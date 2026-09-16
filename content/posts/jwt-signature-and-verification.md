@@ -5,7 +5,7 @@ date: "2026-09-16"
 tags: ["Engineering", "JWT"]
 category: "Engineering"
 cover: "/posts/jwt-token-anatomy.webp"
-coverPosition: "center 35%"
+coverPosition: "center 24%"
 featured: true
 ---
 

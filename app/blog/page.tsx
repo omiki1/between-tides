@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { getPage, getTagSummaries, getTotalPages, coverPositionStyle } from "@/lib/posts";
+import { getPage, getTagSummaries, getTotalPages, coverPositionStyle, getFeaturedPost, getPostsExceptFeatured } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CategoryBar } from "@/components/blog/CategoryBar";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const english = (value:string) => value.toUpperCase();
 export default function BlogPage(){
   const posts = getPage(1);
-  const [featured, ...rest] = posts;
+  const featured = getFeaturedPost() ?? posts[0];
   const tags = getTagSummaries();
   const total = getTotalPages();
   return <main id="main" className="container inner">
@@ -33,8 +33,8 @@ export default function BlogPage(){
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>最新</h2><span className="eyebrow">LATEST</span></div><Link href="/archive/" className="text-link">按年份归档<ArrowUpRight size={15}/></Link></div>
       <div className="journal-grid">
-        <Link href={`/blog/${featured.slug}/`} className="featured-post" style={coverPositionStyle(featured.coverPosition)}>
-          <Image src={featured.cover} alt="" fill sizes="(max-width: 700px) 100vw, 60vw" preload/>
+        <Link href={`/blog/${featured.slug}/`} className={`featured-post${featured.cover?"":" no-cover"}`} style={coverPositionStyle(featured.coverPosition)}>
+          {featured.cover&&<Image src={featured.cover} alt="" fill sizes="(max-width: 700px) 100vw, 60vw" preload/>}
           <div className="featured-shade"/>
           <span className="featured-tag">精选手记 <span>FEATURED</span></span>
           <div className="featured-post-text">
@@ -45,7 +45,7 @@ export default function BlogPage(){
           <ArrowUpRight className="feature-arrow" size={22}/>
         </Link>
         <div className="post-side">
-          {rest.slice(0,2).map((post,index)=><Link href={`/blog/${post.slug}/`} className="small-post" key={post.slug}>
+          {getPostsExceptFeatured().slice(0,2).map((post,index)=><Link href={`/blog/${post.slug}/`} className="small-post" key={post.slug}>
             <div className="post-meta"><span>{post.tags.map(english).join(" / ")}</span><span>0{index+2}</span></div>
             <h3>{post.title}<ArrowUpRight size={17}/></h3>
             <p>{post.description}</p>

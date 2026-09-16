@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-export type Post={slug:string;title:string;description:string;date:string;updated?:string;tags:string[];cover:string;coverPosition?:string;featured:boolean;readingTime:number;content:string};
+export type Post={slug:string;title:string;description:string;date:string;updated?:string;tags:string[];cover?:string;coverPosition?:string;hideCover?:boolean;featured:boolean;readingTime:number;content:string};
 export type Category={name:string;slug:string;count:number;latest:string;posts:Post[]};
 export type TagSummary={name:string;slug:string;count:number;latest:string};
 export type ArchiveGroup={year:string;count:number;posts:Post[]};
@@ -10,7 +10,7 @@ const postsDirectory=path.join(process.cwd(),"content/posts");
 const DEFAULT_CATEGORY="随笔";
 /** 与 config/site.ts 的 pagination.postsPerPage 保持一致。 */
 export const POSTS_PER_PAGE=12;
-export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:String(data.cover||""),coverPosition:data.coverPosition?String(data.coverPosition):undefined,featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort((a,b)=>b.date.localeCompare(a.date))}
+export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:data.cover?String(data.cover):undefined,coverPosition:data.coverPosition?String(data.coverPosition):undefined,hideCover:data.hideCover===true,featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort((a,b)=>b.date.localeCompare(a.date))}
 export function getPost(slug:string):Post|undefined{return getPosts().find(p=>p.slug===slug)}
 /**
  * 把 frontmatter 的 coverPosition 转成 CSS 变量，供封面图定位使用。
@@ -45,6 +45,22 @@ export function getNeighbours(slug:string):{previous?:Post;next?:Post}{
   return {previous:posts[index-1],next:posts[index+1]};
 }
 /** 分页：page 从 1 开始；文章数不超过一页时只生成第 1 页。 */
+/**
+ * 精选手记：优先取显式标了 featured: true 的文章，按日期取最新的那一篇；
+ * 没有任何文章标记时退回最新一篇。
+ *
+ * 之前两个列表页都是直接取「最新一篇」当精选，featured 这个 frontmatter 字段
+ * 写了也没人读。同一天发布两篇时排序还不稳定，表现为精选位在两篇之间跳。
+ */
+export function getFeaturedPost():Post|undefined{
+  const posts=getPosts();
+  return posts.find(p=>p.featured)??posts[0];
+}
+/** 排除了精选位之后的文章，供列表页的小卡片使用。 */
+export function getPostsExceptFeatured():Post[]{
+  const featured=getFeaturedPost();
+  return getPosts().filter(p=>p.slug!==featured?.slug);
+}
 export function getTotalPages():number{return Math.max(1,Math.ceil(getPosts().length/POSTS_PER_PAGE))}
 export function getPage(page:number):Post[]{const posts=getPosts();const start=(page-1)*POSTS_PER_PAGE;return posts.slice(start,start+POSTS_PER_PAGE)}
 export function getPageNumbers():number[]{return Array.from({length:getTotalPages()},(_,index)=>index+1)}
