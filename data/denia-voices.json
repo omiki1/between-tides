@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1210189",
+    "title": "滑翔·一",
+    "text": "感觉身体变轻了。",
+    "src": "/audio/denia/zh/1210189.mp3",
+    "source": "https://api.encore.moe/resource/Data/Game/Aki/WwiseAudio/Events/zh/play_favor_word_daniya_com_fly_01.mp3"
+  },
+  {
+    "id": "1210190",
+    "title": "滑翔·二",
+    "text": "偶尔用飞的也不错？",
+    "src": "/audio/denia/zh/1210190.mp3",
+    "source": "https://api.encore.moe/resource/Data/Game/Aki/WwiseAudio/Events/zh/play_favor_word_daniya_com_fly_02.mp3"
+  },
+  {
+    "id": "1210191",
+    "title": "感知",
+    "text": "有人在这藏了秘密？",
+    "src": "/audio/denia/zh/1210191.mp3",
+    "source": "https://api.encore.moe/resource/Data/Game/Aki/WwiseAudio/Events/zh/play_favor_word_daniya_com_scan.mp3"
+  },
+  {
+    "id": "1210196",
+    "title": "获得补给·三",
+    "text": "能拿去换点甜品嘛？",
+    "src": "/audio/denia/zh/1210196.mp3",
+    "source": "https://api.encore.moe/resource/Data/Game/Aki/WwiseAudio/Events/zh/play_favor_word_daniya_com_openbox_02.mp3"
+  }
+]

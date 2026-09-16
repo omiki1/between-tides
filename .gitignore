@@ -1,0 +1,37 @@
+# ---- 依赖与构建产物 ----
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# ---- 本地审计与截图产物 ----
+# .research/hero-originals/ 保存 public/gallery 的原始 PNG 备份
+# .research/shots/          保存 scripts/visual-audit.mjs 的整页截图
+# docs/ 中把它们记录为「本地备份位置」，因此保留在磁盘上，但不进版本库
+.research/
+
+# ---- 工具运行痕迹 ----
+.grok/
+.playwright-mcp/
+
+# ---- 环境变量：只允许提交模板 ----
+.env*
+!.env.example
+.env.*.example
+
+# ---- 旧运行目录 ----
+.sites-runtime/
+
+# ---- 媒体与素材的本地工作目录 ----
+# assets/ 约 31.7 MB，包含第三方素材包（Kenney particle pack，含 Unity 示例与
+# 14.3 MB 的原始 .zip）、intro 生成原图，以及大量未被站点引用的中间文件。
+# 已确认站点运行时不读取该目录（全仓库 0 处运行时引用），且它不是构建输入
+# （public/ 才是）。不纳入版本库是体积与第三方素材再分发风险上的取舍。
+# 若将来需要版本化，请拆到独立仓库或对象存储，不要直接塞回本仓库。
+assets/
+
+# ---- 根目录的素材工作文件 ----
+# 1024x1024 的哈希命名素材原图，不是构建输入、也不被站点引用
+# （仅 docs/ASSET_SOURCES.md 的来源表格提到其中一个）。
+# 保留在磁盘上作为来源记录，不进版本库。
+/*.png

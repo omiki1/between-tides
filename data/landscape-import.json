@@ -1,0 +1,213 @@
+{
+  "celebration": {
+    "id": "starlight-for-you",
+    "src": "/assets/denia/hero/celebration.webp",
+    "title": "群星，因你闪耀",
+    "english": "STARS SHINE FOR YOU",
+    "location": "Kuro Games 公开宣传图 · 鸣潮2 潮声庆典 · 个人非商业展示",
+    "date": "2026.09.15",
+    "width": 1080,
+    "height": 1920,
+    "album": "character"
+  },
+  "landscapes": [
+    {
+      "id": "maple-01",
+      "src": "/gallery/landscapes/maple/01.webp",
+      "title": "枫桥 01",
+      "english": "MAPLE BRIDGE 01",
+      "location": "Between Tides · 风景壁纸 · 枫桥",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1279,
+      "album": "maple"
+    },
+    {
+      "id": "maple-02",
+      "src": "/gallery/landscapes/maple/02.webp",
+      "title": "枫桥 02",
+      "english": "MAPLE BRIDGE 02",
+      "location": "Between Tides · 风景壁纸 · 枫桥",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1080,
+      "album": "maple"
+    },
+    {
+      "id": "maple-03",
+      "src": "/gallery/landscapes/maple/03.webp",
+      "title": "枫桥 03",
+      "english": "MAPLE BRIDGE 03",
+      "location": "Between Tides · 风景壁纸 · 枫桥",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1275,
+      "album": "maple"
+    },
+    {
+      "id": "maple-04",
+      "src": "/gallery/landscapes/maple/04.webp",
+      "title": "枫桥 04",
+      "english": "MAPLE BRIDGE 04",
+      "location": "Between Tides · 风景壁纸 · 枫桥",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1144,
+      "album": "maple"
+    },
+    {
+      "id": "maple-05",
+      "src": "/gallery/landscapes/maple/05.webp",
+      "title": "枫桥 05",
+      "english": "MAPLE BRIDGE 05",
+      "location": "Between Tides · 风景壁纸 · 枫桥",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1440,
+      "album": "maple"
+    },
+    {
+      "id": "harbor-01",
+      "src": "/gallery/landscapes/harbor/01.webp",
+      "title": "海港 01",
+      "english": "HARBOR 01",
+      "location": "Between Tides · 风景壁纸 · 海港",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "harbor"
+    },
+    {
+      "id": "harbor-02",
+      "src": "/gallery/landscapes/harbor/02.webp",
+      "title": "海港 02",
+      "english": "HARBOR 02",
+      "location": "Between Tides · 风景壁纸 · 海港",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1277,
+      "album": "harbor"
+    },
+    {
+      "id": "harbor-03",
+      "src": "/gallery/landscapes/harbor/03.webp",
+      "title": "海港 03",
+      "english": "HARBOR 03",
+      "location": "Between Tides · 风景壁纸 · 海港",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "harbor"
+    },
+    {
+      "id": "harbor-04",
+      "src": "/gallery/landscapes/harbor/04.webp",
+      "title": "海港 04",
+      "english": "HARBOR 04",
+      "location": "Between Tides · 风景壁纸 · 海港",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "harbor"
+    },
+    {
+      "id": "harbor-05",
+      "src": "/gallery/landscapes/harbor/05.webp",
+      "title": "海港 05",
+      "english": "HARBOR 05",
+      "location": "Between Tides · 风景壁纸 · 海港",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "harbor"
+    },
+    {
+      "id": "snow-village-01",
+      "src": "/gallery/landscapes/snow-village/01.webp",
+      "title": "雪乡 01",
+      "english": "SNOW VILLAGE 01",
+      "location": "Between Tides · 风景壁纸 · 雪乡",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1281,
+      "album": "snow-village"
+    },
+    {
+      "id": "snow-village-02",
+      "src": "/gallery/landscapes/snow-village/02.webp",
+      "title": "雪乡 02",
+      "english": "SNOW VILLAGE 02",
+      "location": "Between Tides · 风景壁纸 · 雪乡",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "snow-village"
+    },
+    {
+      "id": "snow-village-03",
+      "src": "/gallery/landscapes/snow-village/03.webp",
+      "title": "雪乡 03",
+      "english": "SNOW VILLAGE 03",
+      "location": "Between Tides · 风景壁纸 · 雪乡",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1272,
+      "album": "snow-village"
+    },
+    {
+      "id": "snow-field-01",
+      "src": "/gallery/landscapes/snow-field/01.webp",
+      "title": "雪地 01",
+      "english": "SNOW FIELD 01",
+      "location": "Between Tides · 风景壁纸 · 雪地",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1227,
+      "album": "snow-field"
+    },
+    {
+      "id": "snow-field-02",
+      "src": "/gallery/landscapes/snow-field/02.webp",
+      "title": "雪地 02",
+      "english": "SNOW FIELD 02",
+      "location": "Between Tides · 风景壁纸 · 雪地",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1440,
+      "album": "snow-field"
+    },
+    {
+      "id": "snow-field-03",
+      "src": "/gallery/landscapes/snow-field/03.webp",
+      "title": "雪地 03",
+      "english": "SNOW FIELD 03",
+      "location": "Between Tides · 风景壁纸 · 雪地",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "snow-field"
+    },
+    {
+      "id": "snow-field-04",
+      "src": "/gallery/landscapes/snow-field/04.webp",
+      "title": "雪地 04",
+      "english": "SNOW FIELD 04",
+      "location": "Between Tides · 风景壁纸 · 雪地",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "snow-field"
+    },
+    {
+      "id": "snow-field-05",
+      "src": "/gallery/landscapes/snow-field/05.webp",
+      "title": "雪地 05",
+      "english": "SNOW FIELD 05",
+      "location": "Between Tides · 风景壁纸 · 雪地",
+      "date": "2026.09.15",
+      "width": 1920,
+      "height": 1280,
+      "album": "snow-field"
+    }
+  ]
+}

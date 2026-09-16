@@ -1,0 +1,1 @@
+export function AmbientBackground(){return <div className="ambient" aria-hidden="true"><div className="ambient-glow"/>{Array.from({length:12},(_,i)=><i className="star" key={i} style={{left:`${(i*37+11)%100}%`,top:`${(i*23+7)%100}%`,animationDelay:`-${i*3}s`}}/>)}</div>}

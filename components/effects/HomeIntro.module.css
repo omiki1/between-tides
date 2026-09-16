@@ -1,0 +1,104 @@
+.root {
+  --ink: #624667;
+  --glow: #fff5fc;
+  --pink: #edabcd;
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  overflow: hidden;
+  isolation: isolate;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  background: #f2dfec;
+  color: var(--ink);
+}
+.backdrop,.shade,.bubbles,.frame { position: absolute; inset: 0; pointer-events: none; }
+.backdrop img { width: 100%; height: 100%; object-fit: cover; object-position: center 57%; opacity: .88; }
+.shade { background: radial-gradient(ellipse at 50% 44%, #fffcf62b 0%, transparent 45%), linear-gradient(180deg,#ede6f52b,transparent 60%,#ddc5e05c); }
+.frame { inset: clamp(18px,4vw,54px); opacity: .65; }
+.frame i { position: absolute; width: 28px; height: 28px; border-color: #fffc; border-style: solid; border-width: 0; }
+.frame i:nth-child(1) { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+.frame i:nth-child(2) { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+.frame i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+.frame i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+.stage { position: absolute; width: min(43vw,490px); aspect-ratio: 1; left: 50%; top: 46%; transform: translate(-50%,-50%); }
+.aura { position: absolute; inset: -18%; border-radius: 50%; background: radial-gradient(ellipse,#fff7fb80,transparent 65%); filter: blur(24px); }
+.glass { position: absolute; inset: 8%; border-radius: 50%; border: 1px solid #fff9; background: radial-gradient(circle at 27% 18%,#ffffff5c,transparent 33%), radial-gradient(circle at 80% 85%,#ecb8ec45,transparent 50%); box-shadow: inset -8px -8px 26px #99c0ec40,inset 6px 4px 22px #fffe,0 20px 60px #c29db130; }
+.glass:before { content: ""; position: absolute; inset: 8%; border-radius: 50%; border: 1px solid #fffa; border-right-color: transparent; border-bottom-color: transparent; transform: rotate(-25deg); mask: linear-gradient(#000,transparent 70%); }
+.glass i { position: absolute; width: 24%; height: 7%; left: 16%; top: 9%; border-radius: 50%; transform: rotate(-32deg); background: #ffffffe6; filter: blur(5px); }
+.characterEnter { position: absolute; inset: 6%; opacity: 0; transform: translateY(35px) scale(.72); }
+.characterFloat { width: 100%; height: 100%; transform-origin: 50% 75%; }
+.character { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 13px 8px #97758b25); }
+.water { position: absolute; left: 50%; width: 92%; height: 17%; bottom: -3%; transform: translateX(-50%); }
+.water:before { content: ""; position: absolute; inset: 20% 25%; border-radius: 50%; background: #9c83ac25; filter: blur(8px); }
+.water i { position: absolute; inset: 0; border-radius: 50%; border: 1px solid #ffffffd9; box-shadow: 0 2px 0 #bc98b322,inset 0 1px 5px #fff6; opacity: 0; }
+.word { position: absolute; top: 47%; z-index: 2; display: flex; flex-direction: column; gap: .09em; font-size: clamp(2.8rem,6.7vw,6rem); font-weight: 600; line-height: 1.15; letter-spacing: .12em; pointer-events: none; transform: translateY(-50%); }
+.word b { display: block; font-weight: inherit; opacity: 0; color: #fff9fc; -webkit-text-stroke: 1px #9669846b; text-shadow: 0 3px 0 #c89bb538,0 8px 30px #b5799b42; }
+.wordLeft { left: max(6.5vw,calc(50% - 510px)); }
+.wordRight { right: max(6vw,calc(50% - 520px)); }
+.bubbles i { position: absolute; left: calc(9% + var(--i)*13%); top: calc(67% + var(--i)*3%); width: calc(15px + var(--i)*7px); aspect-ratio: 1; border-radius: 50%; border: 1px solid #fffc; background: radial-gradient(circle at 28% 23%,#fff9,transparent 31%),radial-gradient(circle at 77% 80%,#b8d4fa38,transparent 68%); box-shadow: inset 0 -3px 8px #e5afe744; opacity: 0; }
+.sparkle,.sparkleSmall { position: absolute; background: #fff; width: 30px; height: 30px; left: 2%; top: 22%; mask: url('/particles/star-sharp.png') center/contain no-repeat; opacity: 0; filter: drop-shadow(0 0 7px #fffc); }
+.sparkleSmall { left: auto; top: auto; bottom: 18%; right: 3%; width: 20px; height: 20px; }
+.loading { position: absolute; left: 50%; top: calc(46% + min(24vw,270px)); transform: translateX(-50%); display: flex; align-items: center; gap: 5px; font-size: 10px; letter-spacing: .2em; white-space: nowrap; opacity: .7; }
+.loading>span { margin-right: 7px; }.loading i { display: block; width: 3px; height: 3px; background: currentColor; border-radius: 50%; animation: loading-dot 1.1s ease-in-out infinite; }
+.loading i:nth-of-type(2) { animation-delay: .15s; }.loading i:nth-of-type(3) { animation-delay: .3s; }
+.mark { position: absolute; left: 50%; bottom: max(34px,5.5svh); transform: translateX(-50%); white-space: nowrap; font-size: 9px; letter-spacing: .3em; opacity: .65; }
+.skip { position: absolute; right: max(34px,5vw); bottom: max(30px,5svh); display: flex; gap: 18px; align-items: center; font-size: 11px; letter-spacing: .12em; padding: 10px 15px; border: 1px solid #fff8; border-radius: 24px; background: #fff5; backdrop-filter: blur(12px); color: var(--ink); transition: background .2s; }
+.skip:hover { background: #fffb; }.skip:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.root[data-phase=playing] .backdrop img { animation: sky-drift 5s ease-out both; }
+.root[data-phase=playing] .characterEnter { animation: character-arrive .65s .03s cubic-bezier(.2,.8,.3,1) both; }
+.root[data-phase=playing] .characterFloat,.root[data-phase=leaving] .characterFloat { animation: character-float 2.3s 1s ease-in-out infinite; }
+.root[data-phase=playing] .glass { animation: bubble-arrive 1s cubic-bezier(.18,.9,.2,1) both; }
+.root[data-phase=playing] .wordLeft b { animation: word-left 1.25s .28s cubic-bezier(.16,1,.3,1) both; }
+.root[data-phase=playing] .wordRight b { animation: word-right 1.25s .4s cubic-bezier(.16,1,.3,1) both; }
+.root[data-phase=playing] .wordLeft b:nth-child(2) { animation-delay: .5s; }.root[data-phase=playing] .wordRight b:nth-child(2) { animation-delay: .62s; }
+.root[data-phase=playing] .water i { animation: water-ripple 2.4s .65s ease-out infinite; }.root[data-phase=playing] .water i:nth-child(2) { animation-delay: 1.3s; }.root[data-phase=playing] .water i:nth-child(3) { animation-delay: 1.95s; }
+.root[data-phase=playing] .bubbles i { animation: bubble-rise 4.4s calc(var(--i)*.13s) ease-out both; }
+.root[data-phase=playing] .sparkle { animation: sparkle 2s .8s ease-in-out infinite; }.root[data-phase=playing] .sparkleSmall { animation: sparkle 2s 1.3s ease-in-out infinite; }
+.root[data-phase=leaving] { animation: scene-exit .8s cubic-bezier(.4,0,.2,1) both; }
+.root[data-phase=leaving] .characterEnter,.root[data-phase=leaving] .word b { opacity: 1; transform: none; }
+.root[data-phase=leaving] .stage { transition: scale .8s; scale: 1.035; }
+@keyframes character-arrive { from { opacity: 0; transform: translateY(35px) scale(.72) rotate(-6deg); } to { opacity: 1; transform: translateY(0) scale(1) rotate(0); } }
+@keyframes character-float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-13px) rotate(1.5deg); } }
+@keyframes bubble-arrive { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes word-left { from { opacity: 0; transform: translate(-50px,12px); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes word-right { from { opacity: 0; transform: translate(50px,12px); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes sky-drift { from { transform: scale(1.045); } to { transform: scale(1); } }
+@keyframes water-ripple { 0% { opacity: 0; transform: scale(.4); } 18% { opacity: .85; } 100% { opacity: 0; transform: scale(1.35); } }
+@keyframes bubble-rise { 0% { opacity: 0; transform: translateY(40px) scale(.75); } 18% { opacity: .75; } 100% { opacity: 0; transform: translate(20px,-36svh) scale(1.05); } }
+@keyframes sparkle { 0%,100% { opacity: .15; transform: scale(.6) rotate(-15deg); } 50% { opacity: .95; transform: scale(1) rotate(10deg); } }
+@keyframes loading-dot { 0%,80%,100% { opacity: .3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@keyframes scene-exit { 0% { clip-path: inset(0 round 0); filter: blur(0); } 100% { clip-path: inset(0 0 100% round 0 0 45% 45%); filter: blur(3px); } }
+:global(.dark) .root { --ink: #ecdaef; background: #242b48; }
+:global(.dark) .backdrop img { opacity: .58; filter: saturate(.72) brightness(.72); }
+:global(.dark) .shade { background: linear-gradient(180deg,#29365370,#50426720 60%,#1b2e5370); }
+:global(.dark) .glass { background: radial-gradient(circle at 27% 18%,#ffffff35,transparent 33%),radial-gradient(circle at 80% 85%,#939de030,transparent 50%); box-shadow: inset -8px -8px 26px #91b1e340,inset 5px 3px 20px #ebebff88,0 15px 60px #05142740; }
+:global(.dark) .word b { -webkit-text-stroke-color: #e8c4e744; text-shadow: 0 5px 28px #cab0e866; }
+:global(.dark) .skip { background: #27365760; }
+@media(max-width:720px) {
+  .stage { width: min(72vw,380px); top: 46%; }
+  .word { font-size: clamp(24px,7.5vw,43px); top: 45%; letter-spacing: .07em; gap: .5em; }.word b { writing-mode: vertical-rl; }
+  .wordLeft { left: 5%; }.wordRight { right: 5%; }
+  .loading { top: calc(46% + min(40vw,210px)); font-size: 9px; }
+  .mark { bottom: 82px; font-size: 8px; letter-spacing: .22em; }
+  .skip { right: 25px; bottom: 24px; }.frame { inset: 18px; }
+}
+@media(max-height:500px) and (min-width:721px) { .stage { width: 52svh; }.word { font-size: 11svh; }.loading { top: 78%; }.mark { bottom: 22px; } }
+@media(prefers-reduced-motion:reduce) { .root { display: none; }.root * { animation: none!important; transition: none!important; } }
+/* Full illustration turns into the chibi on the back of the same floating layer. */
+.characterEnter{perspective:1000px}.characterFloat{transform-style:preserve-3d}.characterFlip{position:relative;width:100%;height:100%;transform-style:preserve-3d}.front,.back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}.front{transform:rotateY(0deg) translateZ(1px)}.back{transform:rotateY(180deg) translateZ(1px)}.front .character{padding:0 10%;filter:drop-shadow(0 12px 12px #73557930)}
+.turnGlint{position:absolute;inset:7%;border:1px solid #fff;border-radius:50%;box-shadow:0 0 25px #fff7;opacity:0;pointer-events:none}
+.root[data-phase=preparing] .characterFlip,.root[data-phase=playing] .characterFlip{will-change:transform}
+.root[data-phase=playing] .characterFlip{animation:character-turn .5s .8s cubic-bezier(.35,0,.65,1) both}
+.root[data-phase=playing] .characterFloat,.root[data-phase=leaving] .characterFloat{animation-delay:1.3s}
+.root[data-phase=playing] .turnGlint{animation:turn-glint .65s .9s ease-out both}
+.root[data-phase=leaving] .characterFlip{transform:rotateY(180deg)}
+@keyframes character-turn{from{transform:rotateY(0deg)}to{transform:rotateY(180deg)}}
+@keyframes turn-glint{0%{opacity:0;transform:scale(.82)}25%{opacity:.6}100%{opacity:0;transform:scale(1.35)}}
+.root[data-character=chibi] .aura{animation:chibi-breath 2s ease-in-out infinite alternate}
+@keyframes chibi-breath{from{opacity:.5;transform:scale(.9)}to{opacity:1;transform:scale(1.1)}}
+/* Give the original wording enough contrast against the bright water/sky. */
+.word b{color:#8b6784;-webkit-text-stroke-color:#fff9;text-shadow:0 2px 0 #fff8,0 8px 26px #d6a0c338}
+:global(.dark) .word b{color:#fff4fc;-webkit-text-stroke-color:#e8c4e744;text-shadow:0 5px 28px #cab0e866}
+@media(max-width:720px){.mark{font-size:9px}}

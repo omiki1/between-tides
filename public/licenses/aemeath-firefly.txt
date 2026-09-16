@@ -1,0 +1,7 @@
+Aemeath / Firefly theme code reused under MIT License
+Copyright (c) 2024 saicaca
+Copyright (c) 2025 CuteLeaf
+
+See https://github.com/Jarvis0227/Aemeath and the original LICENSE.
+This site copies cursor files, sakura sprite, font-switch behavior, time-greeting widget, and layout ideas.
+It does not copy the original author's posts, avatars, or character art.

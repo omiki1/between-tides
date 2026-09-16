@@ -1,0 +1,1 @@
+export function WaveMark({className=""}:{className?:string}) { return <svg className={className} width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M3 15c4-10 6 10 10 0s6 10 12 0M3 21c4-10 6 10 10 0s6 10 12 0" stroke="currentColor" strokeWidth="1.5"/><circle cx="20" cy="6" r="2.5" stroke="currentColor"/></svg>; }
