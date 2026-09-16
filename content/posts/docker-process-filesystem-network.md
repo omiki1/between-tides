@@ -5,6 +5,7 @@ date: "2026-09-16"
 tags: ["Engineering", "Docker"]
 category: "Engineering"
 cover: "/posts/docker-layers.webp"
+coverPosition: "top"
 featured: true
 ---
 

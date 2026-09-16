@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-export type Post={slug:string;title:string;description:string;date:string;updated?:string;tags:string[];cover:string;featured:boolean;readingTime:number;content:string};
+export type Post={slug:string;title:string;description:string;date:string;updated?:string;tags:string[];cover:string;coverPosition?:string;featured:boolean;readingTime:number;content:string};
 export type Category={name:string;slug:string;count:number;latest:string;posts:Post[]};
 export type TagSummary={name:string;slug:string;count:number;latest:string};
 export type ArchiveGroup={year:string;count:number;posts:Post[]};
@@ -10,8 +10,33 @@ const postsDirectory=path.join(process.cwd(),"content/posts");
 const DEFAULT_CATEGORY="随笔";
 /** 与 config/site.ts 的 pagination.postsPerPage 保持一致。 */
 export const POSTS_PER_PAGE=12;
-export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:String(data.cover||""),featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort((a,b)=>b.date.localeCompare(a.date))}
+export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:String(data.cover||""),coverPosition:data.coverPosition?String(data.coverPosition):undefined,featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort((a,b)=>b.date.localeCompare(a.date))}
 export function getPost(slug:string):Post|undefined{return getPosts().find(p=>p.slug===slug)}
+/**
+ * 把 frontmatter 的 coverPosition 转成 CSS 变量，供封面图定位使用。
+ *
+ * 返回类型标注为 React.CSSProperties：自定义属性（--x）不在 csstype 的
+ * Properties 里，直接返回字面量会让 next/image 与 next/link 的 style
+ * 报 TS2559。这里断言的是"一个合法的 style 对象"，键名受下面正则约束。
+ *
+ * 支持简写（top / bottom / center / left / right），非简写原样透传，非法值忽略。
+ */
+export function coverPositionStyle(position?: string): React.CSSProperties {
+  const value = (position || "").trim();
+  if (!value) return {};
+  const shorthand: Record<string, string> = {
+    top: "50% 0%",
+    bottom: "50% 100%",
+    center: "50% 50%",
+    left: "0% 50%",
+    right: "100% 50%",
+  };
+  const resolved = shorthand[value.toLowerCase()] ?? value;
+  // 只接受「关键字或长度/百分比」的一到两个分量，避免把任意字符串写进 style
+  const part = "(?:center|top|bottom|left|right|-?\\d+(?:\\.\\d+)?(?:%|px|em|rem))";
+  if (!new RegExp(`^${part}(?:\\s+${part})?$`).test(resolved)) return {};
+  return { "--cover-position": resolved } as React.CSSProperties;
+}
 export function getPostSlugs():string[]{return getPosts().map(p=>p.slug)}
 export function getTags():string[]{return [...new Set(getPosts().flatMap(p=>p.tags))]}
 export function getNeighbours(slug:string):{previous?:Post;next?:Post}{

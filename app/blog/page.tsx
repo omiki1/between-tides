@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { getPage, getTagSummaries, getTotalPages } from "@/lib/posts";
+import { getPage, getTagSummaries, getTotalPages, coverPositionStyle } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CategoryBar } from "@/components/blog/CategoryBar";
@@ -33,7 +33,7 @@ export default function BlogPage(){
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>最新</h2><span className="eyebrow">LATEST</span></div><Link href="/archive/" className="text-link">按年份归档<ArrowUpRight size={15}/></Link></div>
       <div className="journal-grid">
-        <Link href={`/blog/${featured.slug}/`} className="featured-post">
+        <Link href={`/blog/${featured.slug}/`} className="featured-post" style={coverPositionStyle(featured.coverPosition)}>
           <Image src={featured.cover} alt="" fill sizes="(max-width: 700px) 100vw, 60vw" preload/>
           <div className="featured-shade"/>
           <span className="featured-tag">精选手记 <span>FEATURED</span></span>

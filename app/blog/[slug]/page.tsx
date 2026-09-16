@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft,ArrowRight,ArrowUpRight,Clock,CalendarDays,Folder } from "lucide-react";
-import { getCategoryOfPost, getPost, getPostSlugs, getNeighbours, slugify } from "@/lib/posts";
+import { getCategoryOfPost, getPost, getPostSlugs, getNeighbours, slugify, coverPositionStyle } from "@/lib/posts";
 import { renderMarkdown, extractHeadings } from "@/lib/markdown";
 import { site } from "@/config/site";
 import { Reveal } from "@/components/effects/Reveal";
@@ -41,7 +41,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
         {post.tags.map(tag=><Link key={tag} className="tag-chip" href={`/tags/${slugify(tag)}/`}># {tag}</Link>)}
       </div>
     </Reveal>
-    {post.cover&&<Reveal className="reading-cover"><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Reveal>}
+    {post.cover&&<Reveal className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Reveal>}
     <div className="reading-layout">
       <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
       <aside className="reading-aside">
