@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "verify": "next build && node scripts/verify-export.mjs"
+    "typegen": "next typegen",
+    "typecheck": "next typegen && tsc --noEmit",
+    "verify": "next build && node scripts/verify-export.mjs",
+    "check": "npm run lint && npm run typecheck"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
