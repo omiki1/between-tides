@@ -1,0 +1,112 @@
+# Cloudflare Workers 静态资源配置：安全响应头
+#
+# 本文件放在 public/ 下，构建时会被原样复制到 out/_headers，
+# `wrangler deploy` 读取它并把这些头作用到所有响应上。
+#
+# 背景：在加入本文件之前，本站**没有任何安全响应头**，等价于
+# 缺失 CSP / HSTS / X-Frame-Options / Referrer-Policy / Permissions-Policy。
+#
+# 语法：以 / 开头的路径模式，其后缩进两格的 Name: value 行。
+# 多个模式可叠加，更具体的路径后应用。
+
+/*
+  # 禁止浏览器用嗅探出的类型覆盖声明的 Content-Type
+  X-Content-Type-Options: nosniff
+
+  # 强制 HTTPS（含子域），有效期一年；本站已确定长期使用 HTTPS
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+  # 不允许被任何站点嵌入 iframe，防点击劫持。
+  # 注意：本站自己没有需要被嵌入的页面，因此用 DENY 而非 SAMEORIGIN。
+  X-Frame-Options: DENY
+
+  # 跨站跳转时不泄露完整路径，只发出来源域
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # 关闭本站不使用的浏览器能力，缩小被滥用面。
+  # 注意：不包含 autoplay —— 音乐面板需要播放，含 fullscreen 供图集灯箱使用。
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=()
+
+  # 明确声明本站是独立上下文，并保留 window.close 能力（灯箱/弹窗类交互安全）
+  Cross-Origin-Opener-Policy: same-origin
+
+  # 不声明 COEP：本站引用 QQ 音乐（i.y.qq.com）与 B 站图床（i0.hdslb.com）
+  # 的第三方资源，require-corp 会把它们全部拦掉。
+
+# ---- Next.js 构建产物：文件名含内容哈希，可长期缓存 ----
+# /_next/static/ 下的文件名形如 0h2qsuyze9ds1.js、153sf1eqm7_9j.css，内容变更必然改名，
+# 因此用 immutable 走最长缓存，避免重复回源。
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ---- 静态媒体：文件名固定，用较短缓存 + 允许陈旧回源 ----
+# 这些资源改名即代表内容变更，用 7 天缓存配合 stale-while-revalidate，
+# 既能省回源又不会让替换后的图片长期不更新。
+/gallery/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/assets/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/artwork/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/audio/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# ---- 内容源文件：会随内容更新，用短缓存 ----
+/search.json
+  Cache-Control: public, max-age=300, stale-while-revalidate=3600
+
+/rss.xml
+  Cache-Control: public, max-age=1800, stale-while-revalidate=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=1800, stale-while-revalidate=86400
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+# ---- HTML 页面 ----
+# 显式不缓存 HTML，避免更新内容后读者仍看到旧页面。
+# 静态资源已由上面的长缓存规则覆盖，因此不缓存 HTML 不会带来回源压力。
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ============================================================================
+# 尚未启用的 Content-Security-Policy —— 请阅读后再决定是否开启
+# ============================================================================
+#
+# 本站**暂时没有** CSP。这不是遗漏，而是有意的顺序安排，原因如下：
+#
+# 1. 首页有 7 个内联 <script>：
+#    - 2 个是项目自己写的 boot 脚本（app/layout.tsx 的 fontBoot / introBoot），
+#      用于在首屏绘制前设定字体模式与入场状态，避免闪烁；
+#    - 5 个是 Next.js 的 RSC 水合数据流（self.__next_f.push(...)），其内容
+#      每个页面都不同、每次构建都不同。
+#    这 5 个的体积是 43 / 21915 / 22278 / 4821 字节等，且随内容变化。
+#    用 'unsafe-inline' 会几乎完全废掉 script-src 的防护意义；
+#    用 sha256 哈希则需要每次构建后重新计算并回写本文件，且哈希一旦不同步
+#    就会让整站 JS 全部被拦（页面看起来白屏）。
+#
+# 2. 本站还引用第三方资源（QQ 音乐播放器 i.y.qq.com / y.gtimg.cn，
+#    B 站图床 i0.hdslb.com），需要逐项确认其真实请求域名与类型。
+#
+# 3. 加入 CSP 后必须**在真实浏览器里逐页验证**，而不是靠推断。
+#
+# 因此正确做法是分两步：
+#
+#   第一步（现在）：先上线除 CSP 之外的全部安全头。
+#     这些头没有破坏性风险，且已经挡掉点击劫持、MIME 嗅探、Referrer 泄露、
+#     敏感浏览器能力滥用这几类问题。
+#
+#   第二步（做 CSP 时）：新增一个构建后脚本生成哈希，
+#     在构建流程末尾把真实 sha256 写入本文件，然后在真实浏览器里验证。
+#     模板如下（哈希值必须由脚本生成，不要手工填）：
+#
+#     /*
+#       Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-<脚本1>' 'sha256-<脚本2>' ...; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i0.hdslb.com https://y.gtimg.cn; media-src 'self'; font-src 'self'; frame-src https://i.y.qq.com https://y.qq.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+#
+# 注意 style-src 必须保留 'unsafe-inline'：本站有 35 处内联 style 属性
+# （Hero 视差、图集布局等），且 CSP 规范下 style 属性无法用哈希覆盖。
+# ============================================================================
