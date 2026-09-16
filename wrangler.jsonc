@@ -1,14 +1,15 @@
 {
-  // 汐间 / BETWEEN TIDES —— 纯静态导出站（Next.js output: "export"）
+  // 汐间 / BETWEEN TIDES —— Next.js 静态导出 + 访客计数 Worker
   //
-  // 本文件不使用任何 Cloudflare 服务端资源：没有 D1 / R2 / KV / DO / Queue。
-  // 站点在构建期烘焙为 out/，Worker 只负责把静态资源按正确规则送达。
+  // 页面在构建期烘焙为 out/。Worker 只拦截 /api/visits，把去重后的访客数写入 KV。
+  // 其余请求仍由静态资源处理，不经过这段脚本。
   //
-  // 部署：  npx wrangler deploy
+  // 部署：  npm run deploy:cf
   // 预览：  npx wrangler dev
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "omiki1-home",
   "compatibility_date": "2026-09-16",
+  "main": "worker/index.ts",
 
   "assets": {
     "directory": "./out",
@@ -23,10 +24,20 @@
 
     // 找不到的路径直接返回 404，不使用 SPA 回退。
     // 对本站点很重要：404.html 是精心做的页面，SPA 回退会把它顶掉。
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+
+    // 只有访客接口走 Worker；HTML 和静态资源仍由 assets 直出。
+    "run_worker_first": ["/api/*"]
   },
 
-  // 静态站没有服务端逻辑，不需要 observability 采样与 Workers 缓存 API。
+  "kv_namespaces": [
+    {
+      "binding": "VISITS",
+      "id": "ed5adb00aa554415aaee52d7ef492849"
+    }
+  ],
+
+  // 访客接口流量很小，不需要 observability 采样。
   "observability": {
     "enabled": false
   },

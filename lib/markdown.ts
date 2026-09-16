@@ -17,6 +17,22 @@ const external = (url:string) => /^https?:/i.test(url);
 const text = (value:string):ElementContent => ({ type:"text", value });
 const element = (tagName:string, properties:Element["properties"], children:ElementContent[]):Element => ({ type:"element", tagName, properties, children });
 
+/* 竖幅插图（宽高比 < 1）在正文列宽下会被拉得过高，单独标记以便样式层限宽居中。
+   宽高比从 Markdown 图片标题（`![alt](/path "1600x1128")`）读取，缺省按横幅处理。 */
+const TALL_RATIO_THRESHOLD = 1;
+const dimensions = /^(\d+)\s*[x×]\s*(\d+)$/;
+
+function figureClassNames(title: string | null | undefined): string[] {
+  const names = ["prose-figure"];
+  const match = dimensions.exec((title || "").trim());
+  if (match) {
+    const width = Number(match[1]);
+    const height = Number(match[2]);
+    if (height > 0 && width / height < TALL_RATIO_THRESHOLD) names.push("is-tall");
+  }
+  return names;
+}
+
 /* All body HTML is produced from our own Markdown files at build time; raw HTML is never executed. */
 function imageHandler(state: State, node: Image): Element {
   const src = node.url || "";
@@ -28,7 +44,7 @@ function imageHandler(state: State, node: Image): Element {
   /* Alt text keeps the credit; external files also link to their original source. */
   const caption:ElementContent[] = [text(alt)];
   if (external(src)) caption.push(element("a", { href:src, target:"_blank", rel:["noreferrer","noopener"] }, [text("原始文件 ↗")]));
-  return element("figure", { className:["prose-figure"] }, [picture, element("figcaption", {}, caption)]);
+  return element("figure", { className: figureClassNames(node.title) }, [picture, element("figcaption", {}, caption)]);
 }
 
 function linkHandler(state: State, node: Link): Element {

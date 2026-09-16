@@ -10,7 +10,7 @@
 - 日/夜主题按钮保存偏好；浏览器验证天气画布切换 sakura/rain。修复主题按钮 SSR hydration mismatch。
 - Kenney CC0 星光/柔光已导入；指针光圈与点击星点/涟漪响应操作；触摸或减少动态效果时停用鼠标特效。
 - 四段达妮娅中文原声已下载；浏览器点击泡泡后音频 readyState=4、paused=false，第一段长度约 3.16 秒。
-- QQ 音乐改为官方外链 iframe，不再依赖本地 :3200 代理。环境音仍由本站播放器播放。
+- QQ 音乐改为官方外链 iframe，不再依赖本地 :3200 代理。进页默认播放导入的 QQ 歌单试听流，环境音只在歌单里手动播放。
 - 保留用户已添加的追番、分类、标签、侧栏、字体和首屏裁切图片。
 - 构建及检查命令：npm run lint、npm run typecheck、npm run verify、node scripts/check-links.mjs。
 

@@ -24,7 +24,8 @@ export const site = {
 
     {label:"About",href:"/about/"},
   ],
-  seo: { title: "汐间 — omiki1 的数字花园", keywords: ["个人博客", "omiki1", "数字花园", "前端", "AI", "星空", "潮汐", "梦幻", "追番"] },
+  seo: { title: "汐间花园", keywords: ["个人博客", "omiki1", "数字花园", "前端", "AI", "星空", "潮汐", "梦幻", "追番"] },
+  musicAutoplay: true,
   music: [
     { title: "Moonlit Current", artist: "Between Tides · 原创环境音", src: "/audio/moonlit-current.wav", cover: "/gallery/deep-tide.webp" },
     { title: "A Quiet Orbit", artist: "Between Tides · 原创环境音", src: "/audio/quiet-orbit.wav", cover: "/gallery/bubble-dream.webp" },

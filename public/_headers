@@ -67,6 +67,12 @@
 /robots.txt
   Cache-Control: public, max-age=3600
 
+/api/visits
+  Cache-Control: no-store
+
+/api/visits/
+  Cache-Control: no-store
+
 # ---- HTML 页面 ----
 # 显式不缓存 HTML，避免更新内容后读者仍看到旧页面。
 # 静态资源已由上面的长缓存规则覆盖，因此不缓存 HTML 不会带来回源压力。

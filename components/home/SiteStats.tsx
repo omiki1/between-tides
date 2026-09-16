@@ -2,6 +2,7 @@ import { getPosts } from "@/lib/posts";
 import { gallery } from "@/data/gallery";
 import { projects } from "@/data/projects";
 import { getBangumiStats } from "@/lib/bangumi";
+import { VisitorStat } from "./VisitorStat";
 
 export function SiteStats() {
   const stats = [
@@ -20,6 +21,7 @@ export function SiteStats() {
             <dd>{item.value}</dd>
           </div>
         ))}
+        <VisitorStat />
       </dl>
     </article>
   );

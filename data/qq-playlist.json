@@ -8,17 +8,6 @@
   "note": "原歌单 7 首中 3 首无法站内试听，已替换为用户提供的 QQ 分享曲目。",
   "songs": [
     {
-      "id": "464003430",
-      "mid": "000TqqHJ1OTCTh",
-      "title": "Midnight Mass (feat. Jordan Rudess)",
-      "artist": "Syncatto / Jordan Rudess",
-      "cover": "https://y.gtimg.cn/music/photo_new/T002R300x300M000004UrA9Y0XYrmm.jpg",
-      "duration": 212,
-      "requiresSubscription": false,
-      "src": "",
-      "url": "https://y.qq.com/n/ryqq_v2/songDetail/000TqqHJ1OTCTh"
-    },
-    {
       "id": "641365537",
       "mid": "002Cw13q3FDGIH",
       "title": "Kyoto’s Jam",
@@ -28,6 +17,17 @@
       "requiresSubscription": false,
       "src": "",
       "url": "https://y.qq.com/n/ryqq_v2/songDetail/002Cw13q3FDGIH"
+    },
+    {
+      "id": "464003430",
+      "mid": "000TqqHJ1OTCTh",
+      "title": "Midnight Mass (feat. Jordan Rudess)",
+      "artist": "Syncatto / Jordan Rudess",
+      "cover": "https://y.gtimg.cn/music/photo_new/T002R300x300M000004UrA9Y0XYrmm.jpg",
+      "duration": 212,
+      "requiresSubscription": false,
+      "src": "",
+      "url": "https://y.qq.com/n/ryqq_v2/songDetail/000TqqHJ1OTCTh"
     },
     {
       "id": "930124",

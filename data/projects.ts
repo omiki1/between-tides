@@ -16,7 +16,7 @@ export const projects: Project[] = [
     id: "mediatlas",
     name: "MediAtlas",
     subtitle: "先找到依据，再开口解释。",
-    description: "从 medical_disease_db 长出来的医学证据工作台。FastAPI + Vue 3 做对话，BM25、向量、同源图谱和重排接到同一条检索链上；权威模式只走已核验公开来源，探索模式才打开历史疾病文档。回答必须带出处，急症和个体剂量规则先于模型。本地可运行，未经临床验证。",
+    description: "FastAPI + Vue 3 做对话的医学证据工作台。BM25、向量、同源图谱和重排接到同一条检索链上；权威模式只走已核验公开来源，探索模式才打开历史疾病文档。回答必须带出处，急症和个体剂量规则先于模型。本地可运行，未经临床验证。",
     tags: ["FastAPI", "Vue 3", "RAG", "Neo4j", "Agent"],
     status: "可运行原型",
     visual: "graph",

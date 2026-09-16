@@ -15,6 +15,7 @@
 | `/about/` | 静态 | `config/site.ts` |
 | `/search.json` | 静态 Route Handler | `lib/search.ts` |
 | `/rss.xml`、`/sitemap.xml`、`/robots.txt` | 静态 Route Handler | `lib/posts.ts` + `config/site.ts` |
+| `/api/visits` | Cloudflare Worker + KV | `worker/index.ts`，绑定 `VISITS`（`omiki1-home-visits`） |
 
 `next.config.ts` 使用 `output: "export"`、`images.unoptimized: true`、`trailingSlash: true`，因此所有路由必须在构建期完成：动态路由必须提供 `generateStaticParams`，Route Handler 必须声明 `export const dynamic = "force-static"`（参考 `node_modules/next/dist/docs/01-app/02-guides/static-exports.md`）。
 
@@ -38,6 +39,7 @@ Markdown 在构建期由 `lib/markdown.ts` 转成 HTML：`remark-parse` → `rem
 
 ## 交互实现
 
+- 访客量：布局里的 `VisitRecorder` 在进页后请求 `/api/visits`。同一浏览器（IP + UA 指纹）只加一次，计数存在 KV `omiki1-home-visits`。本地 `next dev` 没有 Worker，改记在 `localStorage`。首页和追番页的「站点速记」读取同一个数字。
 - 搜索：`components/search/SearchDialog.tsx`，原生 `<dialog>`，`Cmd/Ctrl + K` 或导航栏按钮打开，`↑ ↓` 选择、`Enter` 打开、`Esc` 关闭；索引按需 `fetch("/search.json")`，加载失败时退化为站点栏目导航提示。
 - 灯箱：`components/gallery/GalleryBoard.tsx` 内嵌 `<dialog>`，方向键切换、Esc 关闭（原生行为）、关闭后焦点回到触发按钮；图集卡片使用固定宽高避免布局跳动。
 - 入场动效：`components/effects/Reveal.tsx` 统一 0.55s / 14px；`Providers` 的 `MotionConfig reducedMotion="user"` 与 `@media (prefers-reduced-motion)` 共同保证弱动效偏好生效。

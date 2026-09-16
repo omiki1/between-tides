@@ -18,6 +18,19 @@
 
 转换规则：仅做 WebP 编码（quality 84，保留 alpha），不裁剪、不重绘、不改变构图。像素统计可复现：`node scripts/analyse-images.mjs public/gallery/*.webp`。
 
+## 手记插图
+
+两篇文章的插图由站主提供，转换后放在 `public/posts/`。原始文件不在仓库内。
+
+| 本地文件 | 原始文件 | 原始尺寸 | 转换后 | 用途 |
+| --- | --- | --- | --- | --- |
+| public/posts/jwt-token-anatomy.webp | 站主提供（3.57 MB JPG） | 6952×4900 | 1600×1128，90 KB | 手记封面与正文插图（JWT） |
+| public/posts/docker-layers.webp | 站主提供（1.36 MB PNG） | 803×1043 | 803×1043，109 KB | 手记封面与正文插图（Docker） |
+
+转换规则：等比缩放到宽度上限（横幅 1600、竖幅保持原宽），WebP quality 82，不裁剪、不改变构图。横幅图从 3.57 MB 压到 90 KB，竖幅图从 1.36 MB 压到 109 KB。
+
+**竖幅处理说明：** Docker 篇的插图宽高比是 0.77，在 740px 正文列宽下会被拉到接近 1000px 高。因此 `lib/markdown.ts` 支持从 Markdown 图片标题读取尺寸（`![alt](/path "803x1043")`），宽高比小于 1 时给 `figure` 加 `is-tall` 类，由 `app/globals.css` 在桌面端限宽到 60% 并居中。
+
 ## 音频
 
 ### 本站原创环境音
@@ -85,6 +98,17 @@ Hero 场景使用的角色语音来自游戏音频镜像，逐条记录在 `data
 | public/assets/denia/hero/celebration.webp | official-reference/denia_wallpaper_mobile_02.png | 首页精选、角色相册 |
 
 未使用 `denia_splash_02_drip.jpg`（画面并非达妮娅）以及过长的技能说明长图。
+
+## MediAtlas 界面截图（2026-09-16）
+
+来源：站主提供的本地运行截图，目录 `C:\Users\freeing1\Desktop\33`。仅缩放并编码为 WebP，放入 `public/projects/mediatlas/`，用于项目正文说明，不是医疗宣传材料。
+
+| 本地文件 | 原文件 | 画面 |
+| --- | --- | --- |
+| public/projects/mediatlas/login.webp | QQ20260916-121840.png | 登录页 |
+| public/projects/mediatlas/workspace.webp | QQ20260916-121924.png | 知识问答工作台 |
+| public/projects/mediatlas/answer.webp | QQ20260916-122704.png | 带出处编号的回答 |
+| public/projects/mediatlas/source.webp | QQ20260916-122717.png | WHO 来源详情 |
 
 ## 风景壁纸（2026-09-15）
 

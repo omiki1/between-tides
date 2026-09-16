@@ -17,7 +17,7 @@ export const changelog:ChangelogEntry[]=[
     version:"0.9.0",
     date:"2026-09-16",
     title:"项目页换成真实履历",
-    summary:"用 medical_disease_db 与 stu 练习仓库替换原先的示例项目，按一条学习线写成可核对的履历。",
+    summary:"用 MediAtlas 与 stu 练习仓库替换原先的示例项目，按一条学习线写成可核对的履历。",
     highlights:["MediAtlas","知识图谱","RAG 实验"],
     changes:[
       { kind:"new", text:"当前重点改为 MediAtlas：从医疗疾病库做到带证据门槛的医学问答工作台。" },
@@ -27,6 +27,11 @@ export const changelog:ChangelogEntry[]=[
       { kind:"new", text:"首页、导航和资料卡附上 GitHub @omiki1；MediAtlas 与 Agent 学习工程链到对应公开仓库。" },
       { kind:"improve", text:"QQ 音乐改为官方外链播放器，不再依赖本地 :3200 代理。" },
       { kind:"improve", text:"撤下手记《在喧闹的世界里，做一个安静的界面》。" },
+      { kind:"new", text:"打开网站默认播放导入的 QQ 歌单；浏览器拦截时点一下页面即可开始，可关掉进页播放。下次访问记住选择。" },
+      { kind:"improve", text:"进页默认播放 Kyoto’s Jam；站点标题改为「汐间花园」。" },
+      { kind:"new", text:"站点速记增加访客量：同一浏览器只记一次，数据存在 Cloudflare KV。" },
+      { kind:"new", text:"MediAtlas 正文补上登录页、工作台、带出处回答和来源详情四张界面截图。" },
+      { kind:"improve", text:"MediAtlas 卡片改成直接写工作台本身；音乐手记改成和 QQ 歌单一致。" },
     ],
   },
   {

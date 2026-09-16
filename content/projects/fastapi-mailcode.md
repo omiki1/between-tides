@@ -15,7 +15,7 @@
 
 分层看起来无聊，接上完整系统之后才知道它省事：Controller 不关心 Redis 怎么过期，Service 不关心 SQL 怎么写，DAO 不关心邮件正文。医疗仓库里的 `auth` / `user` 模块，就是在这套 Controller → Service → DAO 上继续长出来的。
 
-当时还没做完注册、登录和重置密码的完整接口，Pydantic 实体也不齐。这些在 `medical_disease_db` 里才补上：密码哈希、JWT、角色权限、Redis 黑名单。
+当时还没做完注册、登录和重置密码的完整接口，Pydantic 实体也不齐。这些在 `medical_agentic_rag` 里才补上：密码哈希、JWT、角色权限、Redis 黑名单。
 
 ## 和后面怎么接
 
