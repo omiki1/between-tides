@@ -64,14 +64,14 @@ R14：鸟类 ∧ 会游泳 ∧ 黑白二色 ∧ 不会飞 → 企鹅
 
 这两支属于顺带收进来的旁支。
 
-**概念图（Conceptual Graph）**由 John F. Sowa 在 1976 与 1984 年提出，被称作一阶逻辑的图接口。示例写法是：
+**概念图（Conceptual Graph）* *由 John F. Sowa 在 1976 与 1984 年提出，被称作一阶逻辑的图接口。示例写法是：
 
 ```text
 (exists ((x Sitting) (y Mat))
   (and (Cat Elsie) (agent x Elsie) (location x y)))
 ```
 
-**形式概念分析（Formal Concept Analysis）**由 Rudolf Wille 在 1982 年提出，用格（Lattice）和偏序集合描述概念结构。概念格由外延（实例集合）和内涵（属性集合）成对构成，被广泛应用在数据挖掘、机器学习与语义 Web 等领域。
+**形式概念分析（Formal Concept Analysis）* *由 Rudolf Wille 在 1982 年提出，用格（Lattice）和偏序集合描述概念结构。概念格由外延（实例集合）和内涵（属性集合）成对构成，被广泛应用在数据挖掘、机器学习与语义 Web 等领域。
 
 把这几支放在一起看，能发现一条规律：**画成图的样子好用，写成一阶逻辑的样子好推。** 后来的描述逻辑要做的，是同时把这两件事要过来。
 

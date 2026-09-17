@@ -28,7 +28,7 @@ Docker 做的事情，就是把"代码 + 它需要的整套环境"一起打包�
 
 ## 二、两个必须分清的词
 
-学 Docker 最先要搞清的是**镜像（image）**和**容器（container）**的关系。
+学 Docker 最先要搞清的是**镜像（image）* *和**容器（container）* *的关系。
 
 | | 镜像 image | 容器 container |
 | --- | --- | --- |
