@@ -1,5 +1,5 @@
 ---
-title: "知识建模：本体是项目的地基，也是最容易返工的一步"
+title: "知识建模"
 description: "本体是什么、和数据库 schema 差在哪、七步法怎么走，以及领域与值域的约束为什么能推出图里没存的事实。"
 date: "2026-09-16"
 tags: ["KnowledgeGraph", "Engineering"]

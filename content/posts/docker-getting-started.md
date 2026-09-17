@@ -1,5 +1,5 @@
 ---
-title: "Docker 入门：从写第一个 Dockerfile 到跑起来"
+title: "Docker 入门"
 description: "面向刚接触容器的人：镜像和容器到底是什么关系，Dockerfile 每一行在做什么，构建与运行的完整流程，以及第一次一定会踩的几个坑。"
 date: "2026-09-16"
 tags: ["Engineering", "Docker"]

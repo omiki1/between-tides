@@ -1,5 +1,5 @@
 ---
-title: "命名实体识别：标注体系、方法主线与还没解决的问题"
+title: "命名实体识别"
 description: "从三大类八小类和 BIO 系标注讲到 HMM、CRF、BiLSTM-CRF 与 BERT，再把前沿进展拆成边界噪声、嵌套、少样本、持续学习等方向，并逐条标出各自的解决程度。"
 date: "2026-09-17"
 tags: ["KnowledgeGraph", "Engineering"]

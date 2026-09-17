@@ -1,5 +1,5 @@
 ---
-title: "知识表示：从语义网络到 OWL 的五十年"
+title: "知识表示"
 description: "机器怎么把一句话变成能运算的形式？从语义网络、产生式规则到描述逻辑与 RDF，把每一代表示方法为什么被替换、代价是什么讲清楚。"
 date: "2026-09-16"
 tags: ["KnowledgeGraph", "Engineering"]

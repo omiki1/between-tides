@@ -1,5 +1,5 @@
 ---
-title: "知识表示学习与大模型：从独热到 GraphRAG"
+title: "知识表示学习与大模型"
 description: "从独热表示的病根讲到翻译、双线性与图神经网络三代表示学习，再看知识图谱与大模型如何互为补丁，以及图谱在其中的角色变化。"
 date: "2026-09-17"
 tags: ["KnowledgeGraph", "Engineering"]

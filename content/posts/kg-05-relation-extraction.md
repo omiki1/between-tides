@@ -1,5 +1,5 @@
 ---
-title: "关系抽取：从模式匹配到生成式"
+title: "关系抽取"
 description: "从任务定义、特征工程、弱监督到神经方法，梳理关系抽取的四种范式、各自的标注成本与噪声来源，以及大模型 Prompting 这条新路线落在什么位置。"
 date: "2026-09-17"
 tags: ["KnowledgeGraph", "Engineering"]
