@@ -13,6 +13,7 @@
     "check": "npm run lint && npm run typecheck",
     "diagrams": "node scripts/diagrams/render.mjs",
     "diagrams:check": "node scripts/diagrams/check.mjs",
+    "diagrams:sync": "node scripts/diagrams/sync-dims.mjs",
     "images:check": "node scripts/check-image-dims.mjs",
     "content:check": "npm run diagrams:check && npm run images:check",
     "deploy:cf": "npm run build && node scripts/deploy-cloudflare.mjs",

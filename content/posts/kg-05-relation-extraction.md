@@ -116,7 +116,7 @@ featured: false
 | 远程监督 | 只要知识库 + 无标注文本 | 假设过强导致的假阳性 | 规模大、可自动，标签噪声重 |
 | 全监督 | 大量人工标注 | 标注一致性、领域漂移 | 效果最好，但代价是标注与特征表示 |
 
-![四种关系抽取范式的成本对照](/posts/kg/05-re-paradigms.webp "1600x1257")
+![四种关系抽取范式的成本对照](/posts/kg/05-re-paradigms.webp "1600x880")
 
 下面按这张表逐行展开。
 
@@ -189,7 +189,7 @@ Chen 等 2006 年在 ACL 提出的标注传播（Label Propagation），依据�
 
 它的标签噪声来自哪里，是下一节的整段内容。
 
-![远程监督的噪声从哪里来](/posts/kg/05-distant-supervision-noise.webp "1600x1077")
+![远程监督的噪声从哪里来](/posts/kg/05-distant-supervision-noise.webp "1600x760")
 
 ## 五、远程监督的噪声到底从哪来
 
