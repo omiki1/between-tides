@@ -26,6 +26,34 @@ const postsDir = path.join(process.cwd(), "content", "posts");
 const problems = [];
 let checked = 0;
 
+/**
+ * 顺带校验 content/posts 目录的构成。
+ *
+ * 这个目录只应包含 .md 文件：Next 的文章路由按 .md 前缀匹配，
+ * 混入的其他文件不会被当成文章，也不会报错，只会悄悄躺在版本库里。
+ * 实际开发中曾因一次批量编辑脚本传错路径而写入一个 0 字节的 .mjs 文件。
+ */
+function checkPostsDirectory() {
+  const stray = readdirSync(postsDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && !entry.name.endsWith(".md"))
+    .map((entry) => entry.name);
+
+  if (stray.length) {
+    problems.push(`content/posts 下存在非 .md 文件：${stray.join(", ")}`);
+  }
+
+  const empty = readdirSync(postsDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .filter((entry) => readFileSync(path.join(postsDir, entry.name), "utf8").trim() === "")
+    .map((entry) => entry.name);
+
+  if (empty.length) {
+    problems.push(`content/posts 下存在空文件：${empty.join(", ")}`);
+  }
+}
+
+checkPostsDirectory();
+
 for (const file of readdirSync(postsDir).filter((f) => f.endsWith(".md")).sort()) {
   const source = readFileSync(path.join(postsDir, file), "utf8");
 
