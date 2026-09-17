@@ -56,7 +56,32 @@
 - 渲染：`node scripts/diagrams/render.mjs` → `public/posts/kg/*.webp`
 - 版面自检：`node scripts/diagrams/check.mjs`
 
+目前共 19 张，按篇分配：
+
+| 篇目 | 图 |
+| --- | --- |
+| 00 总览 | `00-tech-stack`、`00-kg-vs-vector`、`00-pipeline` |
+| 01 知识表示 | `01-representation-timeline`、`01-rdf-triple` |
+| 02 知识建模 | `02-ontology-vs-schema`、`02-modeling-flow` |
+| 03 知识抽取 | `03-extraction-tasks`、`03-ner-timeline` |
+| 04 命名实体识别 | `04-ner-type-system`、`04-ner-open-problems` |
+| 05 关系抽取 | `05-re-paradigms`、`05-distant-supervision-noise` |
+| 06 事件抽取 | `06-relation-vs-event`、`06-event-graph-layers` |
+| 07 知识融合 | `07-fusion-pipeline`、`07-blocking` |
+| 08 表示学习与 KG×LLM | `08-onehot-to-dense`、`08-graphrag-vs-vector` |
+
 配色取自 `styles/tokens.css` 的浅色主题取值并固定使用：文章插图不随主题反色是站点的既有约定，浅底深字在深色页面上表现为一张纸片，在浅色页面上与正文融为一体，两种主题下都可读。
+
+### 校验能覆盖什么、不能覆盖什么
+
+`scripts/diagrams/check.mjs` 检查四类问题：文字纵向越界、文字横向溢出、卡片部分重叠、图注与底边的余量。它**检查不出元素遮挡**（例如一个说明块压在另一块卡片上），这类问题只能靠几何测量或栅格化渲染确认。改动图解后如果拿不准，建议渲染出来看一眼。
+
+`scripts/check-image-dims.mjs` 校验 Markdown 图片标题里的尺寸标注与文件实际尺寸一致。这个标注决定 `lib/markdown.ts` 是否给 `figure` 加 `is-tall`，写错会让竖幅图被当成横幅处理。**新增或修改图解后必须重新核对标注**，因为渲染出的高度取决于内容，无法预先估准。
+
+### 两处已知的口径说明
+
+- `03-ner-timeline` 里的 F1 数值是各代方法在通用英文基准上的代表性结果，**不是同一张评测表的连续读数**，口径并不统一。图注里已写明这一点，正文引用时不应把它当作可直接比较的序列。
+- `04-ner-type-system` 的八个细分类口径随语料库而异（不同标注规范下的划分方式不同），图中给出的是常见做法。
 
 关于各图承担的教学任务与「封面横幅取景」的实测换算，见本文件末尾的相关章节。
 
