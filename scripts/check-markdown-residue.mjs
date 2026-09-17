@@ -51,13 +51,31 @@ const CANDIDATE = /[)\]\u3001\u3002\uff0c\uff1a\uff1b\uff09\uff01\uff1f\u300d\u3
 
 const { renderMarkdown } = await import("../lib/markdown.ts");
 
-/** 去掉代码区后统计字面 `**` —— 代码块里的 `**` 属正常内容。 */
+/** 去掉代码区后统计残留。
+ *
+ *  返回两类：
+ *  - double：字面 `**`，加粗完全没解析
+ *  - single：字面单个 `*`，加粗被撕开（例如源文件里 `**` 中间混入空格变成 `* *`，
+ *            渲染成一个孤立 `*` 加一段斜体）
+ *
+ *  只查 `**` 是不够的 —— 实际漏判过一次：源文件写成 `**文字* *后续`，
+ *  渲染结果里没有 `**` 但有孤立的 `*`，校验通过而页面是坏的。
+ */
 async function residualOf(body) {
   const html = await renderMarkdown(body);
   const stripped = html
     .replace(/<pre[\s\S]*?<\/pre>/g, " ")
     .replace(/<code[\s\S]*?<\/code>/g, " ");
-  return (stripped.match(/\*\*/g) || []).length;
+  return {
+    double: (stripped.match(/\*\*/g) || []).length,
+    single: (stripped.match(/\*/g) || []).length,
+  };
+}
+
+/** 残留总数：两类都要算，任一不为 0 都算有问题。 */
+async function residualCount(body) {
+  const { double, single } = await residualOf(body);
+  return double + single;
 }
 
 const splitFrontmatter = (source) => {
@@ -75,32 +93,47 @@ for (const file of readdirSync(postsDir).filter((f) => f.endsWith(".md")).sort()
   const { head, body } = splitFrontmatter(source);
   checked += 1;
 
-  const before = await residualOf(body);
+  const before = await residualCount(body);
   if (before === 0) continue;
 
   if (!fix) {
-    problems.push(`${file}: 渲染后有 ${before} 处字面 **`);
+    const { double, single } = await residualOf(body);
+    const detail = [double ? `字面 ** × ${double}` : null, single ? `孤立 * × ${single}` : null]
+      .filter(Boolean)
+      .join("，");
+    problems.push(`${file}: 渲染后残留（${detail}）`);
     continue;
   }
 
   /*
-   * 索引说明：正则匹配到的是「标点 + **」这一段，长度为 3 个字符以上
-   * （标点可能是 `)` 这类单字符，也可能是中文标点，均为单码元）。
-   * 因此插入点 = match.index + match[0].length，即 `**` 之后。
+   * 修复分三步。
    *
-   * 早先误写成 match.index + 2，在「中文标点 + **」时恰好落进 `**` 中间，
-   * 把 `**` 撕成 `* *`，反而制造出新的残留。写入前的渲染验证就是为此加的。
+   * 步骤 1：先把被空格撕开的 `* *` 无条件归位成 `**`。
+   *   这一步不做渲染比较，直接改。原因是它无歧义：正文里不会出现
+   *   「星号 + 空格 + 星号」这种合法写法，而它的存在必然是 `**` 被写坏。
+   *   之所以要先做，是因为「归位」这个动作单独看常常不让残留数下降 ——
+   *   归位后的 `**` 往往又落入「后跟正文」的失败形态，需要接着补空格。
+   *   若把两类改动放在同一个循环里逐次比较，就会在归位这一步卡住不动。
+   *
+   * 步骤 2：对「标点 + ** + 非空白」在 `**` 之后补空格。
+   *   索引说明：CANDIDATE 匹配到的是「标点 + **」，标点可能是 `)` 或中文标点、
+   *   均为单码元，因此插入点 = match.index + match[0].length，即 `**` 之后。
+   *   早先误写成 +2，在「中文标点 + **」时落进 `**` 中间，把 `**` 撕成 `* *`。
+   *
+   * 步骤 3：全部改动写回后再渲染一次。若不干净就整个放弃，宁可报告失败，
+   *   也不要静默写坏文件。
    */
-  let current = body;
-  let applied = 0;
-  for (let guard = 0; guard < 80; guard += 1) {
-    const list = [...current.matchAll(CANDIDATE)];
-    if (!list.length) break;
+  let current = body.replace(/\* +\*/g, "**");
+  const normalized = current !== body;
+  let applied = normalized ? 1 : 0;
+
+  for (let guard = 0; guard < 200; guard += 1) {
+    const base = await residualCount(current);
     let improved = false;
-    for (const match of list) {
+    for (const match of current.matchAll(CANDIDATE)) {
       const insertAt = match.index + match[0].length;
       const trial = `${current.slice(0, insertAt)} ${current.slice(insertAt)}`;
-      if ((await residualOf(trial)) < (await residualOf(current))) {
+      if ((await residualCount(trial)) < base) {
         current = trial;
         applied += 1;
         improved = true;
@@ -110,9 +143,9 @@ for (const file of readdirSync(postsDir).filter((f) => f.endsWith(".md")).sort()
     if (!improved) break;
   }
 
-  const after = await residualOf(current);
+  const after = await residualCount(current);
   if (after !== 0) {
-    problems.push(`${file}: 自动修复后仍有 ${after} 处，未写入`);
+    problems.push(`${file}: 自动修复后仍有 ${after} 处残留，未写入`);
     continue;
   }
 
@@ -122,14 +155,14 @@ for (const file of readdirSync(postsDir).filter((f) => f.endsWith(".md")).sort()
     .map((line) => line.replace(/[ \t]+$/, ""))
     .join("\n");
   const { body: verifyBody } = splitFrontmatter(head + cleaned);
-  if ((await residualOf(verifyBody)) !== 0) {
+  if ((await residualCount(verifyBody)) !== 0) {
     problems.push(`${file}: 写回验证未通过，已放弃修改`);
     continue;
   }
 
   writeFileSync(target, head + cleaned, "utf8");
   repairedFiles += 1;
-  console.log(`  fixed  ${file}（残留 ${before} -> 0，补空格 ${applied} 处）`);
+  console.log(`  fixed  ${file}（残留 ${before} -> 0，改动 ${applied} 处）`);
 }
 
 console.log(`\n检查 ${checked} 篇文章的渲染结果。`);
@@ -141,5 +174,5 @@ if (problems.length) {
 console.log(
   fix
     ? `已修复 ${repairedFiles} 个文件，请重新运行本脚本确认。`
-    : "渲染后无 markdown 残留（代码块内的字面 ** 属正常内容，已排除）。",
+    : "渲染后无 markdown 残留（同时检查字面 ** 与孤立 *；代码块内的星号属正常内容，已排除）。",
 );
