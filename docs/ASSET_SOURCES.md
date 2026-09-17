@@ -29,6 +29,37 @@
 
 转换规则：等比缩放到宽度上限（横幅 1600、竖幅保持原宽），WebP quality 82，不裁剪、不改变构图。横幅图从 3.57 MB 压到 90 KB，竖幅图从 1.36 MB 压到 109 KB。
 
+## 装饰插图（知识图谱系列）
+
+站主提供的八张壁纸，转换后放在 `public/gallery/kg/`，用作知识图谱系列的封面。原始文件约 20.8 MB，转换后合计 1.15 MB。
+
+| 本地文件 | 原始尺寸 | 转换后 | 体积变化 |
+| --- | --- | --- | --- |
+| public/gallery/kg/bizhi.webp | 4096×2304 | 1600×900 | 1.25 MB → 200 KB |
+| public/gallery/kg/Gv44.webp | 3840×2160 | 1600×900 | 3.49 MB → 134 KB |
+| public/gallery/kg/tumblr-2796.webp | 4094×2580 | 1600×1008 | 7.32 MB → 137 KB |
+| public/gallery/kg/tumblr-ed95.webp | 2048×1971 | 1400×1347 | 0.77 MB → 142 KB |
+| public/gallery/kg/a8f213.webp | 2000×1402 | 1600×1122 | 2.57 MB → 141 KB |
+| public/gallery/kg/yande-569346.webp | 4092×2893 | 1600×1131 | 4.18 MB → 103 KB |
+| public/gallery/kg/yande-570868.webp | 1500×1060 | 1500×1060 | 0.28 MB → 111 KB |
+| public/gallery/kg/leila-02.webp | 3500×2509 | 1600×1147 | 1.41 MB → 198 KB |
+
+转换规则：等比缩放到宽度 1600 或原宽（取小），WebP quality 80，不裁剪、不改变构图。
+
+**素材版权边界：** 这批图片含 Fate 系列与《亡国的阿基德》的同人 / 官方宣传图，属于个人非商业展示用途。与站点代码的许可证无关，不随代码分发。页面上的站内链接与转载建议参考 `config/site.ts` 的 copyright 字段说明。
+
+## 概念图
+
+知识图谱系列的技术图解**不是外部素材**，而是由本站的程序化生成器产出，因此与上面的摄影 / 插画性质不同：
+
+- 生成器：`scripts/diagrams/kit.mjs`（SVG 图元库）+ `scripts/diagrams/NN-*.mjs`（各篇的图定义）
+- 渲染：`node scripts/diagrams/render.mjs` → `public/posts/kg/*.webp`
+- 版面自检：`node scripts/diagrams/check.mjs`
+
+配色取自 `styles/tokens.css` 的浅色主题取值并固定使用：文章插图不随主题反色是站点的既有约定，浅底深字在深色页面上表现为一张纸片，在浅色页面上与正文融为一体，两种主题下都可读。
+
+关于各图承担的教学任务与「封面横幅取景」的实测换算，见本文件末尾的相关章节。
+
 **竖幅处理说明：** Docker 篇的插图宽高比是 0.77，在 740px 正文列宽下会被拉到接近 1000px 高。因此 `lib/markdown.ts` 支持从 Markdown 图片标题读取尺寸（`![alt](/path "803x1043")`），宽高比小于 1 时给 `figure` 加 `is-tall` 类，由 `app/globals.css` 在桌面端限宽到 60% 并居中。
 
 ### 封面横幅的取景（coverPosition）
