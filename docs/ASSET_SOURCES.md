@@ -267,3 +267,16 @@ Hero 场景使用的角色语音来自游戏音频镜像，逐条记录在 `data
 - Q 版角色：内置 image_gen 按用户图像生成透明背景版本。网页文件 `public/artwork/intro/denia-chibi.webp`（88,446 字节，保留 alpha）。不是官方新发布美术。
 - 两份生成原图保留于 `assets/intro-originals/`，完整提示词见 `docs/INTRO_IMAGE_PROMPTS.md`。
 - 网页将原立绘与透明 Q 版作为两张独立图层，用 CSS 3D 翻转过渡；素材不含烘焙动画。
+
+## 达妮娅表情循环（2026-09-29）
+
+首页左侧栏 `public/assets/wallpaper/loop.mp4`（约 1.5 MB，9 秒，720×940，无音轨）。共鸣瞬间和角色 PV 两段小循环放在关于页的自我介绍下面；举手的一段放在相册页标题下面。
+
+来源：鸣潮官方英文账号 2026-05-27 短片 *Insider Channel: Special Program | Human Emotional Expression Test*，帖子 https://x.com/Wuthering_Waves/status/2059575350682599877 ，原片竖版 720×1280。本地只保留两段微笑：约 8.9–11.5 秒的闭眼笑，以及约 53.2–59.6 秒的托脸笑；裁掉顶部徽记和底部英文字幕。同一原片另有一段小循环 `clip-hands.mp4`。字幕卡之间能用的举手只有约 32.9–34.3 秒，本地把这段放慢到约 2.6 秒，静音、360×450，画面里没有英文字幕。
+
+另外两段小循环来自不同的官方成片，并且比最初的一秒循环更长：
+
+- `clip-resonance.mp4`：共鸣者瞬间 *Resonator Highlights | Denia*，帖子 https://x.com/Wuthering_Waves/status/2058382488364310640 ，原片竖版 720×1280、约 20 秒。本地取约 11.7–14.0 秒，从眼睛拉到面部，约 2.3 秒，静音、360×640，没有字幕和片尾标志。
+- `clip-pv.mp4`：角色 PV *Resonator Showcase | Denia — Human Mimicry Protocol*，帖子 https://x.com/Wuthering_Waves/status/2056570546268381532 ，原片 1560×720、约 4 分 56 秒。本地取约 50.7–53.8 秒，从颈饰拉到红手套比心，约 3.1 秒，裁掉底部英文字幕，静音、360×412。
+
+角色与影像版权归 Kuro Games，本站仅作个人非商业展示，不声明可商用，也不把它标成鸣潮原声。

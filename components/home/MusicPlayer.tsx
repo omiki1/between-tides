@@ -5,6 +5,8 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, AudioLines, ListMusic, X, 
 import { site } from "@/config/site";
 import snapshot from "@/data/qq-playlist.json";
 import { forgetQqPlayUrl, qqOutchainPlayerUrl, resolveQqPlayUrl, type MusicTrack } from "@/lib/music";
+import { publishSiteMusic } from "@/lib/site-music-bus";
+import { attachBeatAnalyser, resumeBeatAudioContext } from "@/lib/site-music-analyser";
 
 const AUTOPLAY_KEY = "between-tides.music-autoplay.v1";
 const autoplayListeners = new Set<() => void>();
@@ -74,7 +76,8 @@ function waitForGesture(signal: AbortSignal) {
 }
 
 export function MusicPlayer() {
-  const audio = useRef<HTMLAudioElement>(null), dialog = useRef<HTMLDialogElement>(null);
+  const audio = useRef<HTMLAudioElement>(null);
+  const beatRef = useRef<ReturnType<typeof attachBeatAnalyser>>(null), dialog = useRef<HTMLDialogElement>(null);
   const revision = useRef(0), volume = useRef(.45), currentRef = useRef(initialTrack);
   const autoplay = useSyncExternalStore(subscribeAutoplay, readAutoplay, () => Boolean(site.musicAutoplay));
   const [source, setSource] = useState<"qq" | "local">("qq");
@@ -90,6 +93,7 @@ export function MusicPlayer() {
 
   useEffect(() => {
     currentRef.current = current;
+    publishSiteMusic({ title: current.title, artist: current.artist });
   }, [current]);
 
   useEffect(() => {
@@ -100,12 +104,21 @@ export function MusicPlayer() {
         element?.pause();
       }
     };
+    if (element) {
+      // Beat clock attaches lazily on play (never pipes QQ through Web Audio).
+    }
     element?.setAttribute("referrerpolicy", "no-referrer");
     window.addEventListener("site-audio", stop);
     return () => { revision.current += 1; element?.pause(); window.removeEventListener("site-audio", stop); };
   }, []);
 
-  function pause() { revision.current++; audio.current?.pause(); setNeedsGesture(false); }
+  function pause() {
+    revision.current++;
+    beatRef.current?.stop();
+    audio.current?.pause();
+    setNeedsGesture(false);
+    publishSiteMusic({ playing: false });
+  }
 
   async function playTrack(track: MusicTrack = currentRef.current, ticket = ++revision.current) {
     const element = audio.current;
@@ -126,7 +139,13 @@ export function MusicPlayer() {
         element.src = src; element.volume = volume.current;
         setPosition(0); setDuration(0);
       }
+      if (!beatRef.current) beatRef.current = attachBeatAnalyser(element);
+      resumeBeatAudioContext(element);
       await element.play();
+      if (ticket === revision.current) {
+        publishSiteMusic({ playing: true, title: track.title, artist: track.artist });
+        beatRef.current?.start();
+      }
       return ticket === revision.current;
     } catch (cause) {
       if (ticket !== revision.current) return false;
@@ -191,12 +210,12 @@ export function MusicPlayer() {
         : <>试听流来自 QQ 音乐 · <a href={current.url} target="_blank" rel="noreferrer">打开歌曲 ↗</a></>
       : "");
 
-  return <section className="music-panel" aria-label="音乐播放器">
+  return <section className="music-panel music-panel-polish" aria-label="音乐播放器">
     <div className="music-top"><span className="eyebrow"><AudioLines size={13}/> MUSIC</span><div className="music-tools"><button className="autoplay-toggle" type="button" aria-pressed={autoplay} aria-label="进入页面时播放导入的 QQ 音乐" onClick={toggleAutoplay}>{autoplay ? "进页播放开" : "进页播放关"}</button><button className="playlist-trigger" onClick={() => dialog.current?.showModal()} aria-label="打开歌单列表"><ListMusic size={15}/><span>歌单 · {queue.length}</span></button></div></div>
     {showWidget ? <div className="qq-player-wrap">
       <iframe key={`${current.id}-${playerEpoch}`} src={qqPlayer} title={`QQ 音乐播放器：${current.title}`} width="100%" height="65" frameBorder="0" allow="autoplay; encrypted-media" loading={autoplay ? "eager" : "lazy"} referrerPolicy="strict-origin-when-cross-origin"/>
     </div> : <>
-      <div className="music-main"><div className="album-cover"><img src={current.cover} alt="专辑封面" width={64} height={64}/><span/></div><div className="track-info"><h3 title={current.title}>{current.title}</h3><p>{current.artist}</p><div className="music-controls">
+      <div className="music-main"><div className={`album-cover${playing ? " is-playing" : ""}`}><img src={current.cover} alt="" width={64} height={64} draggable={false}/><span aria-hidden/></div><div className="track-info"><h3 title={current.title}>{current.title}</h3><p title={current.artist}>{current.artist}</p><div className="music-controls">
         <button aria-label="上一首" onClick={() => change(-1)}><SkipBack size={15}/></button>
         <button className="play-button" aria-label={playing ? "暂停" : "播放"} onClick={() => playing ? pause() : void playTrack()}>{playing ? <Pause size={15}/> : <Play size={15}/>}</button>
         <button aria-label="下一首" onClick={() => change(1)}><SkipForward size={15}/></button>
@@ -205,7 +224,7 @@ export function MusicPlayer() {
       <div className="track-progress"><span>{time(position)}</span><input aria-label="播放进度" type="range" min="0" max={duration || 1} step=".1" value={Math.min(position, duration || 1)} disabled={!duration} onChange={event => { if (audio.current) audio.current.currentTime = Number(event.target.value); setPosition(Number(event.target.value)); }}/><span>{time(duration || current.duration || 0)}</span></div>
     </>}
     <p className="music-status" role="status">{status}</p>
-    <audio ref={audio} preload="none" onLoadedMetadata={() => { const value = audio.current?.duration; setDuration(value && Number.isFinite(value) ? value : 0); }} onPlay={() => { setPlaying(true); setError(""); setNeedsGesture(false); }} onPause={() => setPlaying(false)} onTimeUpdate={() => setPosition(audio.current?.currentTime || 0)} onEnded={() => change(1)} onError={() => { setPlaying(false); if (current.mid) { forgetQqPlayUrl(current.mid); setWidgetFallback(true); setError("这首歌暂时无法试听，可点封面用官方播放器。"); } else setError("这段环境音暂时无法播放，请切换曲目。"); }}/>
+    <audio ref={audio} preload="none" onLoadedMetadata={() => { const value = audio.current?.duration; setDuration(value && Number.isFinite(value) ? value : 0); }} onPlay={() => { setPlaying(true); setError(""); setNeedsGesture(false); publishSiteMusic({ playing: true, title: currentRef.current.title, artist: currentRef.current.artist }); beatRef.current?.start(); }} onPause={() => { setPlaying(false); beatRef.current?.stop(); publishSiteMusic({ playing: false }); }} onTimeUpdate={() => setPosition(audio.current?.currentTime || 0)} onEnded={() => change(1)} onError={() => { setPlaying(false); if (current.mid) { forgetQqPlayUrl(current.mid); setWidgetFallback(true); setError("这首歌暂时无法试听，可点封面用官方播放器。"); } else setError("这段环境音暂时无法播放，请切换曲目。"); }}/>
     <dialog ref={dialog} className="playlist-dialog" aria-labelledby="playlist-heading" onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <header className="playlist-header"><div><span className="eyebrow">MY MUSIC</span><h2 id="playlist-heading">我的歌单</h2></div><button className="icon-button" aria-label="关闭歌单" onClick={() => dialog.current?.close()}><X size={20}/></button></header>
       <div className="playlist-tabs" role="group" aria-label="歌单来源"><button aria-pressed={source === "qq"} onClick={() => setSource("qq")}>QQ 音乐 <small>{qqTracks.length}</small></button><button aria-pressed={source === "local"} onClick={() => setSource("local")}>环境音 <small>{localTracks.length}</small></button></div>

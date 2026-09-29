@@ -7,9 +7,11 @@ export const site = {
   hero: { image: "", greeting: "Hi, I'm", headline: "让好奇心，", emphasis: "慢慢发生。", english: "Code, create & get a little lost." },
   email: "", github: "https://github.com/omiki1",
   bilibili: "https://space.bilibili.com/41883170",
+  steam: "https://steamcommunity.com/profiles/76561199513348738/",
   socials: [
     { label: "GitHub", url: "https://github.com/omiki1" },
     { label: "哔哩哔哩", url: "https://space.bilibili.com/41883170" },
+    { label: "Steam", url: "https://steamcommunity.com/profiles/76561199513348738/" },
   ] as { label: string; url: string }[],
   nav: [
     {label:"Home",href:"/"},
@@ -22,6 +24,7 @@ export const site = {
     {label:"追番",href:"/anime/"},
     {label:"Notes",href:"/notes/"},
 
+    {label:"友链",href:"/friends/"},
     {label:"About",href:"/about/"},
   ],
   seo: { title: "汐间花园", keywords: ["个人博客", "omiki1", "数字花园", "前端", "AI", "星空", "潮汐", "梦幻", "追番"] },

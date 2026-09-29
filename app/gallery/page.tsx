@@ -3,6 +3,7 @@ import { albums, gallery } from "@/data/gallery";
 import { AlbumGrid } from "@/components/gallery/AlbumGrid";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { MiniClips } from "@/components/home/MiniClips";
 
 export const metadata: Metadata = { title: "相册", description: "按相册翻看收藏的图片。", alternates: { canonical: "/gallery/" } };
 
@@ -12,10 +13,13 @@ export default function GalleryPage() {
       <Reveal className="page-head">
         <span className="page-eyebrow"><i/>ALBUM / 相册</span>
         <h1>相册</h1>
-        <p>收藏与风景分成独立相册，点进去慢慢看。</p>
+        <p>收藏与风景壁纸分两组：Anime、角色，以及合并后的风景。</p>
         <div className="page-stats">
           <span><b>{albums.length}</b> 个相册</span>
           <span><b>{gallery.length}</b> 张图片</span>
+        </div>
+        <div className="gallery-portrait">
+          <MiniClips src="/assets/wallpaper/clip-hands.mp4?v=3" position="center 16%" />
         </div>
       </Reveal>
       <Reveal as="section" className="home-section">

@@ -22,16 +22,8 @@ function findLandscapesRoot() {
 }
 
 function classify(sub, files) {
-  if (sub.includes("锋") || sub.includes("磱") || sub.includes("海港")) {
-    return { slug: "harbor", title: "海港", english: "HARBOR" };
-  }
-  if (files.length === 3 || sub.includes("雪乡") || sub.includes("北")) {
-    return { slug: "snow-village", title: "雪乡", english: "SNOW VILLAGE" };
-  }
-  if (sub.includes("妫") || sub.includes("\ue1bd") || sub.includes("枫")) {
-    return { slug: "maple", title: "枫桥", english: "MAPLE BRIDGE" };
-  }
-  return { slug: "snow-field", title: "雪地", english: "SNOW FIELD" };
+  // Merged: maple / harbor / snow-* all go into one scenery album.
+  return { slug: "scenery", title: "风景", english: "SCENERY" };
 }
 
 async function writeWebp(input, output, width) {

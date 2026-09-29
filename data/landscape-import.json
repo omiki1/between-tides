@@ -20,7 +20,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1279,
-      "album": "maple"
+      "album": "scenery"
     },
     {
       "id": "maple-02",
@@ -31,7 +31,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1080,
-      "album": "maple"
+      "album": "scenery"
     },
     {
       "id": "maple-03",
@@ -42,7 +42,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1275,
-      "album": "maple"
+      "album": "scenery"
     },
     {
       "id": "maple-04",
@@ -53,7 +53,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1144,
-      "album": "maple"
+      "album": "scenery"
     },
     {
       "id": "maple-05",
@@ -64,7 +64,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1440,
-      "album": "maple"
+      "album": "scenery"
     },
     {
       "id": "harbor-01",
@@ -75,7 +75,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "harbor"
+      "album": "scenery"
     },
     {
       "id": "harbor-02",
@@ -86,7 +86,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1277,
-      "album": "harbor"
+      "album": "scenery"
     },
     {
       "id": "harbor-03",
@@ -97,7 +97,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "harbor"
+      "album": "scenery"
     },
     {
       "id": "harbor-04",
@@ -108,7 +108,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "harbor"
+      "album": "scenery"
     },
     {
       "id": "harbor-05",
@@ -119,7 +119,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "harbor"
+      "album": "scenery"
     },
     {
       "id": "snow-village-01",
@@ -130,7 +130,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1281,
-      "album": "snow-village"
+      "album": "scenery"
     },
     {
       "id": "snow-village-02",
@@ -141,7 +141,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "snow-village"
+      "album": "scenery"
     },
     {
       "id": "snow-village-03",
@@ -152,7 +152,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1272,
-      "album": "snow-village"
+      "album": "scenery"
     },
     {
       "id": "snow-field-01",
@@ -163,7 +163,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1227,
-      "album": "snow-field"
+      "album": "scenery"
     },
     {
       "id": "snow-field-02",
@@ -174,7 +174,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1440,
-      "album": "snow-field"
+      "album": "scenery"
     },
     {
       "id": "snow-field-03",
@@ -185,7 +185,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "snow-field"
+      "album": "scenery"
     },
     {
       "id": "snow-field-04",
@@ -196,7 +196,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "snow-field"
+      "album": "scenery"
     },
     {
       "id": "snow-field-05",
@@ -207,7 +207,7 @@
       "date": "2026.09.15",
       "width": 1920,
       "height": 1280,
-      "album": "snow-field"
+      "album": "scenery"
     }
   ]
 }

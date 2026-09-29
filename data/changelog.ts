@@ -14,6 +14,20 @@ export type ChangelogEntry = {
  */
 export const changelog:ChangelogEntry[]=[
   {
+    version:"0.10.0",
+    date:"2026-09-29",
+    title:"达妮娅表情循环，潮汐细饰",
+    summary:"侧栏循环换成官方短片里达妮娅的两段微笑，卡片、分区和页头加上粉与冰蓝的小装饰。",
+    highlights:["达妮娅表情","潮汐细饰"],
+    changes:[
+      { kind:"new", text:"左侧循环播放鸣潮官方短片《人类情感表达测试》中达妮娅闭眼笑与托脸的九秒裁切，静音、去字幕。" },
+      { kind:"improve", text:"侧栏卡片、状态条、分区序号、内页页头和页脚加上粉与冰蓝的角标和光点。循环画面不标名字。" },
+      { kind:"improve", text:"眉题小环有一颗绕行光点，分区标题下有一条伸缩细线，页脚菱形缓慢旋转。" },
+      { kind:"new", text:"首页只留九秒大循环。共鸣瞬间和角色 PV 放在关于页的介绍下面，举手的一段放在相册页标题下面。画面不写名字。" },
+      { kind:"improve", text:"减少动效时循环停在第一帧，不再自动播放。" },
+    ],
+  },
+  {
     version:"0.9.0",
     date:"2026-09-16",
     title:"项目页换成真实履历",

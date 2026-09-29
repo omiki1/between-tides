@@ -61,7 +61,7 @@ export function Hero(){
    <motion.div className={styles.character} style={reduced?{}:{x,y}}>
     <Image src="/artwork/denia.webp" alt="Denia 粉发立绘，漂浮于星光与梦境潮汐之间" fill sizes="(max-width: 700px) 270px, 390px" preload/>
    </motion.div>
-   <div className={styles.nameplate}><span className="small-orbit"/><div><b>达妮娅</b><small>DENIA · WUTHERING WAVES</small></div><Sparkles size={18}/></div>
+   <div className={styles.nameplate}><span className="small-orbit"/><div><small>DENIA · WUTHERING WAVES</small></div><Sparkles size={18}/></div>
    <div className={styles.quote}><span>“</span><p aria-live="polite">{voiceError||quote}</p><small>中文角色语音</small></div>
    <button className={`${styles.bubble} ${styles.touchBubble}`} aria-label={voicePlaying?"停止角色语音":"播放达妮娅中文语音"} aria-pressed={voicePlaying} onClick={()=>void resonate()}><span>{voicePlaying?"停止语音":"点击听语音"}</span></button>
    <audio ref={voice} preload="none" onPlay={()=>setVoicePlaying(true)} onPause={()=>setVoicePlaying(false)} onEnded={()=>setVoicePlaying(false)}/>

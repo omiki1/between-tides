@@ -5,6 +5,8 @@ import { ArrowUpRight,Code2,Music2,Sparkles,Compass,PenLine,Coffee } from "lucid
 import { site } from "@/config/site";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { SteamCard } from "@/components/about/SteamCard";
+import { MiniClips } from "@/components/home/MiniClips";
 export const metadata: Metadata = {
   title: "关于",
   description: "关于汐间、关于 omiki1，以及这个小站为什么被建起来。",
@@ -30,6 +32,10 @@ export default function AboutPage(){
           <p className="about-location">目前坐标 · {site.location}</p>
         </div>
       </div>
+      <div className="about-portraits">
+        <MiniClips src="/assets/wallpaper/clip-resonance.mp4?v=3" position="center 46%" />
+        <MiniClips src="/assets/wallpaper/clip-pv.mp4?v=3" position="center 42%" />
+      </div>
     </Reveal>
 
     <Reveal as="section" className="home-section">
@@ -54,8 +60,15 @@ export default function AboutPage(){
       </div>
     </Reveal>
 
-<Reveal as="section" className="home-section">
-      <div className="section-title"><div><span className="section-number">03</span><h2>近况与联系</h2><span className="eyebrow">NOW & CONTACT</span></div></div>
+
+    <div id="steam"><Reveal as="section" className="home-section steam-section">
+      <div className="section-title"><div><span className="section-number">03</span><h2>游戏角落</h2><span className="eyebrow">STEAM</span></div></div>
+      <SteamCard />
+    </Reveal>
+    </div>
+
+    <Reveal as="section" className="home-section">
+      <div className="section-title"><div><span className="section-number">04</span><h2>近况与联系</h2><span className="eyebrow">NOW & CONTACT</span></div></div>
       <div className="about-now">
         <div><Coffee size={16}/><span>正在学习</span><b>{site.now.learning}</b></div>
         <div><PenLine size={16}/><span>正在做</span><b>{site.now.building}</b></div>
@@ -65,7 +78,7 @@ export default function AboutPage(){
     </Reveal>
 
     <Reveal as="section" className="home-section">
-      <div className="section-title"><div><span className="section-number">04</span><h2>从哪里开始逛</h2><span className="eyebrow">START HERE</span></div></div>
+      <div className="section-title"><div><span className="section-number">05</span><h2>从哪里开始逛</h2><span className="eyebrow">START HERE</span></div></div>
       <div className="start-grid">
         {site.nav.filter(item=>item.href!=="/").map(item=><Link key={item.href} href={item.href}>{item.label}<ArrowUpRight size={15}/></Link>)}
       </div>
