@@ -25,9 +25,9 @@ const expectations = [
   ["projects/index.html", ["project-card", "method-grid", "featured-project", "side-rail", "/projects/mediatlas/", "github.com/omiki1/medical_agentic_rag"]],
   ["projects/mediatlas/index.html", ["class=\"prose\"", "MediAtlas", "Neo4j", "toc", "post-pager", "github.com/omiki1/medical_agentic_rag", "/projects/mediatlas/login.webp", "/projects/mediatlas/answer.webp"]],
   ["projects/disease-graph/index.html", ["class=\"prose\"", "stu-neoj4", "Neo4j"]],
-  ["gallery/index.html", ["album-modules", "album-card", "album-credits", "side-rail", "枫桥"]],
+  ["gallery/index.html", ["album-modules", "album-card", "album-credits", "side-rail", "风景壁纸"]],
   ["gallery/character/index.html", ["gallery-board", "album-summary", "lightbox", "达妮娅"]],
-  ["gallery/maple/index.html", ["gallery-board", "枫桥"]],
+  ["gallery/scenery/index.html", ["gallery-board", "枫桥"]],
   ["notes/index.html", ["notes-timeline", "now-strip", "timeline-dot", "side-rail"]],
   ["about/index.html", ["about-identity", "interest-grid", "about-facts", "start-grid", "side-rail"]],
   ["404.html", ["404 / NOT FOUND", "notfound-links"]],
@@ -108,9 +108,11 @@ for (const file of fs.readdirSync(out, { recursive: true })) {
   if (!file.endsWith(".html")) continue;
   const html = fs.readFileSync(path.join(out, file), "utf8");
   for (const match of html.matchAll(/(?:src|href)="(\/(?:posts|gallery|artwork|assets|audio|particles)\/[^"]+)"/g)) {
-    // 带 # 的是同页锚点（例如 /gallery/character/#starlight-for-you），不是静态文件
-    if (match[1].includes("#")) continue;
-    referenced.add(match[1]);
+    // 带 # 的是同页锚点（例如 /gallery/character/#starlight-for-you），不是静态文件。
+    // ?v= 只用来绕过浏览器缓存，磁盘上的文件不带查询串。
+    const ref = match[1].split("#")[0].split("?")[0];
+    if (!ref) continue;
+    referenced.add(ref);
   }
 }
 for (const ref of [...referenced].sort()) {
