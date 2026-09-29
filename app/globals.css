@@ -29,14 +29,15 @@
 /* ===== Inner pages: shared header, archive, reading, gallery, notes, about, search ===== */
 main.inner{padding-bottom:10px}
 .page-head{position:relative;padding:26px 0 30px 30px;border-left:1px solid var(--border);margin-top:12px}
-.page-head:before{content:"";position:absolute;left:-1px;top:26px;width:1px;height:60px;background:var(--secondary)}
+.page-head:before{content:"";position:absolute;left:-1px;top:26px;width:2px;height:92px;border-radius:1px;background:linear-gradient(180deg,var(--secondary),var(--primary-strong) 62%,transparent)}
 .page-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:9px;letter-spacing:2px;color:var(--text-muted)}
 .page-eyebrow i{width:6px;height:6px;border:1px solid var(--secondary);border-radius:50%;box-shadow:0 0 10px var(--glow-blue)}
 .page-head h1{margin-top:18px;font-size:clamp(32px,3.4vw,46px);font-weight:520;line-height:1.42;letter-spacing:1.6px;max-width:19em}
 .page-head h1>span{background:linear-gradient(96deg,var(--primary-strong),var(--primary) 48%,var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
 .page-head>p{margin-top:20px;font-size:13.5px;line-height:2.05;color:var(--text-secondary);max-width:46em}
 .page-stats{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:22px;font-size:10px;letter-spacing:.6px;color:var(--text-muted)}
-.page-stats span+span{padding-left:22px;border-left:1px solid var(--border)}
+.page-stats span+span{position:relative;padding-left:22px}
+.page-stats span+span::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;transform:translate(-50%,-50%) rotate(45deg);background:linear-gradient(135deg,var(--primary-strong),var(--secondary));box-shadow:0 0 6px var(--glow-pink)}
 .page-stats b{color:var(--text-primary);font-weight:550}
 .tag-row{display:flex;flex-wrap:wrap;gap:8px}
 .tag-chip{font-size:10px;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:4px 9px;letter-spacing:.4px}a.tag-chip{display:inline-flex;align-items:center;gap:4px;text-decoration:none}
@@ -107,7 +108,7 @@ main.inner{padding-bottom:10px}
 .prose table{width:100%;border-collapse:collapse;font-size:13px}
 .prose th,.prose td{border-bottom:1px solid var(--border);padding:11px 13px;text-align:left}
 .prose th{color:var(--text-primary);font-weight:550;font-size:11px;letter-spacing:.6px}
-.prose hr{border:0;border-top:1px solid var(--border);margin:40px 0}
+.prose hr{position:relative;border:0;border-top:1px solid var(--border);margin:40px 0}
 .prose .prose-figure{margin:34px 0;display:grid;gap:12px}
 .prose .prose-figure figcaption{font-size:10.5px;color:var(--text-muted);line-height:1.8;display:flex;gap:9px;align-items:baseline}
 .prose .prose-figure figcaption a{color:var(--text-secondary);margin-left:9px;border:0}
@@ -290,7 +291,7 @@ details.archive-year[open]>summary .archive-year-chevron{transform:rotate(180deg
 .now-strip-item svg{color:var(--primary-strong)}
 .now-strip-item b{color:var(--text-secondary);font-weight:500}
 .notes-timeline{list-style:none;margin:22px 0 0;padding:0 0 0 26px;position:relative}
-.notes-timeline:before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:var(--border)}
+.notes-timeline:before{content:"";position:absolute;left:3px;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,var(--primary-strong),var(--secondary) 72%,transparent)}
 .notes-timeline li{position:relative;padding:0 0 30px 6px;scroll-margin-top:105px}
 .timeline-dot{position:absolute;left:-27px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--background);border:1px solid var(--secondary)}
 .notes-timeline time{font-size:10px;letter-spacing:1px;color:var(--text-muted)}
@@ -338,7 +339,7 @@ details.archive-year[open]>summary .archive-year-chevron{transform:rotate(180deg
 .notfound-links a:hover{border-color:var(--border-highlight);color:var(--text-primary)}
 
 .side-rail{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:30;display:grid;gap:13px;padding-left:14px;font-size:9px;letter-spacing:1.3px}
-.side-rail-line{position:absolute;left:0;top:3px;bottom:3px;width:1px;background:var(--border)}
+.side-rail-line{position:absolute;left:0;top:3px;bottom:3px;width:1px;background:linear-gradient(180deg,transparent,var(--primary-strong) 16%,var(--secondary) 84%,transparent);opacity:.7}
 .side-rail a{display:flex;align-items:center;gap:9px;color:var(--text-muted);letter-spacing:1.3px}
 .side-rail a i{font-size:8px;opacity:.7}
 .side-rail a:hover{color:var(--text-secondary)}
@@ -381,6 +382,7 @@ details.archive-year[open]>summary .archive-year-chevron{transform:rotate(180deg
 @media(max-width:1060px){.desktop-nav a:nth-child(n+7){display:none}}
 @media(max-width:960px){.desktop-nav a:nth-child(n+6){display:none}}
 @media(max-width:900px){.desktop-nav{display:none}.mobile-menu{display:inline-flex}.nav-tools{gap:6px}}
+@media(max-width:460px){.theme-switch button span{display:none}.nav-tools a[aria-label=GitHub]{display:none}}
 @media(max-width:380px){.theme-switch button{padding-inline:7px;gap:4px}.theme-switch svg{width:11px}.brand>span{letter-spacing:2px}.brand{gap:7px}}
 .now-panel,.music-panel,.project-card{background:linear-gradient(125deg,var(--glass),color-mix(in srgb,var(--surface) 82%,transparent));border-color:var(--border-highlight);box-shadow:inset 0 1px 0 rgba(255,235,248,.12),0 12px 40px rgba(20,8,30,.08)}
 
@@ -784,4 +786,88 @@ html[data-ambiance-motion=reduce] .music-panel-polish .album-cover.is-playing im
 @media(prefers-reduced-motion:reduce){
   .beat-tap-ring{transition:none}
   .beat-tap-pad{transition:background .18s ease,color .18s ease}
+}
+.text-link{background-image:linear-gradient(90deg,var(--primary-strong),var(--secondary));background-repeat:no-repeat;background-position:0 100%;background-size:0 1px}
+.text-link:hover{background-size:100% 1px}
+
+/* 指针跟手。光斑叠在原玻璃渐变上，侧倾只在悬停时发生。 */
+.pointer-bubble{position:absolute;width:11px;height:11px;border-radius:50%;border:1px solid currentColor;background:color-mix(in srgb,currentColor 24%,transparent);box-shadow:0 0 10px currentColor}
+.pointer-halo.over-card:before{scale:2.4;opacity:.9;background:color-mix(in srgb,currentColor 16%,transparent);box-shadow:0 0 22px color-mix(in srgb,currentColor 70%,transparent)}
+.pointer-halo.over-control:before{scale:1.55;background:color-mix(in srgb,currentColor 9%,transparent);opacity:.7}
+.pointer-halo.over-card.over-control:before{scale:2.15;opacity:.95;background:color-mix(in srgb,currentColor 18%,transparent)}
+.gallery-open::after,
+.album-card-cover::after,
+.featured-work-frame::after,
+.gallery-preview-photo::after,
+.reading-cover::before{
+  content:"";pointer-events:none;position:absolute;inset:0;z-index:1;
+  background:linear-gradient(105deg,transparent 34%,color-mix(in srgb,#fff 58%,transparent) 47%,color-mix(in srgb,var(--primary) 26%,transparent) 53%,transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .75s cubic-bezier(.16,1,.3,1);
+}
+.gallery-open:hover::after,
+.album-card-cover:hover::after,
+.featured-work-frame:hover::after,
+.gallery-preview-photo:hover::after,
+.reading-cover:hover::before{transform:translateX(130%)}
+.featured-work-frame{position:relative}
+.gallery-zoom,.gallery-preview-photo>div{z-index:2}
+.featured-post::before{
+  content:"";pointer-events:none;position:absolute;left:0;right:0;top:0;height:56%;z-index:1;
+  background:linear-gradient(105deg,transparent 34%,color-mix(in srgb,#fff 50%,transparent) 48%,color-mix(in srgb,var(--primary) 22%,transparent) 54%,transparent 68%);
+  transform:translateX(-130%);
+  transition:transform .8s cubic-bezier(.16,1,.3,1);
+}
+.featured-post:hover::before{transform:translateX(130%)}
+.featured-tag,.featured-post-text,.featured-post .feature-arrow{z-index:2}
+.button-primary,.button-quiet,.guestbook-write,.icon-button{transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,border-color .22s,color .22s,background .22s}
+.button-primary:hover,.button-quiet:hover,.guestbook-write:hover{transform:translateY(-2px)}
+.button-quiet:hover{border-color:var(--border-highlight);color:var(--primary-strong)}
+.button-primary:active,.button-quiet:active,.guestbook-write:active{transform:translateY(1px) scale(.98)}
+.icon-button:hover{transform:translateY(-1px)}
+.icon-button:active{transform:scale(.92)}
+.section-title .section-number{transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+.section-title>div:hover .section-number{transform:scale(1.12);box-shadow:0 0 0 3px color-mix(in srgb,var(--glow-blue) 50%,transparent),0 0 16px var(--glow-pink)}
+.hero-interests span{transition:transform .28s cubic-bezier(.16,1,.3,1),border-color .28s,color .28s}
+.hero-interests span:hover{transform:translateY(-2px);border-color:var(--border-highlight);color:var(--primary-strong)}
+.desktop-nav a:not([aria-current=page]):after{content:"";position:absolute;width:14px;height:2px;background:linear-gradient(90deg,var(--primary-strong),var(--secondary));bottom:2px;left:calc(50% - 7px);transform:scaleX(0);transform-origin:center;transition:transform .28s cubic-bezier(.16,1,.3,1)}
+.desktop-nav a:not([aria-current=page]):hover:after{transform:scaleX(1)}
+.small-post{transition:transform .28s cubic-bezier(.16,1,.3,1)}
+.small-post:hover{transform:translateX(3px)}
+.text-link svg{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.text-link:hover svg{transform:translate(2px,-2px)}
+:root,.dark{--ix-hot:color-mix(in srgb,var(--primary-strong) 20%,transparent);--ix-cool:color-mix(in srgb,var(--secondary) 10%,transparent)}
+.light{--ix-hot:transparent;--ix-cool:transparent}
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap),
+.aside-card{--ix-base:linear-gradient(150deg,var(--glass),var(--surface))}
+.now-panel,.music-panel,.project-card{--ix-base:linear-gradient(125deg,var(--glass),color-mix(in srgb,var(--surface) 82%,transparent))}
+.album-card,.featured-work-layout,.taxonomy-card,.post-table a,.start-grid a,.post-pager a{--ix-base:linear-gradient(140deg,var(--glass),transparent)}
+.interest-grid article{--ix-base:linear-gradient(150deg,var(--glass),transparent)}
+.steam-card{--ix-base:linear-gradient(135deg,var(--glass),color-mix(in srgb,var(--surface) 82%,transparent))}
+.friend-card{--ix-base:linear-gradient(transparent,transparent)}
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap),
+.now-panel,.music-panel,.aside-card,.project-card,.album-card,.interest-grid article,.featured-work-layout,
+.post-table a,.friend-card,.taxonomy-card,.start-grid a,.post-pager a,.steam-card{
+  transition:transform .45s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s,filter .3s,color .3s;
+}
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap):hover,
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap).is-ix,
+.now-panel:hover,.now-panel.is-ix,.music-panel:hover,.music-panel.is-ix,.aside-card:hover,.aside-card.is-ix,
+.project-card:hover,.project-card.is-ix,.album-card:hover,.album-card.is-ix,
+.interest-grid article:hover,.interest-grid article.is-ix,
+.featured-work-layout:hover,.featured-work-layout.is-ix,
+.post-table a:hover,.post-table a.is-ix,.friend-card:hover,.friend-card.is-ix,
+.taxonomy-card:hover,.taxonomy-card.is-ix,.start-grid a:hover,.start-grid a.is-ix,
+.post-pager a:hover,.post-pager a.is-ix,.steam-card:hover,.steam-card.is-ix{
+  transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-2px);
+}
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap).is-ix,
+.now-panel.is-ix,.music-panel.is-ix,.aside-card.is-ix,.project-card.is-ix,.album-card.is-ix,
+.interest-grid article.is-ix,.featured-work-layout.is-ix,.post-table a.is-ix,.friend-card.is-ix,
+.taxonomy-card.is-ix,.start-grid a.is-ix,.post-pager a.is-ix,.steam-card.is-ix{
+  transition:transform .12s linear,border-color .3s,box-shadow .3s,filter .3s,color .3s;
+  background-image:radial-gradient(168px 128px at var(--spot-x,50%) var(--spot-y,40%),var(--ix-hot),var(--ix-cool) 34%,transparent 70%),var(--ix-base);
+}
+:is(.project-card,.album-card,.friend-card,.taxonomy-card,.featured-work-layout,.interest-grid article,.post-table a,.start-grid a,.post-pager a,.steam-card):active{
+  transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(1px) scale(.985);
 }

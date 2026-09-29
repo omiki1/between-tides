@@ -74,7 +74,8 @@ export default function AboutPage(){
         <div><PenLine size={16}/><span>正在做</span><b>{site.now.building}</b></div>
         <div><span className="status-dot"/><span>上次更新</span><b>{site.now.updated}</b></div>
       </div>
-      <p className="method-note">{site.github ? <>代码在 <a href={site.github} rel="me" target="_blank">GitHub @omiki1</a>。</> : null}哔哩哔哩在 <a href={site.bilibili} rel="me" target="_blank">空间 A1478L</a>，追番已同步到<Link href="/anime/">这个页面</Link>。邮箱仍未公开。想继续看的话，也可以从<Link href="/blog/">手记</Link>或<Link href="/projects/">项目</Link>开始。</p>
+      <p className="method-note">{site.github ? <>代码在 <a href={site.github} rel="me" target="_blank">GitHub @omiki1</a>。</> : null}哔哩哔哩在 <a href={site.bilibili} rel="me" target="_blank">空间 A1478L</a>，追番已同步到<Link href="/anime/">这个页面</Link>。</p>
+      <div className="contact-flourish" aria-hidden="true" />
     </Reveal>
 
     <Reveal as="section" className="home-section">
