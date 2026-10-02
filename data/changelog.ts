@@ -23,7 +23,7 @@ export const changelog:ChangelogEntry[]=[
       { kind:"improve", text:"站点名、浏览器标题与英文副标改为「幻想收束点 / CONVERGENCE」。" },
       { kind:"improve", text:"首页、欢迎条、关于页和页脚去掉「数字花园」「汐间」的旧称呼。" },
       { kind:"improve", text:"图集署名与原创环境音署名改为幻想收束点。" },
-      { kind:"improve", text:"撤掉关于页游戏角落整段。" },
+      { kind:"improve", text:"关于页游戏卡片去掉那段说明文字，只留封面和时长。" },
     ],
   },
   {

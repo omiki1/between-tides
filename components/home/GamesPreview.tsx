@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- Steam CDN */
+import Link from "next/link";
 import { steam } from "@/config/steam";
 
 const COVER =
@@ -10,11 +11,11 @@ export function GamesPreview() {
     <article className="widget-card games-preview">
       <div className="widget-head">
         <span className="eyebrow">在玩</span>
-        <a href={steam.profileUrl} className="text-link" target="_blank" rel="me noreferrer">
+        <Link href="/about/#steam" className="text-link">
           {count} 款
-        </a>
+        </Link>
       </div>
-      <a href={steam.profileUrl} className="games-preview-hero" aria-label="打开 Steam 主页" target="_blank" rel="me noreferrer">
+      <Link href="/about/#steam" className="games-preview-hero" aria-label="查看游戏角落">
         <img
           src={COVER}
           alt=""
@@ -25,9 +26,9 @@ export function GamesPreview() {
         />
         <span className="games-preview-caption">
           <b>GUILTY GEAR STRIVE</b>
-          <small>Steam</small>
+          <small>游戏角落 · Steam</small>
         </span>
-      </a>
+      </Link>
       <ul className="games-preview-names">
         {steam.featured.slice(0, 4).map((game) => (
           <li key={game.appId}>{game.name}</li>
