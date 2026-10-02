@@ -14,6 +14,19 @@ export type ChangelogEntry = {
  */
 export const changelog:ChangelogEntry[]=[
   {
+    version:"0.11.0",
+    date:"2026-10-03",
+    title:"站点更名为幻想收束点",
+    summary:"对外名称从「汐间花园」改为「幻想收束点」，首页、关于页、页脚和图集署名一并换掉旧称呼。",
+    highlights:["幻想收束点","站点更名"],
+    changes:[
+      { kind:"improve", text:"站点名、浏览器标题与英文副标改为「幻想收束点 / CONVERGENCE」。" },
+      { kind:"improve", text:"首页、欢迎条、关于页和页脚去掉「数字花园」「汐间」的旧称呼。" },
+      { kind:"improve", text:"图集署名与原创环境音署名改为幻想收束点。" },
+      { kind:"improve", text:"关于页游戏卡片去掉那段说明文字，只留封面和时长。" },
+    ],
+  },
+  {
     version:"0.10.0",
     date:"2026-09-29",
     title:"达妮娅表情循环，潮汐细饰",
@@ -52,7 +65,7 @@ export const changelog:ChangelogEntry[]=[
     version:"0.8.0",
     date:"2026-09-15",
     title:"首页开场：达妮娅立绘与快门入场",
-    summary:"参照 Aemeath 开屏的快门构图，用首页达妮娅透明立绘和鸣潮宣传裁切条做汐间自己的进场动画。同一会话只播一次，可跳过。",
+    summary:"参照 Aemeath 开屏的快门构图，用首页达妮娅透明立绘和鸣潮宣传裁切条做本站自己的进场动画。同一会话只播一次，可跳过。",
     highlights:["开场动画","达妮娅立绘","快门转场"],
     changes:[
       { kind:"new", text:"首次打开首页播放开场：上下快门滑入、达妮娅立绘升起、「伪物弥留 / 蚀刻繁彩」对开，随后整幕上掀。" },

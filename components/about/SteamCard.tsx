@@ -75,9 +75,6 @@ export function SteamCard() {
             <GameTile key={game.appId} game={game} />
           ))}
         </ul>
-        <p className="steam-featured-note">
-          封面来自 Steam 商店。游戏库未完全公开时只展示主页可见的高时长 / 最近游玩；有更多想挂出来的可以再发给我。
-        </p>
       </div>
     </article>
   );

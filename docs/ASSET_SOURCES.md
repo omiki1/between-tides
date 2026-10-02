@@ -157,7 +157,7 @@ Docker 封面 803×1043 在 1040×330 容器里的实测换算（缩放后 1040�
 
 ### 本站原创环境音
 
-`public/audio/moonlit-current.wav` 与 `public/audio/quiet-orbit.wav` 为本站用程序合成的原创环境音示例，署名固定写作「Between Tides · 原创环境音」，在任何位置都不标注为鸣潮 OST。
+`public/audio/moonlit-current.wav` 与 `public/audio/quiet-orbit.wav` 为本站用程序合成的原创环境音示例，署名固定写作「幻想收束点 · 原创环境音」，在任何位置都不标注为鸣潮 OST。
 
 ### 达妮娅游戏语音（4 条）
 

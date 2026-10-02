@@ -61,7 +61,7 @@ for (const sub of fs.readdirSync(root)) {
       src: `/gallery/landscapes/${album.slug}/${String(index).padStart(2, "0")}.webp`,
       title: `${album.title} ${String(index).padStart(2, "0")}`,
       english: `${album.english} ${String(index).padStart(2, "0")}`,
-      location: `Between Tides · 风景壁纸 · ${album.title}`,
+      location: `幻想收束点 · 风景壁纸 · ${album.title}`,
       date,
       width: meta.width,
       height: meta.height,

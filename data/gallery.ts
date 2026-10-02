@@ -35,16 +35,16 @@ export const albums: Album[] = [
 
 const collectionPhotos: Photo[] = [
   landscapeImport.celebration as Photo,
-  { id: "dream-tide", src: "/artwork/dream-tide.webp", title: "星潮入梦", english: "DREAMING WITH THE TIDE", location: "Between Tides · AI 共创", date: "2026.09.15", width: 1536, height: 1024, album: "anime" },
-  { id: "classroom-dream", src: "/assets/denia/gallery/classroom-dream.webp", title: "课桌边的午睡", english: "CLASSROOM DREAM", location: "Between Tides · 本地生成灵感图", date: "2026.09.15", width: 1280, height: 720, album: "anime" },
+  { id: "dream-tide", src: "/artwork/dream-tide.webp", title: "星潮入梦", english: "DREAMING WITH THE TIDE", location: "幻想收束点 · AI 共创", date: "2026.09.15", width: 1536, height: 1024, album: "anime" },
+  { id: "classroom-dream", src: "/assets/denia/gallery/classroom-dream.webp", title: "课桌边的午睡", english: "CLASSROOM DREAM", location: "幻想收束点 · 本地生成灵感图", date: "2026.09.15", width: 1280, height: 720, album: "anime" },
   { id: "stagecraft", src: "/assets/denia/gallery/stagecraft.webp", title: "舞台构形", english: "STAGECRAFT", location: "Kuro Games 公开宣传图 · 个人非商业展示", date: "2026.09.15", width: 1080, height: 1920, album: "character" },
   { id: "curtain-call", src: "/assets/denia/gallery/curtain-call.webp", title: "落幕之前", english: "CURTAIN CALL", location: "Kuro Games 公开宣传图 · 个人非商业展示", date: "2026.09.15", width: 1600, height: 900, album: "character" },
   { id: "name-of-someone", src: "/assets/denia/gallery/name-of-someone.webp", title: "一个人的名字", english: "WHAT IS A NAME FOR", location: "Kuro Games 公开宣传图 · 个人非商业展示", date: "2026.09.15", width: 1600, height: 900, album: "character" },
-  { id: "bubble-dream", src: "/gallery/bubble-dream.webp", title: "泡沫梦境", english: "BUBBLE DREAM", location: "Between Tides", date: "2026.09.15", width: 1506, height: 847, album: "anime" },
-  { id: "iridescent-tide", src: "/gallery/iridescent-tide.webp", title: "虹彩潮汐", english: "IRIDESCENT TIDE", location: "Between Tides", date: "2026.09.12", width: 1149, height: 646, album: "anime" },
-  { id: "moonlit-shadow", src: "/gallery/moonlit-shadow.webp", title: "月下微光", english: "MOONLIT SHADOW", location: "Between Tides", date: "2026.08.30", width: 1084, height: 609, album: "anime" },
-  { id: "echoes-at-dusk", src: "/gallery/echoes-at-dusk.webp", title: "暮色回声", english: "ECHOES AT DUSK", location: "Between Tides", date: "2026.08.02", width: 1296, height: 729, album: "anime" },
-  { id: "deep-tide", src: "/gallery/deep-tide.webp", title: "深蓝潮汐", english: "DEEP TIDE", location: "Between Tides", date: "2026.06.18", width: 1088, height: 612, album: "anime" },
+  { id: "bubble-dream", src: "/gallery/bubble-dream.webp", title: "泡沫梦境", english: "BUBBLE DREAM", location: "幻想收束点", date: "2026.09.15", width: 1506, height: 847, album: "anime" },
+  { id: "iridescent-tide", src: "/gallery/iridescent-tide.webp", title: "虹彩潮汐", english: "IRIDESCENT TIDE", location: "幻想收束点", date: "2026.09.12", width: 1149, height: 646, album: "anime" },
+  { id: "moonlit-shadow", src: "/gallery/moonlit-shadow.webp", title: "月下微光", english: "MOONLIT SHADOW", location: "幻想收束点", date: "2026.08.30", width: 1084, height: 609, album: "anime" },
+  { id: "echoes-at-dusk", src: "/gallery/echoes-at-dusk.webp", title: "暮色回声", english: "ECHOES AT DUSK", location: "幻想收束点", date: "2026.08.02", width: 1296, height: 729, album: "anime" },
+  { id: "deep-tide", src: "/gallery/deep-tide.webp", title: "深蓝潮汐", english: "DEEP TIDE", location: "幻想收束点", date: "2026.06.18", width: 1088, height: 612, album: "anime" },
 ];
 
 export const gallery: Photo[] = [...collectionPhotos, ...(landscapeImport.landscapes as Photo[])];

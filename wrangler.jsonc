@@ -1,5 +1,5 @@
 {
-  // 汐间 / BETWEEN TIDES —— Next.js 静态导出 + 访客计数 Worker
+  // 幻想收束点 / CONVERGENCE —— Next.js 静态导出 + 访客计数 Worker
   //
   // 页面在构建期烘焙为 out/。Worker 只拦截 /api/visits，把去重后的访客数写入 KV。
   // 其余请求仍由静态资源处理，不经过这段脚本。

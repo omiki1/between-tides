@@ -1,6 +1,7 @@
 export const site = {
-  name: "汐间", nickname: "omiki1", wordmark: "BETWEEN TIDES",
+  name: "幻想收束点", nickname: "omiki1", wordmark: "CONVERGENCE",
   description: "在代码、音乐和世界之间，记录一些没有答案的问题。",
+  tagline: "散落的念头，会在这里收束。",
   role: "Developer · Curious mind", location: "Somewhere on Earth",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   avatar: "/avatar.jpg",
@@ -27,14 +28,14 @@ export const site = {
     {label:"友链",href:"/friends/"},
     {label:"About",href:"/about/"},
   ],
-  seo: { title: "汐间花园", keywords: ["个人博客", "omiki1", "数字花园", "前端", "AI", "星空", "潮汐", "梦幻", "追番"] },
+  seo: { title: "幻想收束点", keywords: ["个人博客", "omiki1", "幻想收束点", "前端", "AI", "星空", "梦幻", "追番"] },
   musicAutoplay: true,
   music: [
-    { title: "Moonlit Current", artist: "Between Tides · 原创环境音", src: "/audio/moonlit-current.wav", cover: "/gallery/deep-tide.webp" },
-    { title: "A Quiet Orbit", artist: "Between Tides · 原创环境音", src: "/audio/quiet-orbit.wav", cover: "/gallery/bubble-dream.webp" },
+    { title: "Moonlit Current", artist: "幻想收束点 · 原创环境音", src: "/audio/moonlit-current.wav", cover: "/gallery/deep-tide.webp" },
+    { title: "A Quiet Orbit", artist: "幻想收束点 · 原创环境音", src: "/audio/quiet-orbit.wav", cover: "/gallery/bubble-dream.webp" },
   ],
   pagination: { postsPerPage: 12 },
   now: { learning: "医学 RAG 与 Agent 编排", building: "MediAtlas 证据工作台", activity: "给好奇心留一点空间", updated: "2026.09.16" },
-  copyright: "本站为个人非商业的数字花园，与任何游戏或商业公司无关联。鸣潮 / Wuthering Waves 及相关角色版权归 Kuro Games 所有。",
-  characterTheme: { name: "DENIA", chinese: "达妮娅", subtitle: "A QUIET RESONANCE", quotes: ["在潮汐之间，留住一点微光。", "让没有答案的问题，漂浮一会儿。", "星光很远，好奇心很近。", "不要看，不要听，不要记在心里。"] },
+  copyright: "本站为个人非商业站点，与任何游戏或商业公司无关联。鸣潮 / Wuthering Waves 及相关角色版权归 Kuro Games 所有。",
+  characterTheme: { name: "DENIA", chinese: "达妮娅", subtitle: "A QUIET RESONANCE", quotes: ["让散落的念头，在这里收束。", "让没有答案的问题，漂浮一会儿。", "星光很远，好奇心很近。", "不要看，不要听，不要记在心里。"] },
 };

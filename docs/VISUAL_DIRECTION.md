@@ -1,4 +1,4 @@
-# 视觉方向 — 汐间 / BETWEEN TIDES
+# 视觉方向 — 幻想收束点 / CONVERGENCE
 
 ## 设计命题
 

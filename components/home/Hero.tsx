@@ -36,16 +36,16 @@ export function Hero(){
   if(next%5===0){setResonance(true);if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>setResonance(false),4000)}
   try{await element.play()}catch{if(ticket===voiceRequest.current)setVoiceError("语音暂时无法播放，请重试。")}
  }
- return <section className={`hero ${styles.scene} ${resonance?styles.resonating:""}`} aria-label="梦境与潮汐" onPointerMove={event=>{if(reduced||event.pointerType!=="mouse")return;const box=event.currentTarget.getBoundingClientRect();mx.set(((event.clientX-box.left)/box.width-.5)*16);my.set(((event.clientY-box.top)/box.height-.5)*12)}} onPointerLeave={()=>{mx.set(0);my.set(0)}}>
+ return <section className={`hero ${styles.scene} ${resonance?styles.resonating:""}`} aria-label="幻想收束点" onPointerMove={event=>{if(reduced||event.pointerType!=="mouse")return;const box=event.currentTarget.getBoundingClientRect();mx.set(((event.clientX-box.left)/box.width-.5)*16);my.set(((event.clientY-box.top)/box.height-.5)*12)}} onPointerLeave={()=>{mx.set(0);my.set(0)}}>
   <div className={styles.truncTop} aria-hidden="true"><Image src="/assets/denia/hero/banner-top.webp" alt="" fill sizes="100vw"/></div>
   <div className={styles.landscape} aria-hidden="true"><Image src="/artwork/dream-tide.webp" alt="" fill sizes="100vw" preload/></div>
   <div className={styles.meteors} aria-hidden="true"><i/><i/><i/></div>
   <div className="hero-copy">
-   <div className="hero-intro"><span className="small-orbit"/>BETWEEN DREAMS &amp; TIDES</div>
+   <div className="hero-intro"><span className="small-orbit"/>FANTASY CONVERGENCE</div>
    <p className="greeting">{site.hero.greeting} <span>{site.nickname}</span><span className="greeting-line"/></p>
    <h1>{site.hero.headline}<br/><span>{site.hero.emphasis}</span></h1>
    <p className="hero-english">{site.hero.english}</p>
-   <p className="hero-description">{site.description}<br/>这里是我的数字花园，也是偶尔停靠的岸。</p>
+   <p className="hero-description">{site.description}<br/>{site.tagline}</p>
    <div className="hero-actions">
     <Link className="button-primary" href="/projects/">探索我的项目<ArrowUpRight size={17}/></Link>
     {site.github ? <a className="button-quiet" href={site.github} target="_blank" rel="me noreferrer">GitHub<ArrowUpRight size={16}/></a> : null}

@@ -6,7 +6,7 @@ import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 export const metadata: Metadata = {
   title: "标签",
-  description: "汐间的全部标签：从设计、AI 到生活方式。",
+  description: "本站的全部标签：从设计、AI 到生活方式。",
   alternates: { canonical: "/tags/" },
 };
 export default function TagsPage(){

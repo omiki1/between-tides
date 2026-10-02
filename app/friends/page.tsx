@@ -6,7 +6,7 @@ import { Reveal } from "@/components/effects/Reveal";
 
 export const metadata: Metadata = {
   title: "友链",
-  description: "汐间的朋友与常去之处。",
+  description: "本站的朋友与常去之处。",
   alternates: { canonical: "/friends/" },
 };
 

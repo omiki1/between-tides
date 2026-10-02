@@ -9,7 +9,7 @@ import { SteamCard } from "@/components/about/SteamCard";
 import { MiniClips } from "@/components/home/MiniClips";
 export const metadata: Metadata = {
   title: "关于",
-  description: "关于汐间、关于 omiki1，以及这个小站为什么被建起来。",
+  description: "关于幻想收束点、关于 omiki1，以及这个小站为什么被建起来。",
   alternates: { canonical: "/about/" },
 };
 const interests = [
@@ -23,7 +23,7 @@ export default function AboutPage(){
     <Reveal className="page-head about-head">
       <span className="page-eyebrow"><i/>ABOUT / 关于</span>
       <h1>你好，我是 <span>{site.nickname}</span>。</h1>
-      <p>一个普通的开发者，白天写代码，晚上想把白天没想明白的事写下来。「汐间」是这些想法暂时停靠的地方。</p>
+      <p>一个普通的开发者，白天写代码，晚上想把白天没想明白的事写下来。「幻想收束点」是这些想法暂时停靠的地方。</p>
       <div className="about-identity">
         <div className="about-mark"><Image src={site.avatar} alt={`${site.nickname} 的头像`} width={46} height={46}/></div>
         <div>

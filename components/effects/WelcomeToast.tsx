@@ -38,7 +38,7 @@ export function WelcomeToast() {
         <strong>
           {greeting()}，欢迎来到{site.name}
         </strong>
-        <p>慢一点逛也没关系——这里是数字花园，也是偶尔停靠的岸。</p>
+        <p>慢一点逛也没关系——{site.tagline}</p>
       </div>
       <button type="button" onClick={dismiss}>
         好的

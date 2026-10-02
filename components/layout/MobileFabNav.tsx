@@ -66,7 +66,7 @@ export function MobileFabNav() {
       >
         <header className="mobile-fab-sheet-head">
           <div>
-            <p className="mobile-fab-eyebrow">BETWEEN TIDES</p>
+            <p className="mobile-fab-eyebrow">{site.wordmark}</p>
             <h2>去哪儿逛？</h2>
           </div>
           <button

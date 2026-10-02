@@ -7,7 +7,7 @@ import { Reveal } from "@/components/effects/Reveal";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 export const metadata: Metadata = {
   title: "归档",
-  description: "汐间的全部手记，按年份排列，可折叠查看。",
+  description: "本站的全部手记，按年份排列，可折叠查看。",
   alternates: { canonical: "/archive/" },
 };
 export default function ArchivePage(){

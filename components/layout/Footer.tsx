@@ -10,13 +10,13 @@ export function Footer() {
     <footer className="footer">
       <TideDivider tone="footer" palette="tide" />
       <div className="footer container">
-        <p className="footer-tide-line">在潮汐之间，留住一点微光。</p>
+        <p className="footer-tide-line">{site.tagline}</p>
         <TimeProgress />
         <div className="footer-top">
           <Link href="/" className="footer-brand">
             <WaveMark />
             {site.name}
-            <span>让灵感随潮而来。</span>
+            <span>慢慢来也没关系。</span>
           </Link>
           <div>
             {site.github ? (

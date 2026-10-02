@@ -32,8 +32,8 @@ const COLORS = [
 const SEED: Note[] = [
   {
     id: "seed-1",
-    name: "汐间",
-    text: "欢迎来到潮汐之间，留下一句吧。",
+    name: "收束点",
+    text: "欢迎来到幻想收束点，留下一句吧。",
     color: 0,
     x: 8,
     y: 14,
