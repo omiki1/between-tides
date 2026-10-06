@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft,ArrowRight,ArrowUpRight,Clock,CalendarDays,Folder } from "lucide-react";
+import { ArrowLeft,ArrowRight,ArrowUpRight,Clock,CalendarDays,Folder,RefreshCw } from "lucide-react";
 import { getCategoryOfPost, getPost, getPostSlugs, getNeighbours, slugify, coverPositionStyle } from "@/lib/posts";
 import { renderMarkdown, extractHeadings } from "@/lib/markdown";
 import { site } from "@/config/site";
 import { Reveal } from "@/components/effects/Reveal";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import { OutdatedNotice } from "@/components/blog/OutdatedNotice";
 export function generateStaticParams(){return getPostSlugs().map(slug=>({slug}))}
 export async function generateMetadata({params}:PageProps<"/blog/[slug]">):Promise<Metadata>{
   const {slug}=await params;const post=getPost(slug);
@@ -34,6 +35,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
       <p className="reading-lede">{post.description}</p>
       <div className="reading-facts" data-pagefind-ignore="all">
         <span><CalendarDays size={14}/>{post.date.replaceAll("-",".")}</span>
+        {post.updated&&post.updated!==post.date&&<span className="ft-updated-chip"><RefreshCw size={14}/>更新于 <b>{post.updated.replaceAll("-",".")}</b></span>}
         <span><Clock size={14}/>约 {post.readingTime} 分钟</span>
         {category&&<span><Folder size={14}/><Link href={`/categories/${category.slug}/`}>{category.name}</Link></span>}
       </div>
@@ -43,7 +45,10 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
     </Reveal>
     {post.cover&&!post.hideCover&&<Reveal className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Reveal>}
     <div className="reading-layout">
-      <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
+      <div className="ft-article-col">
+        <OutdatedNotice date={post.date} updated={post.updated} seriesHref={category?`/categories/${category.slug}/`:undefined}/>
+        <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
+      </div>
       <aside className="reading-aside" data-pagefind-ignore="all">
         <TableOfContents headings={headings}/>
         {category&&<div className="aside-card">
