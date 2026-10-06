@@ -1,0 +1,124 @@
+/* === texture-v1 === 质感层：胶片颗粒 / 分层阴影 / 玻璃高光 / 排版与细节。
+   只叠材质，不改布局；整块可回滚：删本文件 + app/layout.tsx 里的 import "@/styles/texture.css"。 */
+
+/* ---------- 1. 材质 token（两套主题各自调） ---------- */
+:root,.dark{
+  --tx-ease:cubic-bezier(.16,1,.3,1);
+  /* 顶边 1px 内高光 + 极淡内描边，玻璃“有厚度” */
+  --tx-hl:inset 0 1px 0 rgba(255,255,255,.085),inset 0 0 0 1px rgba(255,255,255,.022);
+  /* 环境光 + 主光源两层阴影 */
+  --tx-depth:0 1px 2px rgba(4,2,14,.28),0 6px 14px -4px rgba(4,2,14,.30),0 22px 44px -16px rgba(6,3,20,.55);
+  --tx-depth-hover:0 2px 4px rgba(4,2,14,.30),0 12px 24px -8px rgba(4,2,14,.36),0 34px 64px -20px rgba(6,3,20,.62);
+  --tx-sheen:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,0) 42%);
+  --tx-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 0.96  0 0 0 0 1  0 0 0 2.2 -1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-noise-opacity:.075;
+  --tx-scroll:color-mix(in srgb,var(--primary-strong) 38%,transparent);
+  --tx-scroll-hover:color-mix(in srgb,var(--primary-strong) 62%,transparent);
+  --tx-select:color-mix(in srgb,var(--primary-strong) 34%,transparent);
+  --tx-img-ring:rgba(255,255,255,.10);
+  /* 原有柔光保留，只在下面垫一层真实景深 */
+  --glow-soft:var(--tx-hl),var(--tx-depth),0 0 36px -6px rgba(244,158,203,.14),0 0 64px -12px rgba(88,150,215,.10);
+  --glow-soft-hover:var(--tx-hl),var(--tx-depth-hover),0 0 40px -6px rgba(244,158,203,.24),0 0 72px -12px rgba(88,150,215,.14);
+}
+.light{
+  --tx-hl:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 1px rgba(255,255,255,.38);
+  --tx-depth:0 1px 2px rgba(64,40,92,.05),0 6px 14px -4px rgba(64,40,92,.07),0 22px 44px -18px rgba(84,52,112,.16);
+  --tx-depth-hover:0 2px 4px rgba(64,40,92,.06),0 12px 24px -8px rgba(64,40,92,.10),0 34px 64px -22px rgba(84,52,112,.22);
+  --tx-sheen:linear-gradient(180deg,rgba(255,255,255,.62),rgba(255,255,255,0) 46%);
+  --tx-noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24  0 0 0 0 0.16  0 0 0 0 0.34  0 0 0 2.2 -1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --tx-noise-opacity:.13;
+  --tx-select:color-mix(in srgb,var(--primary-strong) 22%,transparent);
+  --tx-img-ring:rgba(64,40,92,.10);
+  --glow-soft:var(--tx-hl),var(--tx-depth),0 0 32px -8px rgba(226,142,182,.16),0 0 56px -14px rgba(110,166,214,.10);
+  --glow-soft-hover:var(--tx-hl),var(--tx-depth-hover),0 0 36px -8px rgba(226,142,182,.26),0 0 64px -14px rgba(110,166,214,.14);
+}
+
+/* ---------- 2. 胶片颗粒（静态，一张 SVG 平铺，不吃交互） ---------- */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:9990;
+  pointer-events:none;
+  opacity:var(--tx-noise-opacity);
+  background-image:var(--tx-noise);
+  background-size:160px 160px;
+}
+
+/* ---------- 3. 玻璃：顶部柔光 sheen 叠在原渐变上 ---------- */
+.widget-card:not(.live-wallpaper):not(.sakura-pick):not(.reaction-test):not(.beat-tap),
+.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting{
+  background-image:var(--tx-sheen),var(--ix-base,linear-gradient(150deg,var(--glass),var(--surface)));
+}
+.navbar,.navbar.scrolled{
+  background-image:var(--tx-sheen);
+}
+/* 边框：上沿略亮、下沿略沉，像光从上方来 */
+.widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting,
+.album-card,.taxonomy-card,.post-table a,.featured-post,.navbar{
+  border-top-color:color-mix(in srgb,var(--border-highlight) 55%,var(--border));
+}
+.light :is(.widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting,.album-card,.taxonomy-card,.post-table a,.featured-post,.navbar){
+  border-top-color:rgba(255,255,255,.95);
+  border-bottom-color:rgba(92,72,124,.18);
+}
+.featured-post{box-shadow:var(--glow-soft);transition:box-shadow .35s var(--tx-ease),transform .45s var(--tx-ease),border-color .3s}
+.featured-post:hover{box-shadow:var(--glow-soft-hover)}
+.post-table a,.album-card,.taxonomy-card,.start-grid a,.post-pager a{box-shadow:var(--glow-soft)}
+.post-table a:hover,.start-grid a:hover,.post-pager a:hover{box-shadow:var(--glow-soft-hover)}
+
+/* ---------- 4. 按钮：顶光 + 按压内陷 ---------- */
+.button-primary{
+  background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 55%),linear-gradient(120deg,var(--primary-strong),color-mix(in srgb,var(--primary) 55%,var(--secondary)));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 -1px 0 rgba(20,8,30,.12),0 1px 2px rgba(40,16,60,.12),0 8px 20px -6px color-mix(in oklab,var(--glow-pink) 90%,transparent),0 0 28px -6px color-mix(in oklab,var(--glow-blue) 40%,transparent);
+}
+.button-primary:hover{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(20,8,30,.12),0 2px 4px rgba(40,16,60,.12),0 14px 28px -8px color-mix(in oklab,var(--glow-pink) 100%,transparent),0 0 36px -6px color-mix(in oklab,var(--glow-blue) 50%,transparent);
+}
+.button-primary:active{
+  box-shadow:inset 0 2px 6px rgba(20,8,30,.22),inset 0 0 0 1px rgba(255,255,255,.08),0 1px 2px rgba(40,16,60,.10);
+}
+.button-quiet{
+  background-image:var(--tx-sheen);
+  box-shadow:var(--tx-hl),0 1px 2px rgba(40,16,60,.06),0 6px 14px -8px rgba(40,16,60,.16);
+}
+.button-quiet:active{box-shadow:inset 0 2px 5px rgba(20,8,30,.14)}
+.theme-switch{box-shadow:var(--tx-hl)}
+
+/* ---------- 5. 排版：层次与节奏（不改字号，避免回流） ---------- */
+body{font-kerning:normal;text-wrap:pretty}
+h1,h2,h3,.section-title h2{text-wrap:balance}
+.section-title h2{font-weight:560;letter-spacing:.06em}
+.eyebrow,.hero-intro,.small-orbit{letter-spacing:.2em}
+time,.post-meta,.now-bottom,.section-number,.track-time,.track-progress,.time-progress,.calendar-card,.steam-recent li{font-variant-numeric:tabular-nums}
+
+/* ---------- 6. 细节：焦点环 / 选区 / 滚动条 / 图片内描边 ---------- */
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--primary-strong) 82%,transparent);
+  outline-offset:3px;
+}
+::selection{background:var(--tx-select);color:inherit}
+html{scrollbar-width:thin;scrollbar-color:var(--tx-scroll) transparent}
+html:hover{scrollbar-color:var(--tx-scroll-hover) transparent}
+@supports not (scrollbar-color:auto){
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--tx-scroll);border-radius:999px;border:3px solid transparent;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background:var(--tx-scroll-hover);background-clip:padding-box}
+}
+.featured-post img,.album-card img,.gallery-item img,.anime-card img,.steam-card img,.friend-card img,.prose img,.widget-card img{
+  outline:1px solid var(--tx-img-ring);
+  outline-offset:-1px;
+}
+
+/* ---------- 7. 性能与可访问性 ---------- */
+@media (max-width:700px){
+  /* 手机：卡片取消毛玻璃，只留导航模糊；颗粒透明度降低 */
+  .widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting,.button-quiet{backdrop-filter:none;-webkit-backdrop-filter:none}
+  body::before{opacity:calc(var(--tx-noise-opacity) * .6)}
+}
+@media (prefers-reduced-motion:reduce){
+  .featured-post,.button-primary,.button-quiet{transition:none}
+}
+@media print{body::before{display:none}}
+/* === /texture-v1 === */

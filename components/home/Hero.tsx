@@ -5,14 +5,16 @@ import { ArrowUpRight,ArrowDown,Code2,Music2,Sparkles,Play } from "lucide-react"
 import { motion,useMotionValue,useSpring,useReducedMotion } from "framer-motion";
 import { useState,useRef,useEffect } from "react";
 import { site } from "@/config/site";
-import voices from "@/data/denia-voices.json";
+import { deniaVoices as voices, claimVoice, releaseVoice } from "@/lib/deniaVoices";
 import styles from "./Hero.module.css";
+import { DeniaTassel } from "./DeniaTassel";
 export function Hero(){
  const reduced=useReducedMotion();
  const mx=useMotionValue(0),my=useMotionValue(0);
  const x=useSpring(mx,{stiffness:45,damping:25}),y=useSpring(my,{stiffness:45,damping:25});
  const [clicks,setClicks]=useState(0);const [resonance,setResonance]=useState(false);
- const [quote,setQuote]=useState(voices[0].text);
+ const [line,setLine]=useState(0);const [announce,setAnnounce]=useState(false);const [hold,setHold]=useState(false);
+ const quote=voices[line%voices.length].text;
  const [voicePlaying,setVoicePlaying]=useState(false);
  const [voiceError,setVoiceError]=useState("");
  const voice=useRef<HTMLAudioElement>(null);
@@ -24,21 +26,32 @@ export function Hero(){
   window.addEventListener("site-audio",stop);
   return()=>{if(timer.current)clearTimeout(timer.current);requestSequence.current++;element?.pause();window.removeEventListener("site-audio",stop)};
  },[]);
+ /* 台词池：挂载后再领取（静态导出，SSR 先显示第一句兜底），轮播时跳过其他位置正在显示的台词 */
+ useEffect(()=>{setLine(claimVoice("hero").index);return()=>releaseVoice("hero")},[]);
+ useEffect(()=>{
+  if(reduced||voicePlaying||hold||voiceError)return;
+  const id=setTimeout(()=>{
+   if(document.visibilityState!=="visible"||document.documentElement.dataset.ambianceMotion==="reduce")return;
+   setAnnounce(false);setLine(claimVoice("hero",{advance:true}).index);
+  },6000);
+  return()=>clearTimeout(id);
+ },[reduced,voicePlaying,hold,voiceError,line]);
+ function advance(){setVoiceError("");setAnnounce(true);setLine(claimVoice("hero",{advance:true}).index)}
  async function resonate(){
   const element=voice.current;if(!element)return;
   if(!element.paused){voiceRequest.current++;element.pause();return}
   const ticket=++voiceRequest.current;
-  const clip=voices[clicks%voices.length];
+  const picked=claimVoice("hero",{advance:true});const clip=voices[picked.index];
   const next=clicks+1;setClicks(next);
-  setQuote(clip.text);setVoiceError("");
+  setLine(picked.index);setAnnounce(true);setVoiceError("");
   window.dispatchEvent(new CustomEvent("site-audio",{detail:"voice"}));
-  element.src=clip.src;element.volume=.75;
+  element.src=clip.src??"";element.volume=.75;
   if(next%5===0){setResonance(true);if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>setResonance(false),4000)}
   try{await element.play()}catch{if(ticket===voiceRequest.current)setVoiceError("语音暂时无法播放，请重试。")}
  }
  return <section className={`hero ${styles.scene} ${resonance?styles.resonating:""}`} aria-label="幻想收束点" onPointerMove={event=>{if(reduced||event.pointerType!=="mouse")return;const box=event.currentTarget.getBoundingClientRect();mx.set(((event.clientX-box.left)/box.width-.5)*16);my.set(((event.clientY-box.top)/box.height-.5)*12)}} onPointerLeave={()=>{mx.set(0);my.set(0)}}>
   <div className={styles.truncTop} aria-hidden="true"><Image src="/assets/denia/hero/banner-top.webp" alt="" fill sizes="100vw"/></div>
-  <div className={styles.landscape} aria-hidden="true"><Image src="/artwork/dream-tide.webp" alt="" fill sizes="100vw" preload/></div>
+  <div className={styles.landscape} aria-hidden="true"><Image src="/artwork/dream-tide.webp" alt="" fill sizes="100vw" loading="eager" fetchPriority="high"/></div>
   <div className={styles.meteors} aria-hidden="true"><i/><i/><i/></div>
   <div className="hero-copy">
    <div className="hero-intro"><span className="small-orbit"/>FANTASY CONVERGENCE</div>
@@ -62,7 +75,7 @@ export function Hero(){
     <Image src="/artwork/denia.webp" alt="Denia 粉发立绘，漂浮于星光与梦境潮汐之间" fill sizes="(max-width: 700px) 270px, 390px" preload/>
    </motion.div>
    <div className={styles.nameplate}><span className="small-orbit"/><div><small>DENIA · WUTHERING WAVES</small></div><Sparkles size={18}/></div>
-   <div className={styles.quote}><span>“</span><p aria-live="polite">{voiceError||quote}</p><small>中文角色语音</small></div>
+   <div className={`${styles.quote} denia-quote`} role="button" tabIndex={0} data-denia-bubble="" aria-label={`角色语录：${voiceError||quote}（点击切换下一句）`} onClick={advance} onKeyDown={event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();advance()}}} onPointerEnter={()=>setHold(true)} onPointerLeave={()=>setHold(false)} onFocus={()=>setHold(true)} onBlur={()=>setHold(false)}><span>“</span><p aria-live={announce?"polite":"off"}>{voiceError?voiceError:<><span className="sr-only">{quote}</span><span className="denia-type" aria-hidden="true" key={line}>{Array.from(quote).map((char,index)=><i key={index} style={{animationDelay:`${index*55}ms`}}>{char}</i>)}</span></>}</p><small>中文角色语音</small><span className={styles.quoteClose} aria-hidden="true">”</span><DeniaTassel className="denia-tassel"/></div>
    <button className={`${styles.bubble} ${styles.touchBubble}`} aria-label={voicePlaying?"停止角色语音":"播放达妮娅中文语音"} aria-pressed={voicePlaying} onClick={()=>void resonate()}><span>{voicePlaying?"停止语音":"点击听语音"}</span></button>
    <audio ref={voice} preload="none" onPlay={()=>setVoicePlaying(true)} onPause={()=>setVoicePlaying(false)} onEnded={()=>setVoicePlaying(false)}/>
    <i className={`${styles.bubble} ${styles.bubbleTwo}`} aria-hidden="true"/><i className={`${styles.bubble} ${styles.bubbleThree}`} aria-hidden="true"/>

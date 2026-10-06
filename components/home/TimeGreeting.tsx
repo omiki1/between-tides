@@ -2,6 +2,8 @@
 /** Adapted from Firefly / Aemeath TimeGreeting (MIT). */
 import { useLocalClock } from "@/lib/use-local-clock";
 import { Moon, Sun, Sunrise, Sunset } from "lucide-react";
+import { useEffect, useState } from "react";
+import { claimVoice, releaseVoice, localDateSeed, type ClaimedVoice } from "@/lib/deniaVoices";
 
 const periods = [
   { id: "late-night", until: 6, message: "夜深了，早点休息！", Icon: Moon },
@@ -22,6 +24,15 @@ export function TimeGreeting() {
   const date = now ?? new Date(Date.UTC(2026, 8, 15, 13));
   const period = periodOf(date.getHours());
   const Icon = period.Icon;
+  const periodId = now ? period.id : null;
+  const [voice, setVoice] = useState<ClaimedVoice | null>(null);
+  /* 台词在浏览器里按「本地日期 + 时段」挑选，并与 Hero / 今日卡片互斥；时段变化时换一句 */
+  useEffect(() => {
+    if (!periodId) return;
+    releaseVoice("time-greeting");
+    setVoice(claimVoice("time-greeting", { timeOfDay: periodId, seed: `${localDateSeed()}|${periodId}` }));
+    return () => releaseVoice("time-greeting");
+  }, [periodId]);
   const clock = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
   return (
     <article className="time-greeting" data-period={period.id}>
@@ -35,6 +46,7 @@ export function TimeGreeting() {
               <b>{String(date.getDate()).padStart(2, "0")}<small>/{String(date.getMonth() + 1).padStart(2, "0")}</small></b>
             </div>
           </div>
+          {voice && <p className="time-greeting-voice" title={voice.caption}>「{voice.text}」</p>}
         </div>
         <Icon size={22} aria-hidden="true" />
       </div>

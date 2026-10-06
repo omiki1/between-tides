@@ -1,0 +1,170 @@
+/* === denia-v1 === 达妮娅元素层：配色 / 菱形 / 流苏 / 泡影 / 星夜 / 语录轮播 / 主题柔光切换。
+   全部用代码绘制，没有新图片。回滚：删本文件 + layout.tsx 里的 import "@/styles/denia.css" 与 <DeniaBubbles/>，
+   以及 components/effects/DeniaBubbles.tsx、components/home/DeniaTassel.tsx、Hero.tsx / ThemeSwitch.tsx 的改动。 */
+
+/* ---------- 1. 配色（取样自 public/artwork/denia.webp） ---------- */
+:root,.dark,.light{
+  --denia-pink:#f3c1c8;      /* 发色 */
+  --denia-tassel:#e185a0;    /* 流苏粉 */
+  --denia-blue:#334278;      /* 星空裙蓝 */
+  --denia-red:#a62630;       /* 手套红 */
+  --denia-gold:#d6c19b;      /* 金色滚边 */
+  --denia-gold-deep:#b8955f;
+  --denia-ice:#b9d6ee;       /* 发梢冰蓝 */
+}
+:root,.dark{--denia-focus:#eba5bd;--denia-blue-soft:#8fa3dc}
+.light{--denia-focus:#c2546f;--denia-blue-soft:#4a5c9a}
+
+/* 点缀：当前导航 / 阅读进度 / 焦点环 */
+.desktop-nav a[aria-current=page]:after{background:linear-gradient(90deg,var(--denia-tassel),var(--denia-blue-soft))}
+.desktop-nav a[aria-current=page]::before{
+  content:"";position:absolute;left:calc(50% + 10px);bottom:1.5px;width:4px;height:4px;
+  transform:rotate(45deg);border-radius:1px;background:var(--denia-gold-deep);pointer-events:none;
+}
+.dark .desktop-nav a[aria-current=page]::before{background:var(--denia-gold)}
+.reading-progress span{background:linear-gradient(90deg,var(--denia-ice),var(--denia-pink) 55%,var(--denia-tassel))}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
+  outline-color:var(--denia-focus);
+}
+
+/* ---------- 2. 菱形纹（裙摆镂空） ---------- */
+/* 卡片标题下划线末端的小菱形（卡片的 ::before/::after 已被角标占用，这里用标题行的空闲伪元素） */
+.widget-head::before{
+  content:"";position:absolute;left:37px;bottom:-8.5px;width:5px;height:5px;pointer-events:none;
+  transform:rotate(45deg);border-radius:1px;
+  background:linear-gradient(135deg,var(--denia-tassel),var(--denia-gold));
+}
+/* 侧栏列表（分类等）的菱形项目符号 */
+.widget-list a>span:first-child{display:inline-flex;align-items:center;gap:9px}
+.widget-list a>span:first-child::before{
+  content:"";flex:none;width:5px;height:5px;transform:rotate(45deg);border-radius:1px;
+  border:1px solid color-mix(in srgb,var(--denia-tassel) 75%,transparent);
+  background:color-mix(in srgb,var(--denia-pink) 35%,transparent);
+  transition:background .25s,transform .3s cubic-bezier(.16,1,.3,1),border-color .25s;
+}
+.widget-list a:hover>span:first-child::before{background:var(--denia-tassel);border-color:var(--denia-tassel);transform:rotate(45deg) scale(1.25)}
+
+/* ---------- 3. Hero 语录卡：皂膜虹彩 + 流苏 + 逐字浮现 ---------- */
+.hero .denia-quote{
+  cursor:pointer;
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0) 46%),
+    conic-gradient(from 210deg at 78% 24%,rgba(243,193,200,.24),rgba(185,214,238,.22),rgba(214,193,155,.16),rgba(206,184,240,.2),rgba(243,193,200,.24));
+}
+.dark .hero .denia-quote{
+  background-image:
+    linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0) 46%),
+    conic-gradient(from 210deg at 78% 24%,rgba(243,193,200,.10),rgba(185,214,238,.09),rgba(214,193,155,.06),rgba(206,184,240,.09),rgba(243,193,200,.10));
+}
+.hero .denia-quote:focus-visible{outline-offset:3px}
+.denia-tassel{position:absolute;left:20px;top:calc(100% - 3px);width:12px;height:32px;transform-origin:50% 0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(120,60,90,.18))}
+.hero .denia-quote:hover .denia-tassel{animation:denia-sway 2.2s ease-in-out infinite}
+@keyframes denia-sway{0%,100%{transform:rotate(0)}30%{transform:rotate(7deg)}65%{transform:rotate(-5deg)}}
+.denia-type i{font-style:normal;opacity:0;filter:blur(2px);animation:denia-type .55s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes denia-type{to{opacity:1;filter:blur(0)}}
+
+/* ---------- 4. 泡影：点击冒泡 ---------- */
+.denia-bubbles{position:fixed;inset:0;z-index:70;pointer-events:none;overflow:hidden}
+.denia-bubble{
+  position:absolute;border-radius:50%;pointer-events:none;will-change:transform,opacity;
+  background:
+    radial-gradient(circle at 32% 28%,rgba(255,255,255,.98) 0 9%,rgba(255,255,255,0) 21%),
+    radial-gradient(circle at 70% 76%,rgba(255,255,255,.55) 0 6%,rgba(255,255,255,0) 14%),
+    conic-gradient(from 140deg,rgba(225,133,160,.85),rgba(150,190,232,.8),rgba(214,180,120,.7),rgba(186,150,236,.8),rgba(225,133,160,.85));
+  -webkit-mask-image:radial-gradient(circle,rgba(0,0,0,.22) 44%,#000 72%);
+  mask-image:radial-gradient(circle,rgba(0,0,0,.22) 44%,#000 72%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),inset 0 0 6px rgba(225,133,160,.35);
+}
+.dark .denia-bubble{box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),inset 0 0 6px rgba(185,214,238,.3)}
+
+/* ---------- 5. 夜间星夜：极淡星点 + 两三个泡影圆环（静态） ---------- */
+.dark .ambient::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.72;
+  background-image:
+    radial-gradient(circle at 33.1% 16.5%,rgba(220,236,255,0.48) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 11.0% 57.9%,rgba(255,255,255,0.53) 0 0.8px,transparent 1.5px),
+    radial-gradient(circle at 43.6% 8.7%,rgba(220,236,255,0.60) 0 0.4px,transparent 0.9px),
+    radial-gradient(circle at 13.9% 23.4%,rgba(220,236,255,0.78) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 58.2% 6.8%,rgba(255,255,255,0.64) 0 0.5px,transparent 1.0px),
+    radial-gradient(circle at 29.8% 15.8%,rgba(220,236,255,0.56) 0 0.4px,transparent 0.9px),
+    radial-gradient(circle at 19.3% 57.8%,rgba(220,236,255,0.58) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 70.4% 56.2%,rgba(220,236,255,0.62) 0 0.6px,transparent 1.2px),
+    radial-gradient(circle at 43.0% 32.2%,rgba(255,230,240,0.61) 0 0.6px,transparent 1.2px),
+    radial-gradient(circle at 25.8% 19.3%,rgba(255,230,240,0.48) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 52.4% 86.0%,rgba(255,255,255,0.55) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 13.3% 42.1%,rgba(255,230,240,0.50) 0 0.7px,transparent 1.4px),
+    radial-gradient(circle at 42.5% 94.4%,rgba(255,230,240,0.65) 0 0.4px,transparent 0.9px),
+    radial-gradient(circle at 34.7% 35.6%,rgba(255,255,255,0.73) 0 0.6px,transparent 1.2px),
+    radial-gradient(circle at 82.6% 92.7%,rgba(255,240,248,0.73) 0 1.0px,transparent 2.0px),
+    radial-gradient(circle at 72.2% 31.7%,rgba(214,232,255,0.74) 0 1.0px,transparent 2.1px),
+    radial-gradient(circle at 29.3% 39.0%,rgba(214,232,255,0.51) 0 1.0px,transparent 2.1px),
+    radial-gradient(circle at 36.1% 60.6%,rgba(214,232,255,0.58) 0 1.0px,transparent 2.0px),
+    radial-gradient(circle at 14.4% 25.8%,rgba(255,240,248,0.80) 0 1.0px,transparent 2.0px),
+    radial-gradient(circle at 18.0% 40.6%,rgba(214,232,255,0.55) 0 0.9px,transparent 1.8px),
+    radial-gradient(circle at 2% 88%,transparent 0 62px,rgba(243,193,200,.12) 63px 64px,transparent 66px),
+    radial-gradient(circle at 98.5% 24%,transparent 0 38px,rgba(185,214,238,.12) 39px 40px,transparent 42px),
+    radial-gradient(circle at 96.8% 30%,transparent 0 12px,rgba(243,193,200,.12) 12.5px 13.5px,transparent 15px);
+  background-size:380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,380px 380px,620px 620px,620px 620px,620px 620px,620px 620px,620px 620px,620px 620px,100% 100%,100% 100%,100% 100%;
+  background-repeat:repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,repeat,no-repeat,no-repeat,no-repeat;
+}
+
+/* ---------- 6. 主题切换：柔光扫过（View Transitions） ---------- */
+html.denia-vt::view-transition-old(root){animation:none}
+html.denia-vt::view-transition-new(root){
+  animation:denia-sweep .55s cubic-bezier(.45,0,.2,1) both;
+  -webkit-mask-image:linear-gradient(110deg,#000 40%,rgba(0,0,0,.55) 50%,transparent 60%);
+  mask-image:linear-gradient(110deg,#000 40%,rgba(0,0,0,.55) 50%,transparent 60%);
+  -webkit-mask-size:320% 100%;mask-size:320% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+@keyframes denia-sweep{from{-webkit-mask-position:100% 0;mask-position:100% 0}to{-webkit-mask-position:0 0;mask-position:0 0}}
+
+/* ---------- 7. 减弱动效 / 手机 ---------- */
+@media (prefers-reduced-motion:reduce){
+  .denia-type i{animation:none;opacity:1;filter:none}
+  .hero .denia-quote:hover .denia-tassel{animation:none}
+  .denia-bubbles{display:none}
+  html.denia-vt::view-transition-new(root){animation:none}
+}
+:root[data-ambiance-motion="reduce"] .denia-type i{animation:none;opacity:1;filter:none}
+:root[data-ambiance-motion="reduce"] .denia-quote:hover .denia-tassel{animation:none}
+@media (max-width:700px){
+  .dark .ambient::after{opacity:.45}
+}
+
+/* ---------- 8. 页脚探头（data-denia-footer；文章详情页由组件自己隐藏） ---------- */
+.footer.container{position:relative}
+.denia-footer-peek{position:absolute;right:clamp(10px,3vw,40px);top:-50px;width:60px;height:60px;pointer-events:none;z-index:2}
+.denia-footer-peek img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:auto;
+  filter:drop-shadow(0 6px 10px rgba(84,52,112,.18));transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.denia-footer-peek img:hover{transform:translateY(-4px) rotate(-4deg)}
+.denia-footer-peek::after{content:"";position:absolute;left:-10px;top:6px;width:9px;height:9px;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.95) 0 14%,transparent 26%),conic-gradient(from 140deg,rgba(225,133,160,.55),rgba(150,190,232,.5),rgba(214,180,120,.45),rgba(225,133,160,.55));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);opacity:.8}
+@media (max-width:700px){.denia-footer-peek{width:48px;height:48px;top:-40px;right:auto;left:14px}.denia-footer-peek::after{left:auto;right:-10px}}
+@media (prefers-reduced-motion:reduce){.denia-footer-peek img{transition:none}.denia-footer-peek img:hover{transform:none}}
+/* ---------- 9. 泡泡文字反馈（window.deniaBubble(x,y,{text})） ---------- */
+.denia-bubble-text{position:absolute;transform:translate(-50%,-125%);white-space:nowrap;pointer-events:none;
+  padding:4px 11px 5px;border-radius:999px;font-size:12px;line-height:1.4;letter-spacing:.5px;color:var(--text-primary);
+  background:linear-gradient(color-mix(in srgb,var(--surface-elevated,#fff) 88%,transparent),color-mix(in srgb,var(--surface-elevated,#fff) 88%,transparent)) padding-box,
+    linear-gradient(120deg,var(--denia-tassel),var(--denia-ice),var(--denia-gold),var(--denia-tassel)) border-box;
+  border:1px solid transparent;box-shadow:0 6px 18px rgba(84,52,112,.16);will-change:transform,opacity}
+.denia-bubble-text::before{content:"";display:inline-block;width:5px;height:5px;margin:0 6px 1px 0;vertical-align:middle;transform:rotate(45deg);background:var(--denia-tassel)}
+@media (prefers-reduced-motion:reduce){.denia-bubbles{display:block}.denia-bubble{display:none}}
+
+/* ---------- 10. 指针：精细指针才启用的菱形光标（SVG，系统光标兜底；不跟随 JS） ---------- */
+@media (hover:hover) and (pointer:fine){
+  :root{
+    --cursor-default:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M2 2 L15.5 7.4 L10.4 10.4 L7.4 15.5 Z' fill='%23f3c1c8' stroke='%23334278' stroke-width='1.3' stroke-linejoin='round'/%3E%3Cpath d='M4.8 4.8 L9.6 6.7' stroke='%23fff' stroke-width='1.1' stroke-linecap='round' opacity='.9'/%3E%3C/svg%3E") 2 2,url("/mouse/default.cur"),auto;
+    --cursor-pointer:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2 2 L19 8.8 L12.6 12.6 L8.8 19 Z' fill='%23e185a0' stroke='%23334278' stroke-width='1.4' stroke-linejoin='round'/%3E%3Cpath d='M5.2 5.2 L11.6 7.7' stroke='%23fff' stroke-width='1.2' stroke-linecap='round' opacity='.9'/%3E%3Cpath d='M18.5 15.5 L19.6 18.4 L22.5 19.5 L19.6 20.6 L18.5 23.5 L17.4 20.6 L14.5 19.5 L17.4 18.4 Z' fill='%23d6c19b' stroke='%23fff' stroke-width='.6'/%3E%3C/svg%3E") 2 2,url("/mouse/pointer.cur"),pointer;
+  }
+}
+
+/* ---------- 11. 选区 / 滚动条：达妮娅配色（覆盖 texture.css 的变量） ---------- */
+:root,.dark{--tx-select:color-mix(in srgb,var(--denia-tassel) 38%,transparent);--tx-scroll:color-mix(in srgb,var(--denia-ice) 32%,transparent);--tx-scroll-hover:color-mix(in srgb,var(--denia-pink) 58%,transparent)}
+.light{--tx-select:color-mix(in srgb,var(--denia-pink) 72%,transparent);--tx-scroll:color-mix(in srgb,var(--denia-tassel) 42%,transparent);--tx-scroll-hover:color-mix(in srgb,var(--denia-tassel) 72%,transparent)}
+.reading-aside{scrollbar-color:var(--tx-scroll) transparent}
+/* ---------- 12. TimeGreeting 里的达妮娅台词（lib/deniaVoices 领取） ---------- */
+.time-greeting-voice{margin-top:6px;font-size:12px;line-height:1.5;color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.time-greeting-voice::before{content:"";flex:none;width:5px;height:5px;transform:rotate(45deg);background:var(--denia-tassel);opacity:.85}
+/* === /denia-v1 === */

@@ -114,14 +114,7 @@ export function PointerEffects() {
           { transform: `translate(${Math.cos(angle) * distance}px,${Math.sin(angle) * distance + (night ? 12 : 0)}px) rotate(80deg) scale(.1)`, opacity: 0 },
         ], i === 0 ? 780 : 640 + i * 60);
       }
-      if (animations.size <= 35) {
-        const bubble = document.createElement("i");
-        bubble.className = "pointer-bubble";
-        spawn(bubble, [
-          { transform: "translate(-50%,-50%) scale(.4)", opacity: .8 },
-          { transform: "translate(-50%,-48px) scale(1.08)", opacity: 0 },
-        ], 760);
-      }
+      /* 泡泡统一交给 DeniaBubbles（window.deniaBubble），这里只保留涟漪与火花 */
     };
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerdown", click, { passive: true });

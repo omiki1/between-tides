@@ -4,12 +4,14 @@ import { WaveMark } from "@/components/ui/Logo";
 import { FooterVisits } from "./FooterVisits";
 import { TideDivider } from "@/components/effects/TideDivider";
 import { TimeProgress } from "./TimeProgress";
+import { FooterPeek } from "./FooterPeek";
 
 export function Footer() {
   return (
     <footer className="footer">
       <TideDivider tone="footer" palette="tide" />
       <div className="footer container">
+        <FooterPeek />
         <p className="footer-tide-line">{site.tagline}</p>
         <TimeProgress />
         <div className="footer-top">

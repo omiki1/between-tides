@@ -5,7 +5,7 @@
   --font-active-sans:var(--font-lxgw-wenkai);
 }
 :root[data-font-mode="original"]{--font-active-sans:var(--font-blog-original)}
-html,body{overflow-x:hidden}
+html,body{overflow-x:hidden;overflow-x:clip}
 .container,.nav-inner{max-width:1420px}
 .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,1fr);gap:28px 36px;align-items:end;position:relative;min-height:620px;padding:18px 0 10px}
 .hero-copy{padding-bottom:28px;max-width:36em}
@@ -1188,3 +1188,12 @@ main .page-head{
   .footer-tide-line::before,
   .footer-tide-line::after{width:28px}
 }
+
+/* === sticky-fix === */
+/* html/body 用 overflow-x:clip 后 sticky 真正生效：首页两侧栏保持随页滚动（底部卡片自然可见）；
+   文章页目录侧栏继续吸顶，超过视口时在侧栏内部滚动，左右留白给卡片阴影。 */
+.home-sidebar{position:static}
+@media(min-width:1101px){
+  .reading-aside{max-height:calc(100vh - 120px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--primary-strong) 35%,transparent) transparent;padding:2px 12px 18px 6px;margin:-2px -12px -18px -6px}
+}
+/* === /sticky-fix === */
