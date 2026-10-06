@@ -23,21 +23,26 @@
 .ft-search-group-head i{font-style:normal;opacity:.7}
 .ft-search-sub{font-style:normal;font-weight:400;color:var(--text-muted)}
 .search-results small mark{background:color-mix(in srgb,var(--primary-strong) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}
-.ft-search-empty{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:16px 17px 10px;padding:14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--primary-strong) 10%,transparent)}
-.ft-search-avatar{width:72px;height:72px;position:relative;display:block}
-.ft-search-avatar img{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary-strong) 35%,transparent),0 8px 24px var(--glow-pink)}
-.ft-search-avatar .ft-bubble{position:absolute}
-.ft-search-avatar .b1{--s:13px;right:-8px;top:2px;animation:ft-float 4s ease-in-out infinite}
-.ft-search-avatar .b2{--s:8px;right:-15px;top:-10px;animation:ft-float 5s ease-in-out infinite .6s}
-.ft-search-voice{font-size:13px;color:var(--text-primary);line-height:1.7;margin:0}
-.ft-search-voice q{quotes:"「" "」"}
-.ft-search-voice button{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:10px;color:var(--secondary);border:1px solid var(--border);border-radius:99px;padding:1px 8px;vertical-align:2px;background:none;cursor:pointer}
-.ft-search-sub-line{font-size:11px;color:var(--text-muted);margin:4px 0 0;line-height:1.8}
+/* 统一空状态（components/ui/EmptyState.tsx）：页面里和 Cmd+K 里共用 */
+.ft-empty{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:16px 18px;border-radius:var(--radius-sm);border:1px dashed color-mix(in srgb,var(--primary-strong) 30%,var(--border));background:color-mix(in srgb,var(--primary-strong) 8%,transparent)}
+.search-dialog .ft-empty{margin:16px 17px 10px;padding:14px;border:0;background:color-mix(in srgb,var(--primary-strong) 10%,transparent)}
+.ft-empty-avatar{width:72px;height:72px;position:relative;display:block}
+.ft-empty-avatar img{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary-strong) 35%,transparent),0 8px 24px var(--glow-pink)}
+.ft-empty-avatar .ft-bubble{position:absolute}
+.ft-empty-avatar .b1{--s:13px;right:-8px;top:2px;animation:ft-float 4s ease-in-out infinite}
+.ft-empty-avatar .b2{--s:8px;right:-15px;top:-10px;animation:ft-float 5s ease-in-out infinite .6s}
+.ft-empty-line{font-size:14px;color:var(--text-primary);line-height:1.7;margin:0}
+.search-dialog .ft-empty-line{font-size:13px}
+.ft-empty-line q{quotes:"「" "」"}
+.ft-empty-line button{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:10px;color:var(--secondary);border:1px solid var(--border);border-radius:99px;padding:1px 8px;vertical-align:2px;background:none;cursor:pointer}
+.ft-empty-hint{font-size:12px;color:var(--text-muted);margin:4px 0 0;line-height:1.8}
+.search-dialog .ft-empty-hint{font-size:11px}
+.ft-empty-hint a{color:var(--secondary)}
 .ft-search-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
 .ft-search-chips a,.ft-search-chips button{font-size:10.5px;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--text-secondary);background:none;cursor:pointer}
 .ft-search-chips a:hover,.ft-search-chips button:hover{border-color:var(--border-highlight);color:var(--text-primary)}
-@media (max-width:520px){.ft-search-empty{grid-template-columns:1fr;justify-items:start}}
-@media (prefers-reduced-motion:reduce){.ft-search-avatar .ft-bubble{animation:none}}
+@media (max-width:520px){.ft-empty{grid-template-columns:1fr;justify-items:start}}
+@media (prefers-reduced-motion:reduce){.ft-empty-avatar .ft-bubble{animation:none}}
 
 /* ---- 目录固定（sticky） ----
  * 原因：styles/firefly.css 第 8 行的 html,body{overflow-x:hidden} 让 body 变成滚动容器，

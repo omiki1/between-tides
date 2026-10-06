@@ -4,6 +4,7 @@ import { ArrowUpRight,Folder } from "lucide-react";
 import { getCategories, getPosts } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { EmptyState } from "@/components/ui/EmptyState";
 export const metadata: Metadata = {
   title: "分类",
   description: "按主题浏览本站的手记：设计、技术、AI 与生活。",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function CategoriesPage(){
   const categories=getCategories();
   const posts=getPosts();
-  const largest=Math.max(...categories.map(category=>category.count));
+  const largest=Math.max(1,...categories.map(category=>category.count));
   return <main id="main" className="container inner">
     <Reveal className="page-head">
       <span className="page-eyebrow"><i/>CATEGORIES / 分类</span>
@@ -26,6 +27,7 @@ export default function CategoriesPage(){
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>全部分类</h2><span className="eyebrow">ALL CATEGORIES</span></div><Link href="/tags/" className="text-link">按标签浏览<ArrowUpRight size={15}/></Link></div>
+      {!categories.length&&<EmptyState line="分类的小房间还空着。" hint="每篇手记的 category 会在这里排成一间间屋子。"/>}
       <div className="taxonomy-grid">
         {categories.map(category=><Link key={category.slug} href={`/categories/${category.slug}/`} className="taxonomy-card">
           <span className="taxonomy-icon"><Folder size={15}/></span>

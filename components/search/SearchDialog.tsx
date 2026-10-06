@@ -3,6 +3,7 @@ import { useCallback,useEffect,useMemo,useRef,useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search,X,CornerDownLeft,Play } from "lucide-react";
 import voices from "@/data/denia-voices.json";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { groupBySection,loadPagefind,searchLegacy,searchPagefind,type SearchHit } from "@/lib/search-client";
 export type SearchSeed = { recent:{title:string;href:string;excerpt:string}[]; suggestions:{label:string;href:string;query?:string}[] };
 /* 输入框空着时轮换的提示：第一句是原来的说明，其余是达妮娅的语气 */
@@ -109,23 +110,15 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
           </li>)}
         </ul>
       </>}
-      {showing&&state.status==="done"&&!groups.length&&<div className="ft-search-empty" role="status">
-        <span className="ft-search-avatar" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element -- 固定尺寸的小头像，已手写 1x/2x */}
-          <img src="/artwork/denia/face-circle-160.webp" srcSet="/artwork/denia/face-circle-160.webp 1x, /artwork/denia/face-circle-320.webp 2x" alt="" width={72} height={72} loading="lazy" decoding="async"/>
-          <i className="ft-bubble b1"/><i className="ft-bubble b2"/>
-        </span>
-        <div>
-          <p className="ft-search-voice"><q>{line.text}</q><button type="button" onClick={playVoice} aria-label={`播放达妮娅语音：${line.text}`}><Play size={10}/>语音</button></p>
-          <p className="ft-search-sub-line">没有找到「{term}」。换一个更短的词，或者从这里开始：</p>
-          <div className="ft-search-chips">
-            {seed.suggestions.map(s=>s.query
-              ?<button type="button" key={s.label} onClick={()=>{setQuery(s.query!);input.current?.focus()}}>{s.label}</button>
-              :<a key={s.label} href={s.href} onClick={event=>{event.preventDefault();go(s.href)}}>{s.label}</a>)}
-          </div>
-          <small className="ft-art-credit">OFFICIAL ART · KURO GAMES <b>· 鸣潮角色资料图</b></small>
+      {showing&&state.status==="done"&&!groups.length&&<EmptyState
+        line={<><q>{line.text}</q><button type="button" onClick={playVoice} aria-label={`播放达妮娅语音：${line.text}`}><Play size={10}/>语音</button></>}
+        hint={<>没有找到「{term}」。换一个更短的词，或者从这里开始：</>}>
+        <div className="ft-search-chips">
+          {seed.suggestions.map(s=>s.query
+            ?<button type="button" key={s.label} onClick={()=>{setQuery(s.query!);input.current?.focus()}}>{s.label}</button>
+            :<a key={s.label} href={s.href} onClick={event=>{event.preventDefault();go(s.href)}}>{s.label}</a>)}
         </div>
-      </div>}
+      </EmptyState>}
       <div className="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
     </div>
   </dialog>;

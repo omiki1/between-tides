@@ -4,6 +4,7 @@ import { ArrowUpRight,Tag as TagIcon } from "lucide-react";
 import { getPosts, getTagSummaries } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { EmptyState } from "@/components/ui/EmptyState";
 export const metadata: Metadata = {
   title: "标签",
   description: "本站的全部标签：从设计、AI 到生活方式。",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function TagsPage(){
   const tags=getTagSummaries();
   const posts=getPosts();
-  const heaviest=Math.max(...tags.map(tag=>tag.count));
+  const heaviest=Math.max(0,...tags.map(tag=>tag.count));
   return <main id="main" className="container inner">
     <Reveal className="page-head">
       <span className="page-eyebrow"><i/>TAGS / 标签</span>
@@ -26,6 +27,7 @@ export default function TagsPage(){
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>标签云</h2><span className="eyebrow">TAG CLOUD</span></div><Link href="/categories/" className="text-link">按分类浏览<ArrowUpRight size={15}/></Link></div>
+      {!tags.length&&<EmptyState line="标签还没长出来呢。" hint="文章带上 tags 之后，就会出现在这片标签云里。"/>}
       <div className="tag-cloud">
         {tags.map(tag=><Link key={tag.slug} href={`/tags/${tag.slug}/`} className={`tag-cloud-item weight-${Math.min(3,tag.count)}`}>
           <span className="tag-cloud-mark">#</span>{tag.name}

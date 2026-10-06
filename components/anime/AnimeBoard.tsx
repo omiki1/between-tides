@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, startTransition } from "react";
 import { Search, Star, X } from "lucide-react";
 import { followLabels, type BangumiItem } from "@/lib/bangumi";
 import { coverSrcSet, coverThumb } from "@/lib/cover-thumb";
+import { EmptyState } from "@/components/ui/EmptyState";
 
 const PAGE = 24;
 
@@ -99,6 +100,14 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
         共 {filtered.length} 部。封面来自哔哩哔哩公开追番列表，点击打开详情或跳转到原页面。
       </p>
 
+      {!filtered.length && (
+        <EmptyState line={query.trim() ? <>没找到「{query.trim()}」……是不是记错名字了？</> : "这一栏里还没有番呢。"}
+          hint="换个关键词，或者把类型和状态放宽一点再看看。">
+          <div className="ft-search-chips">
+            <button type="button" onClick={() => { setQuery(""); filterBy({ type: "全部", status: 0 }); }}>清空筛选</button>
+          </div>
+        </EmptyState>
+      )}
       <ul className="anime-grid">
         {slice.map((item) => (
           <li key={item.id} className="anime-card">

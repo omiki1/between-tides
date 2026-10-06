@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Post } from "@/lib/posts";
-export function PostRow({posts}:{posts:Post[]}){
+import { EmptyState } from "@/components/ui/EmptyState";
+export function PostRow({posts,empty}:{posts:Post[];empty?:React.ReactNode}){
+  if(!posts.length)return <EmptyState line="这里暂时还没有手记呢。" hint={empty??<>先去 <Link href="/blog/">全部手记</Link> 里逛逛吧。</>}/>;
   return <ol className="post-table">
     {posts.map((post,index)=><li key={post.slug}>
       <Link href={`/blog/${post.slug}/`}>
