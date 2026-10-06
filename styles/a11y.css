@@ -107,4 +107,9 @@ html .search-dialog:modal{margin:12vh auto auto;max-height:calc(100dvh - 12vh - 
 @media (max-width:700px){
   html .search-dialog:modal{margin:max(76px,9vh) auto auto;width:calc(100% - 24px);max-height:calc(100dvh - max(76px,9vh) - 24px);border-radius:18px}
 }
+/* ---------- 5. 悬浮球面板里的「搜索」入口（打开同一个 Pagefind 弹窗） ---------- */
+.mobile-fab-links .mobile-fab-search{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 12px;border-radius:14px;
+  border:1px solid color-mix(in srgb,var(--denia-tassel) 40%,var(--border));background:color-mix(in srgb,var(--denia-pink) 14%,var(--surface,transparent));
+  font:inherit;font-size:14px;color:var(--text-primary);cursor:pointer;text-align:left}
+.mobile-fab-links .mobile-fab-search svg{color:var(--denia-tassel)}
 /* === /a11y-v1 === */

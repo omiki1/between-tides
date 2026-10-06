@@ -27,7 +27,7 @@ export function Hero(){
   return()=>{if(timer.current)clearTimeout(timer.current);requestSequence.current++;element?.pause();window.removeEventListener("site-audio",stop)};
  },[]);
  /* 台词池：挂载后再领取（静态导出，SSR 先显示第一句兜底），轮播时跳过其他位置正在显示的台词 */
- useEffect(()=>{setLine(claimVoice("hero").index);return()=>releaseVoice("hero")},[]);
+ useEffect(()=>{const v=claimVoice("hero");let live=true;queueMicrotask(()=>{if(live)setLine(v.index)});return()=>{live=false;releaseVoice("hero")}},[]);
  useEffect(()=>{
   if(reduced||voicePlaying||hold||voiceError)return;
   const id=setTimeout(()=>{

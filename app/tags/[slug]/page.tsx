@@ -25,7 +25,7 @@ export default async function TagPage({params}:PageProps<"/tags/[slug]">){
       <p>带有这个标签的全部手记。最近一次出现在 {tag.latest.replaceAll("-",".")}。</p>
     </Reveal>
     <Reveal as="section" className="home-section">
-      <PostRow posts={posts}/>
+      <PostRow posts={posts} empty={<>这个标签下暂时没有手记，<Link href="/tags/">换个标签</Link>看看？</>}/>
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>相关标签</h2><span className="eyebrow">NEARBY TAGS</span></div></div>

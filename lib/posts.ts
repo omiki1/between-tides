@@ -10,7 +10,14 @@ const postsDirectory=path.join(process.cwd(),"content/posts");
 const DEFAULT_CATEGORY="随笔";
 /** 与 config/site.ts 的 pagination.postsPerPage 保持一致。 */
 export const POSTS_PER_PAGE=12;
-export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:data.cover?String(data.cover):undefined,coverPosition:data.coverPosition?String(data.coverPosition):undefined,hideCover:data.hideCover===true,featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort((a,b)=>b.date.localeCompare(a.date))}
+/**
+ * 日期倒序；同一天的按 slug 倒序（数字按数值比较），保证每次构建顺序一致。
+ * 系列文章（kg-00 … kg-08）因此在同一天内也保持「后写的在前」，归档、分类、列表页都一致。
+ */
+function byDateDesc(a:{date:string;slug:string},b:{date:string;slug:string}):number{
+  return b.date.localeCompare(a.date)||b.slug.localeCompare(a.slug,"en",{numeric:true});
+}
+export function getPosts():Post[]{return fs.readdirSync(postsDirectory).filter(f=>f.endsWith(".md")).map(f=>{const {data,content}=matter(fs.readFileSync(path.join(postsDirectory,f),"utf8"));if(typeof data.title!=="string"||typeof data.date!=="string")throw new Error(`Invalid frontmatter: ${f}`);return {slug:f.slice(0,-3),title:data.title,description:String(data.description||""),date:data.date,updated:data.updated?String(data.updated):undefined,tags:Array.isArray(data.tags)?data.tags.map(String):[],cover:data.cover?String(data.cover):undefined,coverPosition:data.coverPosition?String(data.coverPosition):undefined,hideCover:data.hideCover===true,featured:!!data.featured,readingTime:Math.max(1,Math.ceil(content.replace(/\s/g,"").length/450)),content}}).sort(byDateDesc)}
 export function getPost(slug:string):Post|undefined{return getPosts().find(p=>p.slug===slug)}
 /**
  * 把 frontmatter 的 coverPosition 转成 CSS 变量，供封面图定位使用。

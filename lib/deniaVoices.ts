@@ -9,6 +9,7 @@
  *   const v = claimVoice("hero", { advance: true });            // 轮播：跳到下一句没被别人占用的
  *   releaseVoice("daily");                                       // 组件卸载时释放
  */
+import { useEffect, useState } from "react";
 import raw from "@/data/denia-voices.json";
 
 export type DeniaVoice = {
@@ -130,4 +131,24 @@ export function localDateSeed(date = new Date()) {
 export function timeOfDayOf(date = new Date()) {
   const h = date.getHours();
   return h < 6 ? "late-night" : h < 9 ? "morning" : h < 12 ? "forenoon" : h < 14 ? "noon" : h < 18 ? "afternoon" : "evening";
+}
+
+/**
+ * React 封装：挂载后（浏览器里）领取，卸载时释放。opts 传 null 表示暂不领取（例如时钟还没就绪）。
+ *   const line = useDeniaVoice("daily", now ? { seed: localDateSeed(now) } : null);
+ */
+export function useDeniaVoice(slot: string, opts: ClaimOptions | null): ClaimedVoice | null {
+  const [voice, setVoice] = useState<ClaimedVoice | null>(null);
+  const ready = opts !== null;
+  const seed = opts?.seed;
+  const timeOfDay = opts?.timeOfDay;
+  useEffect(() => {
+    if (!ready) return;
+    releaseVoice(slot);
+    const v = claimVoice(slot, { seed, timeOfDay });
+    let live = true;
+    queueMicrotask(() => { if (live) setVoice(v); });
+    return () => { live = false; releaseVoice(slot); };
+  }, [slot, ready, seed, timeOfDay]);
+  return voice;
 }

@@ -2,22 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { getPage, getTagSummaries, getTotalPages, coverPositionStyle, getFeaturedPost, getPostsExceptFeatured } from "@/lib/posts";
+import { getPosts, getTagSummaries, coverPositionStyle, getFeaturedPost, getPostsExceptFeatured } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 import { PostRow } from "@/components/blog/PostRow";
 export const metadata: Metadata = {
   title: "手记",
-  description: "全部手记：设计、技术、AI 与生活。按时间倒序，每页 12 篇。",
+  description: "全部手记：设计、技术、AI 与生活。按时间倒序排列。",
   alternates: { canonical: "/blog/" },
 };
 const english = (value:string) => value.toUpperCase();
 export default function BlogPage(){
-  const posts = getPage(1);
+  // 站内没有 /blog/page/2/ 路由，之前只取第 1 页（12 篇）会把更早的文章漏掉；文章不多，直接列全部
+  const posts = getPosts();
   const featured = getFeaturedPost() ?? posts[0];
   const tags = getTagSummaries();
-  const total = getTotalPages();
   return <main id="main" className="container inner">
     <Reveal className="page-head">
       <span className="page-eyebrow"><i/>THE JOURNAL / 手记</span>
@@ -26,7 +26,7 @@ export default function BlogPage(){
       <div className="page-stats">
         <span><b>{posts.length}</b> 篇手记</span>
         <span><b>{tags.length}</b> 个标签</span>
-        <span>{total>1?<>共 <b>{total}</b> 页</>:<>最近更新 <b>{featured.date.replaceAll("-",".")}</b></>}</span>
+        <span>最近更新 <b>{posts[0].date.replaceAll("-",".")}</b></span>
       </div>
     </Reveal>
 

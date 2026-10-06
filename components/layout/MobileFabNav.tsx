@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
-import { Compass, X } from "lucide-react";
+import { Compass, Search, X } from "lucide-react";
 import { site } from "@/config/site";
 
 function isActive(pathname: string, href: string) {
@@ -80,6 +80,17 @@ export function MobileFabNav() {
           </button>
         </header>
         <nav className="mobile-fab-links" aria-label="移动浮窗导航">
+          <button
+            type="button"
+            className="mobile-fab-search"
+            onClick={() => {
+              close();
+              requestAnimationFrame(() => window.dispatchEvent(new Event("open-search")));
+            }}
+          >
+            <Search size={16} aria-hidden="true" />
+            搜索
+          </button>
           {site.nav.map((item) => (
             <Link
               key={item.href}

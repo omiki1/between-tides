@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/make-image-variants.mjs",
     "dev": "next dev --hostname 127.0.0.1",
-    "build": "next build",
+    "prebuild": "node scripts/make-image-variants.mjs",
+    "build": "next build && node scripts/fix-rsc-paths.mjs && node scripts/build-search.mjs",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typegen": "next typegen",
+    "pretypecheck": "node scripts/make-image-variants.mjs",
     "typecheck": "next typegen && tsc --noEmit",
-    "verify": "next build && node scripts/verify-export.mjs",
+    "verify": "npm run build && node scripts/verify-export.mjs",
     "check": "npm run lint && npm run typecheck",
     "diagrams": "node scripts/diagrams/render.mjs",
     "diagrams:check": "node scripts/diagrams/check.mjs",
@@ -21,7 +24,9 @@
     "deploy:cf": "npm run build && node scripts/deploy-cloudflare.mjs",
     "deploy:cf:only": "node scripts/deploy-cloudflare.mjs",
     "preview:cf": "npm run build && npx wrangler dev",
-    "deploy:doctor": "node scripts/deploy-cloudflare.mjs --dry-run"
+    "deploy:doctor": "node scripts/deploy-cloudflare.mjs --dry-run",
+    "search:index": "node scripts/build-search.mjs",
+    "images:variants": "node scripts/make-image-variants.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
@@ -52,6 +57,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.2.1",
+    "pagefind": "^1.5.2",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5.9.3",

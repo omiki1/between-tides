@@ -40,3 +40,7 @@ assets/
 # （仅 docs/ASSET_SOURCES.md 的来源表格提到其中一个）。
 # 保留在磁盘上作为来源记录，不进版本库。
 /*.png
+
+# ---- 构建时生成的图片宽度变体（scripts/make-image-variants.mjs）----
+public/**/*.w[0-9]*.webp
+lib/image-variants.json

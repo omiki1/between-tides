@@ -24,7 +24,7 @@ export default async function CategoryPage({params}:PageProps<"/categories/[slug
       <p>这个分类下的全部手记，按时间从新到旧排列。最近更新于 {category.latest.replaceAll("-",".")}。</p>
     </Reveal>
     <Reveal as="section" className="home-section">
-      <PostRow posts={category.posts}/>
+      <PostRow posts={category.posts} empty={<>这个分类还空着，<Link href="/categories/">换个分类</Link>看看？</>}/>
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>换个分类</h2><span className="eyebrow">KEEP BROWSING</span></div></div>

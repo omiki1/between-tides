@@ -4,6 +4,7 @@ import { ArrowUpRight,CalendarDays,ChevronDown } from "lucide-react";
 import { getArchive, getCategories, getPosts } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 export const metadata: Metadata = {
   title: "归档",
@@ -21,12 +22,13 @@ export default function ArchivePage(){
       <div className="page-stats">
         <span><b>{posts.length}</b> 篇手记</span>
         <span><b>{archive.length}</b> 个年份</span>
-        <span>首次记录 <b>{posts[posts.length-1].date.replaceAll("-",".")}</b></span>
+        {posts.length>0&&<span>首次记录 <b>{posts[posts.length-1].date.replaceAll("-",".")}</b></span>}
       </div>
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>按年份</h2><span className="eyebrow">BY YEAR</span></div><Link href="/categories/" className="text-link">按分类浏览<ArrowUpRight size={15}/></Link></div>
       <CategoryBar/>
+      {!archive.length&&<EmptyState line="这里还什么都没有呢……先歇一会儿吧。" hint="第一篇手记写好之后，会按年份排在这里。"/>}
       <div className="archive-years">
         {archive.map((group,index)=>{
           const rows=<ol className="archive-list">

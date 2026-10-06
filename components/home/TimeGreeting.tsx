@@ -30,8 +30,10 @@ export function TimeGreeting() {
   useEffect(() => {
     if (!periodId) return;
     releaseVoice("time-greeting");
-    setVoice(claimVoice("time-greeting", { timeOfDay: periodId, seed: `${localDateSeed()}|${periodId}` }));
-    return () => releaseVoice("time-greeting");
+    const v = claimVoice("time-greeting", { timeOfDay: periodId, seed: `${localDateSeed()}|${periodId}` });
+    let live = true;
+    queueMicrotask(() => { if (live) setVoice(v); });
+    return () => { live = false; releaseVoice("time-greeting"); };
   }, [periodId]);
   const clock = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
   return (
