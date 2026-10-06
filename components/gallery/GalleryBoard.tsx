@@ -2,7 +2,11 @@
 /* eslint-disable @next/next/no-img-element -- local originals with known intrinsic dimensions. */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { X, ArrowLeft, ArrowRight, Grid2X2, LayoutGrid } from "lucide-react";
+import { getImageProps } from "next/image";
 import type { Photo } from "@/data/gallery";
+
+/* 缩略图用 next/image 的 loader 生成 srcset（构建前生成的宽度变体，见 lib/image-loader.ts）；大图仍用原图 */
+const thumbSet = (photo: Photo) => getImageProps({ src: photo.src, alt: "", width: photo.width, height: photo.height, sizes: "(max-width: 700px) 100vw, 560px" }).props;
 
 export function GalleryBoard({ photos }: { photos: Photo[] }) {
   const [compact, setCompact] = useState(false);
@@ -30,7 +34,7 @@ export function GalleryBoard({ photos }: { photos: Photo[] }) {
     <div className={`gallery-board album-board ${compact ? "album-compact" : ""}`}>
       {photos.map((photo, index) => <figure key={photo.id} id={photo.id} className="gallery-item">
         <button className="gallery-open" onClick={event => { opener.current = event.currentTarget; setOpenIndex(index); }} aria-label={`查看${photo.title}`}>
-          <img src={photo.src} alt={photo.title} width={photo.width} height={photo.height} loading="lazy" decoding="async"/>
+          <img src={photo.src} srcSet={thumbSet(photo).srcSet} sizes={thumbSet(photo).sizes} alt={photo.title} width={photo.width} height={photo.height} loading="lazy" decoding="async"/>
           <span className="gallery-zoom" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         </button>
       </figure>)}

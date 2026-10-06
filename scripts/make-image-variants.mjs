@@ -24,6 +24,8 @@ const GROUPS = [
   { dir: "assets/denia/hero", widths: [384, 640, 828, 1080] },
   { dir: "posts", widths: [640, 828, 1080] },
   { dir: "gallery/kg", widths: [640, 828, 1080] },
+  { dir: "gallery", widths: [640, 828, 1080] },
+  { dir: "assets/denia/gallery", widths: [640, 828, 1080] },
 ];
 const manifest = {};
 let made = 0;

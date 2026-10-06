@@ -26,11 +26,9 @@ const wallpaper = sharp(path.join(official, "denia_wallpaper_desktop_01.jpg"));
 const mobile = sharp(path.join(official, "denia_wallpaper_mobile_01.png"));
 const celebration = sharp(path.join(official, "denia_wallpaper_mobile_02.png"));
 const avatarGen = sharp(path.join(generated, "denia_gen_avatar.png"));
-const sleeping = sharp(path.join(generated, "denia_gen_sleeping.png"));
 
 await Promise.all([
   write(avatarGen.clone().extract({ left: 280, top: 0, width: 720, height: 720 }), "character/avatar.webp", 640),
-  write(sleeping.clone(), "gallery/classroom-dream.webp", 1280),
   write(profile01.clone(), "gallery/stagecraft.webp", 1080),
   write(profile01.clone().extract({ left: 40, top: 80, width: 1000, height: 1480 }), "character/stagecraft-crop.webp", 780),
   write(profile02.clone().extract({ left: 40, top: 80, width: 1000, height: 980 }), "character/portrait.webp", 720),

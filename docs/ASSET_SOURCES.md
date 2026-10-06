@@ -212,7 +212,7 @@ Hero 场景使用的角色语音来自游戏音频镜像，逐条记录在 `data
 | public/assets/denia/character/avatar.webp | generated/denia_gen_avatar.png 中心裁切 | 资料卡头像 |
 | public/assets/denia/character/portrait.webp | official-reference/denia_official_profile_02.jpg 头像区 | 备用肖像 |
 | public/assets/denia/character/stagecraft-crop.webp | official-reference/denia_official_profile_01.jpg | 立绘裁切 |
-| public/assets/denia/gallery/classroom-dream.webp | generated/denia_gen_sleeping.png | 图集 |
+| public/gallery/denia-anniversary.webp | official-reference/denia_wallpaper_8k_01.jpg（《鸣潮》2 周年官方壁纸，7680×4320，缩放到 1600×900，未重绘） | 角色相册「笼中的两面」（2026-10-06 起替换原来的生成图 classroom-dream） |
 | public/assets/denia/gallery/stagecraft.webp | denia_official_profile_01.jpg | 图集 |
 | public/assets/denia/gallery/curtain-call.webp | denia_splash_01.jpg | 图集 |
 | public/assets/denia/gallery/name-of-someone.webp | denia_wallpaper_desktop_01.jpg | 图集 |
