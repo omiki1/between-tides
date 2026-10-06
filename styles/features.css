@@ -38,3 +38,13 @@
 .ft-search-chips a:hover,.ft-search-chips button:hover{border-color:var(--border-highlight);color:var(--text-primary)}
 @media (max-width:520px){.ft-search-empty{grid-template-columns:1fr;justify-items:start}}
 @media (prefers-reduced-motion:reduce){.ft-search-avatar .ft-bubble{animation:none}}
+
+/* ---- 目录固定（sticky） ----
+ * 原因：styles/firefly.css 第 8 行的 html,body{overflow-x:hidden} 让 body 变成滚动容器，
+ * 全站所有 position:sticky 都失效（文章右侧目录从来没固定住过）。
+ * overflow-x:clip 同样裁掉横向溢出，但不会生成滚动容器。
+ * TODO(ui师)：把 firefly.css 那一行直接改成 clip 之后，这里的第一条规则可以删掉。 */
+html,body{overflow-x:clip}
+@media (min-width:1101px){
+  .reading-aside{align-self:start;max-height:calc(100vh - 124px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+}
