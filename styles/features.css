@@ -96,3 +96,34 @@ html,body{overflow-x:clip}
 .prose .ft-series-ref.is-current{color:var(--accent);border-bottom-style:solid}
 @media (max-width:560px){.ft-series-top{flex-direction:column;gap:4px}.ft-series-foot{font-size:10px}.ft-series-foot .t{display:none}.ft-series-steps .ft-bubble{--s:14px}.ft-series-steps .current .ft-bubble{--s:20px}}
 @media (prefers-reduced-motion:reduce){.ft-series-steps .current span::after{animation:none}.ft-series-steps .ft-bubble{transition:none}}
+
+/* ---- 404 戳泡泡 ---- */
+.ft-404{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,380px);grid-template-areas:"head stage" "found stage";column-gap:28px;align-items:end}
+.ft-404 .page-head{grid-area:head}
+.ft-404-found{grid-area:found;align-self:start;margin:4px 0 0 28px;font-size:12px;line-height:2;color:var(--text-secondary);min-height:4em}
+.ft-404-found b{color:var(--accent);font-weight:520}
+.ft-404-found a{color:var(--secondary)}
+.ft-404-stage{grid-area:stage;position:relative;height:520px}
+.ft-404-stage figure{margin:0;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;pointer-events:none}
+.ft-404-denia{width:366px;height:auto;filter:drop-shadow(0 18px 40px var(--glow-pink));animation:ft-float 6s ease-in-out infinite}
+.ft-404-stage figcaption{text-align:center}
+.ft-404-pop{position:absolute;z-index:1;padding:6px;border:0;background:none;border-radius:50%;cursor:pointer;animation:ft-rise var(--d,9s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.ft-404-pop .ft-bubble{--s:var(--sz,28px);transition:transform .2s}
+.ft-404-pop:hover .ft-bubble,.ft-404-pop:focus-visible .ft-bubble{transform:scale(1.12)}
+.ft-404-pop:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
+.ft-404-pop.is-popped{pointer-events:none}
+.ft-404-pop.is-popped .ft-bubble{animation:ft-burst .28s ease-out forwards}
+.ft-404-pop:disabled:not(.is-popped){cursor:default;opacity:.6}
+@keyframes ft-rise{50%{transform:translate(10px,-36px)}}
+@keyframes ft-burst{to{transform:scale(1.7);opacity:0}}
+@media (max-width:760px){
+  .ft-404{grid-template-columns:1fr;grid-template-areas:"head" "found" "stage"}
+  .ft-404-found{margin-left:20px}
+  .ft-404-stage{height:380px}
+  .ft-404-denia{width:264px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ft-404-denia,.ft-404-pop{animation:none}
+  .ft-404-pop.is-popped .ft-bubble{animation:none;opacity:0}
+  .ft-404-pop .ft-bubble{transition:none}
+}
