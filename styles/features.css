@@ -68,3 +68,31 @@ html,body{overflow-x:clip}
 @keyframes ft-in{from{opacity:0;transform:translateY(-6px)}}
 @keyframes ft-out{to{opacity:0;transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.ft-outdated,.ft-outdated.is-leaving{animation:none}}
+
+/* ---- 系列进度卡（知识图谱 · 第 N/9 篇） ---- */
+.ft-series{margin:24px 0 2px;padding:16px 18px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--glass);backdrop-filter:blur(14px)}
+.ft-series-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ft-series-top small{letter-spacing:1.6px;color:var(--text-muted);font-size:9px}
+.ft-series-top strong{font-size:13px;font-weight:520;color:var(--text-primary)}
+.ft-series-top strong em{font-style:normal;color:var(--accent);margin-left:8px;font-weight:400;font-size:12px}
+.ft-series-steps{list-style:none;margin:14px 0 2px;padding:0;display:flex;align-items:center}
+.ft-series-steps li{flex:1;display:flex;align-items:center;position:relative}
+.ft-series-steps li:last-child{flex:none}
+.ft-series-steps li:not(:last-child)::after{content:"";flex:1;height:1px;margin:0 4px;background:linear-gradient(90deg,var(--border-highlight),var(--border))}
+.ft-series-steps a,.ft-series-steps span{display:grid;place-items:center;position:relative;padding:4px;margin:-4px;border-radius:50%}
+.ft-series-steps .ft-bubble{--s:16px;opacity:.55;transition:transform .25s}
+.ft-series-steps .read .ft-bubble{opacity:1;background:radial-gradient(circle at 32% 28%,#fff 0 10%,transparent 11%),radial-gradient(circle,color-mix(in srgb,var(--primary-strong) 60%,#fff) 0,var(--primary-strong) 70%,color-mix(in srgb,var(--secondary) 80%,transparent) 100%)}
+.ft-series-steps .current .ft-bubble{--s:24px;opacity:1;box-shadow:0 0 0 4px color-mix(in srgb,var(--primary-strong) 22%,transparent),0 0 18px var(--glow-pink)}
+.ft-series-steps .current span::after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:var(--secondary);top:-3px;right:-1px;box-shadow:0 0 8px var(--secondary);animation:ft-float 3.6s ease-in-out infinite}
+.ft-series-steps a:hover .ft-bubble,.ft-series-steps a:focus-visible .ft-bubble{transform:translateY(-2px) scale(1.12)}
+.ft-series-steps [data-tip]:hover::before,.ft-series-steps [data-tip]:focus-visible::before{content:attr(data-tip);position:absolute;bottom:135%;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:10px;padding:5px 8px;border-radius:8px;background:var(--surface-elevated);border:1px solid var(--border);color:var(--text-secondary);pointer-events:none}
+.ft-series-steps li:first-child [data-tip]::before{left:0;transform:none}
+.ft-series-steps li:last-child [data-tip]::before{left:auto;right:0;transform:none}
+.ft-series-foot{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:10.5px;color:var(--text-muted)}
+.ft-series-foot a{color:var(--text-secondary)}
+.ft-series-foot a:hover{color:var(--text-primary)}
+.ft-pager-series{display:block;font-style:normal;font-size:9px;letter-spacing:1.2px;color:var(--accent);margin-bottom:3px}
+.prose .ft-series-ref{color:var(--secondary);border-bottom:1px dashed color-mix(in srgb,var(--secondary) 60%,transparent);text-decoration:none}
+.prose .ft-series-ref.is-current{color:var(--accent);border-bottom-style:solid}
+@media (max-width:560px){.ft-series-top{flex-direction:column;gap:4px}.ft-series-foot{font-size:10px}.ft-series-foot .t{display:none}.ft-series-steps .ft-bubble{--s:14px}.ft-series-steps .current .ft-bubble{--s:20px}}
+@media (prefers-reduced-motion:reduce){.ft-series-steps .current span::after{animation:none}.ft-series-steps .ft-bubble{transition:none}}
