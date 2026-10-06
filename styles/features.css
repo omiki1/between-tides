@@ -161,3 +161,24 @@ html,body{overflow-x:clip}
   .ft-done-line{font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){.ft-done-denia{transition:none;transform:none}.ft-done-top{transition:none}.ft-done-top:hover{transform:none}}
+
+/* ---- (n) 首页「今日达妮娅」 ----
+   --denia-* 在 f113b1f 里还没有定义，先写成带备用值的形式；ui师 补上变量后自动生效 */
+.ft-today{box-shadow:var(--glow-soft)}
+.ft-today-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ft-today-head .eyebrow{font-size:9px;letter-spacing:1.6px}
+.ft-today-head time{font-size:10px;letter-spacing:.08em;color:var(--denia-pink,#e58fb9);font-variant-numeric:tabular-nums}
+.ft-today-body{margin-top:10px}
+.ft-today-frame{margin:0;aspect-ratio:4/5;border-radius:var(--radius-sm,10px);overflow:hidden;border:1px solid color-mix(in srgb,var(--denia-pink,#f4a6c8) 38%,var(--border));background:linear-gradient(160deg,color-mix(in srgb,var(--denia-blue,#9cc8f2) 22%,transparent),color-mix(in srgb,var(--denia-pink,#f4a6c8) 26%,transparent))}
+.ft-today-frame img{width:100%;height:100%;object-fit:cover;animation:ft-today-in .6s ease both}
+@keyframes ft-today-in{from{opacity:0}to{opacity:1}}
+.ft-today-text{margin-top:10px}
+.ft-today-line{margin:0;min-height:1.7em;font-size:13px;line-height:1.7;color:var(--text-primary);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ft-today-play{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-secondary)}
+.ft-today-play:hover{color:var(--denia-pink,var(--primary-strong));border-color:var(--border-highlight)}
+.ft-today .ft-art-credit{margin-top:4px}
+@media (max-width:980px){
+  .ft-today-body{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:center}
+  .ft-today-text{margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){.ft-today-frame img{animation:none}}

@@ -280,3 +280,17 @@ Hero 场景使用的角色语音来自游戏音频镜像，逐条记录在 `data
 - `clip-pv.mp4`：角色 PV *Resonator Showcase | Denia — Human Mimicry Protocol*，帖子 https://x.com/Wuthering_Waves/status/2056570546268381532 ，原片 1560×720、约 4 分 56 秒。本地取约 50.7–53.8 秒，从颈饰拉到红手套比心，约 3.1 秒，裁掉底部英文字幕，静音、360×412。
 
 角色与影像版权归 Kuro Games，本站仅作个人非商业展示，不声明可商用，也不把它标成鸣潮原声。
+
+## 首页「今日达妮娅」小图（2026-10-06）
+
+全部取自 official-reference 的《鸣潮》官方宣传图（库洛游戏），仅裁切成 4:5 并缩放到 240 / 480 宽 WebP，未重绘、未放大。按浏览器当天日期轮换（`components/home/DeniaToday.tsx`，图池 `data/denia-today.ts`）。
+
+| 文件 public/artwork/denia/today/ | 源文件 | 裁切 (x0,y0,x1,y1) |
+| --- | --- | --- |
+| stagecraft-{240,480}.webp | denia_official_profile_01.jpg | (140,140,940,1140) |
+| portrait-{240,480}.webp | denia_official_profile_02.jpg | (165,150,865,1025) |
+| curtain-{240,480}.webp | denia_splash_01.jpg | (640,60,1360,960) |
+| name-{240,480}.webp | denia_wallpaper_desktop_01.png | (1180,140,1820,940) |
+| party-{240,480}.webp | denia_wallpaper_mobile_01.png | (140,150,940,1150) |
+| peace-{240,480}.webp | denia_wallpaper_mobile_02.png | (100,120,900,1120) |
+| cage-{240,480}.webp | denia_wallpaper_8k_01.jpg | (5600,300,7600,2800) |

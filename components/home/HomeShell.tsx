@@ -8,6 +8,7 @@ import { GamesPreview } from "./GamesPreview";
 import { TimeGreeting } from "./TimeGreeting";
 import { ReactionTest } from "./ReactionTest";
 import { LiveWallpaper } from "./LiveWallpaper";
+import { DeniaToday } from "./DeniaToday";
 
 export function HomeShell({ children }: { children: React.ReactNode }) {
   return (
@@ -22,6 +23,7 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
       <div className="home-main">{children}</div>
       <aside className="home-sidebar home-sidebar-right" aria-label="右侧栏">
         <TimeGreeting />
+        <DeniaToday />
         <SiteStats />
         <GamesPreview />
         <AnimePreview />
