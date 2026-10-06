@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
-    "build": "next build && node scripts/build-search.mjs",
+    "build": "next build && node scripts/fix-rsc-paths.mjs && node scripts/build-search.mjs",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typegen": "next typegen",
