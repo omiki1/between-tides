@@ -137,3 +137,27 @@ html,body{overflow-x:clip}
 .ft-copy:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
 @media (hover:none){.ft-copy{opacity:1}}
 .ft-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---- (k) 文末「读完啦」角落 ---- */
+.ft-done{margin:44px 0 6px}
+.ft-done-card{position:relative;overflow:hidden;display:flex;align-items:flex-end;min-height:132px;padding:18px 210px 18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:linear-gradient(120deg,color-mix(in srgb,var(--surface-elevated) 88%,transparent),color-mix(in srgb,var(--glow-pink) 30%,transparent))}
+.ft-done-text{position:relative;z-index:1;display:grid;gap:6px;justify-items:start}
+.ft-done-eyebrow{font-size:11px;letter-spacing:.14em;color:var(--primary-strong);font-weight:600}
+.ft-done-eyebrow i{font-style:normal;color:var(--text-muted);font-weight:500}
+.ft-done-line{margin:0;font-size:15px;color:var(--text-primary);display:flex;align-items:center;gap:6px}
+.ft-done-sub{margin:0;font-size:12px;color:var(--text-muted)}
+.ft-done-play{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text-secondary);cursor:pointer}
+.ft-done-play:hover{color:var(--primary-strong);border-color:var(--border-highlight)}
+.ft-done-top{margin-top:6px;display:inline-flex;align-items:center;gap:5px;padding:6px 15px 6px 12px;border-radius:999px;cursor:pointer;font-size:12px;color:var(--text-primary);border:1px solid color-mix(in srgb,var(--secondary) 55%,transparent);background:radial-gradient(circle at 26% 28%,rgba(255,255,255,.85) 0 3px,transparent 9px),radial-gradient(120% 140% at 30% 20%,color-mix(in srgb,var(--secondary) 14%,transparent),color-mix(in srgb,var(--primary-strong) 16%,transparent));box-shadow:inset 0 -2px 6px color-mix(in srgb,var(--secondary) 18%,transparent),0 4px 14px color-mix(in srgb,var(--secondary) 14%,transparent);transition:transform .2s,box-shadow .2s}
+.ft-done-top:hover{transform:translateY(-1px);box-shadow:inset 0 -2px 6px color-mix(in srgb,var(--secondary) 24%,transparent),0 6px 18px color-mix(in srgb,var(--secondary) 22%,transparent)}
+.ft-done-play:focus-visible,.ft-done-top:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
+.ft-done-denia{position:absolute;right:14px;bottom:0;width:188px;height:auto;pointer-events:none;opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.3,1)}
+.ft-done.is-in .ft-done-denia{opacity:1;transform:none}
+.ft-done .ft-art-credit{text-align:right}
+@media (max-width:700px){
+  .ft-done{margin-top:34px}
+  .ft-done-card{padding:16px 132px 16px 16px;min-height:118px}
+  .ft-done-denia{width:128px;right:6px}
+  .ft-done-line{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){.ft-done-denia{transition:none;transform:none}.ft-done-top{transition:none}.ft-done-top:hover{transform:none}}
