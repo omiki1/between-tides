@@ -1,0 +1,13 @@
+/* === perf-v1 === 移动端性能：霞鹜文楷只用于标题与短展示文字，正文改用系统 CJK 字体栈。
+ * 文楷 webfont 是按 unicode-range 切片的，正文用它会触发几十个分片下载并拖慢 LCP；
+ * 标题/语录这类短文字只会用到少量字形，分片请求大幅减少。「原版字体」模式（data-font-mode=original）不受影响。 */
+:root{
+  --font-body-cjk:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC","Source Han Sans SC",sans-serif;
+}
+:root[data-font-mode="wenkai"]{--font-active-sans:var(--font-body-cjk)}
+:root[data-font-mode="wenkai"] :is(
+  h1, h2, h3, .brand > span, .greeting, .denia-quote p, .time-greeting-info p, .time-greeting-voice,
+  .page-head h1, .reading-head h1, .footer-tide-line, .footer-brand, .quote-card p, .welcome-toast strong
+){font-family:var(--font-lxgw-wenkai)}
+/* 正文里的标题（文章 h2/h3）也保持文楷；正文段落、列表、表格走系统字体 */
+/* === /perf-v1 === */
