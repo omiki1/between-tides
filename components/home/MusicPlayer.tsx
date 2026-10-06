@@ -210,7 +210,7 @@ export function MusicPlayer() {
         : <>试听流来自 QQ 音乐 · <a href={current.url} target="_blank" rel="noreferrer">打开歌曲 ↗</a></>
       : "");
 
-  return <section className="music-panel music-panel-polish" aria-label="音乐播放器">
+  return <section className="music-panel music-panel-polish" aria-label="音乐播放器" data-pagefind-ignore="all">
     <div className="music-top"><span className="eyebrow"><AudioLines size={13}/> MUSIC</span><div className="music-tools"><button className="autoplay-toggle" type="button" aria-pressed={autoplay} aria-label="进入页面时播放导入的 QQ 音乐" onClick={toggleAutoplay}>{autoplay ? "进页播放开" : "进页播放关"}</button><button className="playlist-trigger" onClick={() => dialog.current?.showModal()} aria-label="打开歌单列表"><ListMusic size={15}/><span>歌单 · {queue.length}</span></button></div></div>
     {showWidget ? <div className="qq-player-wrap">
       <iframe key={`${current.id}-${playerEpoch}`} src={qqPlayer} title={`QQ 音乐播放器：${current.title}`} width="100%" height="65" frameBorder="0" allow="autoplay; encrypted-media" loading={autoplay ? "eager" : "lazy"} referrerPolicy="strict-origin-when-cross-origin"/>

@@ -1,0 +1,40 @@
+/*
+ * 交互功能的样式（搜索、目录、过期提醒、系列导航、404 泡泡……）。
+ * 只用 styles/tokens.css 里已有的 token；不改 globals.css / firefly.css / texture.css。
+ * 类名统一 ft- 前缀，避免和视觉层的类冲突。
+ */
+
+/* layout 里包住页面主体的那层：只给 Pagefind 圈定索引范围，不参与布局 */
+.ft-pf-body{display:contents}
+
+/* 共用：CSS 画的泡泡（达妮娅的泡影母题） */
+.ft-bubble{--s:14px;width:var(--s);height:var(--s);border-radius:50%;display:inline-block;flex:none;position:relative;
+  background:radial-gradient(circle at 32% 28%,#fff 0 9%,transparent 10%),radial-gradient(circle at 50% 50%,transparent 52%,color-mix(in srgb,var(--secondary) 55%,transparent) 66%,color-mix(in srgb,var(--primary-strong) 70%,transparent) 100%);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--primary-strong) 45%,transparent)}
+@keyframes ft-float{50%{transform:translateY(-4px)}}
+/* 官方立绘旁的出处小字，写法同首页「精选」卡片的 OFFICIAL ART · KURO GAMES */
+.ft-art-credit{display:block;letter-spacing:1.6px;color:var(--text-muted);font-size:8px;text-transform:uppercase;margin-top:8px}
+.ft-art-credit b{font-weight:500;letter-spacing:.4px;text-transform:none}
+
+/* ---- Cmd+K：按板块分组 + 空结果 ---- */
+.ft-search-group{list-style:none}
+.ft-search-group>ul{list-style:none;margin:0;padding:0}
+.ft-search-group-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:8px;padding:10px 10px 5px;font-size:9px;letter-spacing:1.6px;color:var(--text-muted);background:linear-gradient(var(--surface) 70%,transparent)}
+.ft-search-group-head i{font-style:normal;opacity:.7}
+.ft-search-sub{font-style:normal;font-weight:400;color:var(--text-muted)}
+.search-results small mark{background:color-mix(in srgb,var(--primary-strong) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}
+.ft-search-empty{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:16px 17px 10px;padding:14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--primary-strong) 10%,transparent)}
+.ft-search-avatar{width:72px;height:72px;position:relative;display:block}
+.ft-search-avatar img{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary-strong) 35%,transparent),0 8px 24px var(--glow-pink)}
+.ft-search-avatar .ft-bubble{position:absolute}
+.ft-search-avatar .b1{--s:13px;right:-8px;top:2px;animation:ft-float 4s ease-in-out infinite}
+.ft-search-avatar .b2{--s:8px;right:-15px;top:-10px;animation:ft-float 5s ease-in-out infinite .6s}
+.ft-search-voice{font-size:13px;color:var(--text-primary);line-height:1.7;margin:0}
+.ft-search-voice q{quotes:"「" "」"}
+.ft-search-voice button{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:10px;color:var(--secondary);border:1px solid var(--border);border-radius:99px;padding:1px 8px;vertical-align:2px;background:none;cursor:pointer}
+.ft-search-sub-line{font-size:11px;color:var(--text-muted);margin:4px 0 0;line-height:1.8}
+.ft-search-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+.ft-search-chips a,.ft-search-chips button{font-size:10.5px;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--text-secondary);background:none;cursor:pointer}
+.ft-search-chips a:hover,.ft-search-chips button:hover{border-color:var(--border-highlight);color:var(--text-primary)}
+@media (max-width:520px){.ft-search-empty{grid-template-columns:1fr;justify-items:start}}
+@media (prefers-reduced-motion:reduce){.ft-search-avatar .ft-bubble{animation:none}}

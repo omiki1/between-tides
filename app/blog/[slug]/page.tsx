@@ -28,11 +28,11 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
     <ReadingProgress/>
     <Reveal className="reading-head">
-      <Link className="back-link" href="/blog/"><ArrowLeft size={15}/>所有手记</Link>
+      <Link className="back-link" href="/blog/" data-pagefind-ignore="all"><ArrowLeft size={15}/>所有手记</Link>
       <div className="post-meta">{post.tags.map(t=>t.toUpperCase()).join(" / ")}<span>{post.date.replaceAll("-",".")}</span></div>
       <h1>{post.title}</h1>
       <p className="reading-lede">{post.description}</p>
-      <div className="reading-facts">
+      <div className="reading-facts" data-pagefind-ignore="all">
         <span><CalendarDays size={14}/>{post.date.replaceAll("-",".")}</span>
         <span><Clock size={14}/>约 {post.readingTime} 分钟</span>
         {category&&<span><Folder size={14}/><Link href={`/categories/${category.slug}/`}>{category.name}</Link></span>}
@@ -44,7 +44,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
     {post.cover&&!post.hideCover&&<Reveal className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Reveal>}
     <div className="reading-layout">
       <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
-      <aside className="reading-aside">
+      <aside className="reading-aside" data-pagefind-ignore="all">
         <TableOfContents headings={headings}/>
         {category&&<div className="aside-card">
           <span className="eyebrow">CATEGORY</span>
@@ -59,7 +59,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
         {post.updated&&<p className="aside-note">最后更新 {post.updated.replaceAll("-",".")}</p>}
       </aside>
     </div>
-    <nav className="post-pager" aria-label="相邻手记">
+    <nav className="post-pager" aria-label="相邻手记" data-pagefind-ignore="all">
       {previous?<Link href={`/blog/${previous.slug}/`}><ArrowLeft size={16}/><span><small>上一篇</small>{previous.title}</span></Link>:<span/>}
       {next?<Link href={`/blog/${next.slug}/`} className="pager-next"><span><small>下一篇</small>{next.title}</span><ArrowRight size={16}/></Link>:<span/>}
     </nav>

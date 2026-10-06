@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState, startTransition } from "react";
+import { useEffect, useMemo, useState, startTransition } from "react";
 import { Search, Star, X } from "lucide-react";
 import { followLabels, type BangumiItem } from "@/lib/bangumi";
 
@@ -17,6 +17,11 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
   const [sort, setSort] = useState<"rating-desc" | "rating-asc" | "title">("rating-desc");
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState<BangumiItem | null>(null);
+  /* Cmd+K 里的追番结果会带 ?q=番名 跳过来，这里接住并预填搜索框。 */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) startTransition(() => { setQuery(q); setPage(1); });
+  }, []);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();

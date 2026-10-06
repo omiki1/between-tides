@@ -1,7 +1,7 @@
 import { site } from "@/config/site";
 /** Right-edge section rail for inner pages: same navigation, fewer pixels. */
 export function SideRail({current}:{current:string}){
-  return <nav className="side-rail" aria-label="区块导航">
+  return <nav className="side-rail" aria-label="区块导航" data-pagefind-ignore="all">
     <span className="side-rail-line" aria-hidden="true"/>
     {site.nav.map((item,index)=>{
       const key = item.href.replaceAll("/","") || "home";
