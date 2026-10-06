@@ -1,0 +1,110 @@
+/* === a11y-v1 === 可读性与可点性底线（审计 AUDIT.md G1/G2/G3 + 追番页手机端）
+ * 1) 字号底线：中文/正文 ≥ 11px，纯大写或数字的微标签 ≥ 10px。选择器统一加 html 前缀，压过各处媒体查询里的旧值。
+ * 2) ≤700px 点按目标 ≥ 44×44：只扩大可点区域（透明伪元素 / padding+负 margin），视觉尺寸不变。
+ * 3) 追番页 ≤980px：番剧列表排到侧栏前面；站点速记与头像卡右侧不再贴边/被截。 */
+
+/* ---------- 1b. 大写 / 数字微标签：≥ 10px ---------- */
+html :is(
+  .brand small, .hero-intro, .hero-bottom .eyebrow, .now-header .eyebrow, .music-top .eyebrow,
+  .aside-card .eyebrow, .steam-card-meta .eyebrow, .featured-work .eyebrow, .section-title .eyebrow,
+  .now-bottom span, .now-bottom time, .featured-work-meta small, .featured-tag span,
+  .post-meta, .post-meta span, .graph-label, .album-card-body small,
+  .time-greeting-meta span, .calendar-grid, .calendar-grid span:not(.calendar-week),
+  .track-progress span, .side-rail i, .reading-head .post-meta, .category-bar a span
+){font-size:10px}
+/* ---------- 1a. 中文 / 正文类：≥ 11px ---------- */
+html :is(
+  .search-trigger kbd, .ambiance-trigger-label, .theme-switch button span,
+  .now-content span, .project-status, .project-links, .project-repo, .section-footnote,
+  .album-group-label, .featured-tag, .small-post .post-date, .tags span, .stat-grid dt,
+  .anime-preview-grid a, .guestbook-note span, .friend-name small, .autoplay-toggle,
+  .playlist-trigger, .playlist-trigger span, .track-info p, .music-status,
+  .footer-top > div a, .footer-bottom, .footer-bottom span, .copyright,
+  .page-stats, .page-stats span, .page-stats b, .page-eyebrow, .category-bar-label,
+  .post-table-meta, .post-table-meta > *, .reading-facts span, .tag-chip,
+  .prose-figure figcaption, .toc .depth-3 a, .post-pager small, .gallery-note,
+  .anime-type, .about-location, .steam-fav small, .archive-year-count, .archive-tags,
+  .archive-time, .profile-links a, .calendar-grid .calendar-week, .side-rail a span,
+  .now-bottom span span, .graph-node
+){font-size:11px}
+/* 1a 放在 1b 之后：两份 :is() 特异度相同，后写的赢，确保嵌套的中文 span 拿到 11px */
+
+
+html .brand small{letter-spacing:2px}
+html .graph-label{letter-spacing:1.2px}
+
+/* G3：品牌名在手机上不折行 */
+@media (max-width:700px){
+  html .brand>span{white-space:nowrap}
+}
+
+/* ---------- 2. ≤700px 点按目标 ≥ 44×44（不改视觉尺寸） ---------- */
+@media (max-width:700px){
+  /* 顶栏：FAB 小球已经提供同一套导航，隐藏重复的汉堡按钮，给工具按钮腾出空间 */
+  html .nav-tools .mobile-menu{display:none}
+
+  /* 通用透明热区：以元素中心为基准，至少 44×44，原尺寸更大时不缩小 */
+  html :is(
+    .search-trigger, .ambiance-trigger, .hero-actions a, .hero-bottom a, .now-header a,
+    .profile-links a, .widget-head .text-link, .widget-list a, .section-title .text-link,
+    .guestbook-toolbar button, .autoplay-toggle, .playlist-trigger, .music-controls button,
+    .footer-brand, .category-bar a, .back-link, .tag-chip, .aside-card .text-link,
+    .anime-type-tabs button, .gallery-filter button, .anime-pages button, .steam-profile-link,
+    .method-note a, .footer-top > div a, .reading-facts a
+  ){position:relative}
+  html .project-repo{position:absolute}
+  html :is(
+    .search-trigger, .ambiance-trigger, .hero-actions a, .hero-bottom a, .now-header a,
+    .profile-links a, .widget-head .text-link, .widget-list a, .section-title .text-link,
+    .guestbook-toolbar button, .autoplay-toggle, .playlist-trigger, .music-controls button,
+    .footer-brand, .category-bar a, .back-link, .tag-chip, .aside-card .text-link,
+    .anime-type-tabs button, .gallery-filter button, .anime-pages button, .steam-profile-link,
+    .method-note a, .footer-top > div a, .reading-facts a, .project-repo
+  )::after{
+    content:"";position:absolute;left:50%;top:50%;
+    width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%);
+    background:none;border:0;box-shadow:none;pointer-events:auto;
+  }
+  /* 文字切换按钮的 ::after 已被"激活态"占用，改用 ::before */
+  html .font-switch{position:relative}
+  html .font-switch::before{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+  /* 日/夜两个相邻按钮：热区各自向外延伸，互不重叠 */
+  html .theme-switch button{position:relative}
+  html .theme-switch button::after{content:"";position:absolute;top:50%;height:44px;width:44px;transform:translateY(-50%)}
+  html .theme-switch .theme-night::after{right:0}
+  html .theme-switch .theme-dream::after{left:0}
+  /* 文章目录：链接自带 ::after 当前项标记，用上下 padding + 负 margin 扩大 */
+  html .toc a{display:inline-block;padding-block:15px;margin-block:-15px}
+  /* 原生控件不能挂伪元素 */
+  html .anime-search input{min-height:44px;margin-block:-9px}
+  html .anime-sort select{min-height:44px}
+  html .album-credits>summary{padding-block:12px;margin-block:-12px}
+  html :is(.volume, .track-progress) input[type=range]{box-sizing:content-box;padding-block:21px;margin-block:-21px;background-clip:content-box}
+  html .brand{min-height:44px}
+  /* 类型页签在横向滚动容器里，伪元素会被裁掉，直接给 44px 高（视觉 +5px） */
+  html .anime-type-tabs button{min-height:44px}
+}
+
+/* ---------- 3. 追番页手机端 ---------- */
+@media (max-width:980px){
+  html .anime-shell .anime-center{order:-3}
+}
+@media (max-width:700px){
+  /* 四张统计卡改成 2×2 紧凑排列，让搜索框和番剧列表在首屏露出来 */
+  html .anime-stat-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+  html .anime-stat-cards article{padding:10px 12px;gap:3px}
+  html .anime-stat-cards b{font-size:18px}
+}
+@media (max-width:980px){
+  html .stat-grid .visit-stat dd{padding-right:10px}
+  html .profile-card .profile-bio{padding-right:8px}
+}
+/* ---------- 4. 模态框定位 ----------
+ * firefly.css 给 .search-dialog 等加了 position:relative（角标用），全局重置又把 margin 清成 0，
+ * 两者一起冲掉了浏览器给 :modal 的 fixed + margin:auto 居中，导致大图/搜索框贴在左上角或顶边。 */
+html dialog:modal{position:fixed;inset:0;margin:auto}
+html .search-dialog:modal{margin:12vh auto auto;max-height:calc(100dvh - 12vh - 32px)}
+@media (max-width:700px){
+  html .search-dialog:modal{margin:max(76px,9vh) auto auto;width:calc(100% - 24px);max-height:calc(100dvh - max(76px,9vh) - 24px);border-radius:18px}
+}
+/* === /a11y-v1 === */
