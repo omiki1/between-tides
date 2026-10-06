@@ -11,6 +11,7 @@ import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { OutdatedNotice } from "@/components/blog/OutdatedNotice";
 import { SeriesCard } from "@/components/blog/SeriesCard";
+import { CodeCopy } from "@/components/blog/CodeCopy";
 import { getSeries, linkSeriesRefs } from "@/lib/series";
 export function generateStaticParams(){return getPostSlugs().map(slug=>({slug}))}
 export async function generateMetadata({params}:PageProps<"/blog/[slug]">):Promise<Metadata>{
@@ -56,6 +57,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
       <div className="ft-article-col">
         <OutdatedNotice date={post.date} updated={post.updated} seriesHref={category?`/categories/${category.slug}/`:undefined}/>
         <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
+        <CodeCopy/>
       </div>
       <aside className="reading-aside" data-pagefind-ignore="all">
         <TableOfContents headings={headings}/>

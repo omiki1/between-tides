@@ -10,6 +10,7 @@ import { Sakura } from "@/components/effects/Sakura";
 import { MusicDock } from "@/components/layout/MusicDock";
 import { VisitRecorder } from "@/components/layout/VisitRecorder";
 import { SearchDialog, type SearchSeed } from "@/components/search/SearchDialog";
+import { DeniaDetails } from "@/components/effects/DeniaDetails";
 import { getCategories, getPosts, getTagSummaries } from "@/lib/posts";
 import { ReadingProgress } from "@/components/effects/ReadingProgress";
 import { WelcomeToast } from "@/components/effects/WelcomeToast";
@@ -30,4 +31,4 @@ function searchSeed():SearchSeed{
   suggestions.push({label:"按时间浏览",href:"/archive/"});
   return {recent,suggestions};
 }
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><Sakura/><PointerEffects/><ReadingProgress/><Navbar/><WelcomeToast/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/></Providers></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><Sakura/><PointerEffects/><ReadingProgress/><Navbar/><WelcomeToast/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/><DeniaDetails/></Providers></body></html>}

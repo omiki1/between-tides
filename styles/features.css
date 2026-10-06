@@ -127,3 +127,13 @@ html,body{overflow-x:clip}
   .ft-404-pop.is-popped .ft-bubble{animation:none;opacity:0}
   .ft-404-pop .ft-bubble{transition:none}
 }
+
+/* ---- (m) 代码块复制按钮 ---- */
+.ft-code{position:relative}
+.ft-copy{position:absolute;top:14px;right:14px;z-index:3;padding:3px 10px;border-radius:999px;border:1px solid var(--border);background:color-mix(in srgb,var(--surface-elevated) 82%,transparent);color:var(--text-secondary);font-size:11px;line-height:1.6;letter-spacing:.04em;cursor:pointer;opacity:.72;transition:opacity .2s,color .2s,border-color .2s}
+.ft-code:hover .ft-copy,.ft-copy:focus-visible{opacity:1}
+.ft-copy:hover{color:var(--text-primary);border-color:var(--border-highlight)}
+.ft-copy.is-done{color:var(--primary-strong);border-color:color-mix(in srgb,var(--primary-strong) 55%,transparent);opacity:1}
+.ft-copy:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
+@media (hover:none){.ft-copy{opacity:1}}
+.ft-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}

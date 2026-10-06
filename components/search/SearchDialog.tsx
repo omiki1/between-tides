@@ -5,6 +5,8 @@ import { Search,X,CornerDownLeft,Play } from "lucide-react";
 import voices from "@/data/denia-voices.json";
 import { groupBySection,loadPagefind,searchLegacy,searchPagefind,type SearchHit } from "@/lib/search-client";
 export type SearchSeed = { recent:{title:string;href:string;excerpt:string}[]; suggestions:{label:string;href:string;query?:string}[] };
+/* 输入框空着时轮换的提示：第一句是原来的说明，其余是达妮娅的语气 */
+const PLACEHOLDERS = ["搜文章、项目、随记或图片…","有人在这藏了秘密？","想找什么，慢慢打就好～","试试「知识图谱」或「docker」","番名和图集也搜得到哦"];
 type State = { query:string; hits:SearchHit[]; status:"idle"|"loading"|"done"|"error" };
 export function SearchDialog({seed}:{seed:SearchSeed}){
   const router=useRouter();
@@ -14,7 +16,9 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
   const [state,setState]=useState<State>({query:"",hits:[],status:"idle"});
   const [cursor,setCursor]=useState(0);
   const [voice,setVoice]=useState(0);
-  const open=useCallback(()=>{void loadPagefind();dialog.current?.showModal();requestAnimationFrame(()=>input.current?.focus())},[]);
+  const [hint,setHint]=useState(0);
+  const [isOpen,setIsOpen]=useState(false);
+  const open=useCallback(()=>{void loadPagefind();setHint(0);setIsOpen(true);dialog.current?.showModal();requestAnimationFrame(()=>input.current?.focus())},[]);
   const close=useCallback(()=>{dialog.current?.close()},[]);
   useEffect(()=>{
     const onOpen=()=>open();
@@ -28,6 +32,12 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
     window.addEventListener("keydown",onKey);
     return ()=>{window.removeEventListener("open-search",onOpen);window.removeEventListener("keydown",onKey)};
   },[open,close]);
+  /* 对话框开着且输入框为空时，每 3.2 秒换一句占位提示 */
+  useEffect(()=>{
+    if(!isOpen||query)return;
+    const timer=window.setInterval(()=>setHint(i=>(i+1)%PLACEHOLDERS.length),3200);
+    return ()=>window.clearInterval(timer);
+  },[isOpen,query]);
   /* 输入停顿 140ms 再查；只采用最后一次查询的结果。 */
   useEffect(()=>{
     const term=query.trim();
@@ -61,11 +71,11 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
   }
   const line=voices[voice%voices.length];
   const playVoice=()=>{try{void new Audio(line.src).play()}catch{/* 浏览器拒绝播放时静默 */}};
-  return <dialog ref={dialog} className="search-dialog" aria-label="站内搜索" onClose={()=>{setQuery("");setCursor(0)}} onClick={event=>{if(event.target===event.currentTarget)close()}}>
+  return <dialog ref={dialog} className="search-dialog" aria-label="站内搜索" onClose={()=>{setQuery("");setCursor(0);setIsOpen(false)}} onClick={event=>{if(event.target===event.currentTarget)close()}}>
     <div className="search-panel">
       <div className="search-field">
         <Search size={17}/>
-        <input ref={input} value={query} onChange={event=>{setQuery(event.target.value);setCursor(0)}} onKeyDown={onInputKeyDown} type="search" placeholder="搜文章、项目、随记或图片…" aria-label="搜索关键词" aria-controls="search-results" autoComplete="off"/>
+        <input ref={input} value={query} onChange={event=>{setQuery(event.target.value);setCursor(0)}} onKeyDown={onInputKeyDown} type="search" placeholder={PLACEHOLDERS[hint]} aria-label="搜索关键词" aria-controls="search-results" autoComplete="off"/>
         <button className="icon-button" onClick={close} aria-label="关闭搜索"><X size={17}/></button>
       </div>
       {!term&&<>
@@ -101,6 +111,7 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
       </>}
       {showing&&state.status==="done"&&!groups.length&&<div className="ft-search-empty" role="status">
         <span className="ft-search-avatar" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element -- 固定尺寸的小头像，已手写 1x/2x */}
           <img src="/artwork/denia/face-circle-160.webp" srcSet="/artwork/denia/face-circle-160.webp 1x, /artwork/denia/face-circle-320.webp 2x" alt="" width={72} height={72} loading="lazy" decoding="async"/>
           <i className="ft-bubble b1"/><i className="ft-bubble b2"/>
         </span>
