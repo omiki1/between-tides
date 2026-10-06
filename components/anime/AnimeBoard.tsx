@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState, startTransition } from "react";
 import { Search, Star, X } from "lucide-react";
 import { followLabels, type BangumiItem } from "@/lib/bangumi";
+import { coverSrcSet, coverThumb } from "@/lib/cover-thumb";
 
 const PAGE = 24;
 
@@ -103,7 +104,7 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
           <li key={item.id} className="anime-card">
             <button type="button" onClick={() => setOpen(item)} aria-label={`查看 ${item.title}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.cover} alt="" width={220} height={293} loading="lazy" decoding="async" referrerPolicy="no-referrer" crossOrigin="anonymous" />
+              <img src={coverThumb(item.cover, 220, 293)} srcSet={coverSrcSet(item.cover, 220, 293)} alt="" width={220} height={293} loading="lazy" decoding="async" referrerPolicy="no-referrer" crossOrigin="anonymous" />
               {item.rating > 0 ? (
                 <span className="anime-score">
                   <Star size={11} />
@@ -139,7 +140,7 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
               <X size={18} />
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={open.cover} alt="" width={280} height={373} referrerPolicy="no-referrer" />
+            <img src={coverThumb(open.cover, 280, 373)} srcSet={coverSrcSet(open.cover, 280, 373)} alt="" width={280} height={373} decoding="async" referrerPolicy="no-referrer" />
             <div>
               <span className="eyebrow">{open.seasonTypeName} · {followLabels[open.followStatus]}</span>
               <h2>{open.title}</h2>

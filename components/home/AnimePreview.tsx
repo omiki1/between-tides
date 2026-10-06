@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getBangumi, getBangumiStats } from "@/lib/bangumi";
+import { coverSrcSet, coverThumb } from "@/lib/cover-thumb";
 
 export function AnimePreview() {
   const items = getBangumi().slice(0, 6);
@@ -17,7 +18,7 @@ export function AnimePreview() {
           <li key={item.id}>
             <a href={item.link} target="_blank" rel="noreferrer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.cover} alt="" width={72} height={96} loading="lazy" referrerPolicy="no-referrer" />
+              <img src={coverThumb(item.cover, 72, 96)} srcSet={coverSrcSet(item.cover, 72, 96)} alt="" width={72} height={96} loading="lazy" decoding="async" referrerPolicy="no-referrer" />
               <span>{item.title}</span>
             </a>
           </li>
