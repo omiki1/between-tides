@@ -13,13 +13,13 @@
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--primary-strong) 45%,transparent)}
 @keyframes ft-float{50%{transform:translateY(-4px)}}
 /* 官方立绘旁的出处小字，写法同首页「精选」卡片的 OFFICIAL ART · KURO GAMES */
-.ft-art-credit{display:block;letter-spacing:1.6px;color:var(--text-muted);font-size:8px;text-transform:uppercase;margin-top:8px}
+.ft-art-credit{display:block;letter-spacing:1.6px;color:var(--text-secondary);font-size:11px;text-transform:uppercase;margin-top:8px}
 .ft-art-credit b{font-weight:500;letter-spacing:.4px;text-transform:none}
 
 /* ---- Cmd+K：按板块分组 + 空结果 ---- */
 .ft-search-group{list-style:none}
 .ft-search-group>ul{list-style:none;margin:0;padding:0}
-.ft-search-group-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:8px;padding:10px 10px 5px;font-size:9px;letter-spacing:1.6px;color:var(--text-muted);background:linear-gradient(var(--surface) 70%,transparent)}
+.ft-search-group-head{position:sticky;top:0;z-index:1;display:flex;align-items:center;gap:8px;padding:10px 10px 5px;font-size:11px;letter-spacing:1.6px;color:var(--text-muted);background:linear-gradient(var(--surface) 70%,transparent)}
 .ft-search-group-head i{font-style:normal;opacity:.7}
 .ft-search-sub{font-style:normal;font-weight:400;color:var(--text-muted)}
 .search-results small mark{background:color-mix(in srgb,var(--primary-strong) 32%,transparent);color:inherit;border-radius:3px;padding:0 2px}
@@ -34,7 +34,7 @@
 .ft-empty-line{font-size:14px;color:var(--text-primary);line-height:1.7;margin:0}
 .search-dialog .ft-empty-line{font-size:13px}
 .ft-empty-line q{quotes:"「" "」"}
-.ft-empty-line button{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:10px;color:var(--secondary);border:1px solid var(--border);border-radius:99px;padding:1px 8px;vertical-align:2px;background:none;cursor:pointer}
+.ft-empty-line button{display:inline-flex;align-items:center;gap:4px;margin-left:8px;font-size:11px;color:var(--secondary);border:1px solid var(--border);border-radius:99px;padding:1px 8px;vertical-align:2px;background:none;cursor:pointer}
 .ft-empty-hint{font-size:12px;color:var(--text-muted);margin:4px 0 0;line-height:1.8}
 .search-dialog .ft-empty-hint{font-size:11px}
 .ft-empty-hint a{color:var(--secondary)}
@@ -77,7 +77,7 @@ html,body{overflow-x:clip}
 /* ---- 系列进度卡（知识图谱 · 第 N/9 篇） ---- */
 .ft-series{margin:24px 0 2px;padding:16px 18px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--glass);backdrop-filter:blur(14px)}
 .ft-series-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.ft-series-top small{letter-spacing:1.6px;color:var(--text-muted);font-size:9px}
+.ft-series-top small{letter-spacing:1.6px;color:var(--text-muted);font-size:11px}
 .ft-series-top strong{font-size:13px;font-weight:520;color:var(--text-primary)}
 .ft-series-top strong em{font-style:normal;color:var(--accent);margin-left:8px;font-weight:400;font-size:12px}
 .ft-series-steps{list-style:none;margin:14px 0 2px;padding:0;display:flex;align-items:center}
@@ -90,16 +90,16 @@ html,body{overflow-x:clip}
 .ft-series-steps .current .ft-bubble{--s:24px;opacity:1;box-shadow:0 0 0 4px color-mix(in srgb,var(--primary-strong) 22%,transparent),0 0 18px var(--glow-pink)}
 .ft-series-steps .current span::after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:var(--secondary);top:-3px;right:-1px;box-shadow:0 0 8px var(--secondary);animation:ft-float 3.6s ease-in-out infinite}
 .ft-series-steps a:hover .ft-bubble,.ft-series-steps a:focus-visible .ft-bubble{transform:translateY(-2px) scale(1.12)}
-.ft-series-steps [data-tip]:hover::before,.ft-series-steps [data-tip]:focus-visible::before{content:attr(data-tip);position:absolute;bottom:135%;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:10px;padding:5px 8px;border-radius:8px;background:var(--surface-elevated);border:1px solid var(--border);color:var(--text-secondary);pointer-events:none}
+.ft-series-steps [data-tip]:hover::before,.ft-series-steps [data-tip]:focus-visible::before{content:attr(data-tip);position:absolute;bottom:135%;left:50%;transform:translateX(-50%);z-index:2;white-space:nowrap;font-size:11px;padding:5px 8px;border-radius:8px;background:var(--surface-elevated);border:1px solid var(--border);color:var(--text-secondary);pointer-events:none}
 .ft-series-steps li:first-child [data-tip]::before{left:0;transform:none}
 .ft-series-steps li:last-child [data-tip]::before{left:auto;right:0;transform:none}
 .ft-series-foot{display:flex;justify-content:space-between;gap:10px;margin-top:10px;font-size:10.5px;color:var(--text-muted)}
 .ft-series-foot a{color:var(--text-secondary)}
 .ft-series-foot a:hover{color:var(--text-primary)}
-.ft-pager-series{display:block;font-style:normal;font-size:9px;letter-spacing:1.2px;color:var(--accent);margin-bottom:3px}
+.ft-pager-series{display:block;font-style:normal;font-size:11px;letter-spacing:1.2px;color:var(--accent);margin-bottom:3px}
 .prose .ft-series-ref{color:var(--secondary);border-bottom:1px dashed color-mix(in srgb,var(--secondary) 60%,transparent);text-decoration:none}
 .prose .ft-series-ref.is-current{color:var(--accent);border-bottom-style:solid}
-@media (max-width:560px){.ft-series-top{flex-direction:column;gap:4px}.ft-series-foot{font-size:10px}.ft-series-foot .t{display:none}.ft-series-steps .ft-bubble{--s:14px}.ft-series-steps .current .ft-bubble{--s:20px}}
+@media (max-width:560px){.ft-series-top{flex-direction:column;gap:4px}.ft-series-foot{font-size:11px}.ft-series-foot .t{display:none}.ft-series-steps .ft-bubble{--s:14px}.ft-series-steps .current .ft-bubble{--s:20px}}
 @media (prefers-reduced-motion:reduce){.ft-series-steps .current span::after{animation:none}.ft-series-steps .ft-bubble{transition:none}}
 
 /* ---- 404 戳泡泡 ---- */
@@ -171,8 +171,8 @@ html,body{overflow-x:clip}
    --denia-* 在 f113b1f 里还没有定义，先写成带备用值的形式；ui师 补上变量后自动生效 */
 .ft-today{box-shadow:var(--glow-soft)}
 .ft-today-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ft-today-head .eyebrow{font-size:9px;letter-spacing:1.6px}
-.ft-today-head time{font-size:10px;letter-spacing:.08em;color:var(--denia-pink,#e58fb9);font-variant-numeric:tabular-nums}
+.ft-today-head .eyebrow{font-size:11px;letter-spacing:1.6px}
+.ft-today-head time{font-size:11px;letter-spacing:.08em;color:var(--denia-pink,#e58fb9);font-variant-numeric:tabular-nums}
 .ft-today-body{margin-top:10px}
 .ft-today-frame{margin:0;aspect-ratio:4/5;border-radius:var(--radius-sm,10px);overflow:hidden;border:1px solid color-mix(in srgb,var(--denia-pink,#f4a6c8) 38%,var(--border));background:linear-gradient(160deg,color-mix(in srgb,var(--denia-blue,#9cc8f2) 22%,transparent),color-mix(in srgb,var(--denia-pink,#f4a6c8) 26%,transparent))}
 .ft-today-frame img{width:100%;height:100%;object-fit:cover;animation:ft-today-in .6s ease both}
