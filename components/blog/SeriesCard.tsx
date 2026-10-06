@@ -39,7 +39,7 @@ export function SeriesCard({series}:{series:Series}){
         const label=`第 ${item.index}/${series.total} 篇 · ${item.title}`;
         return <li key={item.slug} className={state||undefined}>
           {state==="current"
-            ?<span aria-current="page" data-tip={label} aria-label={`${label}（本篇）`} tabIndex={0}><i className="ft-bubble"/></span>
+            ?<span aria-current="page" data-tip={label} tabIndex={0}><i className="ft-bubble"/><span className="ft-sr-only">{label}（本篇）</span></span>
             :<Link href={`/blog/${item.slug}/`} prefetch={false} data-tip={label} aria-label={`${label}${state==="read"?"（已读）":""}`}><i className="ft-bubble"/></Link>}
         </li>;
       })}
