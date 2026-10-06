@@ -6,7 +6,7 @@ export function ProfileCard() {
   return (
     <article className="widget-card profile-card">
       <Link href="/about/" className="profile-avatar" aria-label={`关于 ${site.nickname}`}>
-        <Image src={site.avatar} alt={`${site.nickname} 的头像`} width={640} height={640} />
+        <Image src={site.avatar} alt={`${site.nickname} 的头像`} width={640} height={640} sizes="(max-width: 700px) 72px, (max-width: 980px) 84px, 208px" />
       </Link>
       <h2>{site.nickname}</h2>
       <i className="profile-rule" aria-hidden="true" />

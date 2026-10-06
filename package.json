@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/make-image-variants.mjs",
     "dev": "next dev --hostname 127.0.0.1",
+    "prebuild": "node scripts/make-image-variants.mjs",
     "build": "next build && node scripts/fix-rsc-paths.mjs && node scripts/build-search.mjs",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typegen": "next typegen",
+    "pretypecheck": "node scripts/make-image-variants.mjs",
     "typecheck": "next typegen && tsc --noEmit",
     "verify": "npm run build && node scripts/verify-export.mjs",
     "check": "npm run lint && npm run typecheck",
@@ -22,7 +25,8 @@
     "deploy:cf:only": "node scripts/deploy-cloudflare.mjs",
     "preview:cf": "npm run build && npx wrangler dev",
     "deploy:doctor": "node scripts/deploy-cloudflare.mjs --dry-run",
-    "search:index": "node scripts/build-search.mjs"
+    "search:index": "node scripts/build-search.mjs",
+    "images:variants": "node scripts/make-image-variants.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

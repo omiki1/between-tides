@@ -1,12 +1,16 @@
 "use client";
 /* eslint-disable @next/next/no-img-element -- small pre-optimized intro layers must expose native decode/load events. */
 import { useEffect, useRef } from "react";
+import { getImageProps } from "next/image";
 import styles from "./HomeIntro.module.css";
 
 const SESSION_KEY = "between-tides.home-intro-seen.v2";
 const PLAY_MS = 4400;
 const EXIT_MS = 800;
 const ASSET_WAIT_MS = 1600;
+// 与首页 Hero 里的同一张立绘用完全相同的 srcset / sizes（同一个 loader 生成），
+// 浏览器会挑中同一个文件：开场动画下载过的，Hero 直接复用缓存。
+const { props: { srcSet: DENIA_SRCSET, sizes: DENIA_SIZES } } = getImageProps({ src: "/artwork/denia.webp", alt: "", fill: true, sizes: "(max-width: 700px) 270px, 390px" });
 
 function waitForImage(image: HTMLImageElement, signal: AbortSignal) {
   return new Promise<void>(resolve => {
@@ -148,7 +152,7 @@ export function HomeIntro() {
       <div className={styles.glass}><i/></div>
       <div className={styles.characterEnter}><div className={styles.characterFloat}>
         <div className={styles.characterFlip}>
-          <div className={styles.front}><img className={styles.character} src="/artwork/denia.webp" alt="" width="835" height="1400" decoding="async" fetchPriority="high"/></div>
+          <div className={styles.front}><img className={styles.character} src="/artwork/denia.webp" srcSet={DENIA_SRCSET} sizes={DENIA_SIZES} alt="" width="835" height="1400" decoding="async" fetchPriority="high"/></div>
           <div className={styles.back}><img className={styles.character} src="/artwork/intro/denia-chibi.webp" alt="" width="720" height="720" decoding="async" fetchPriority="high"/></div>
         </div>
       </div></div>
