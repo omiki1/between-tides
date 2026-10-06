@@ -1,5 +1,6 @@
 "use client";
 import { useEffect,useState } from "react";
+import Link from "next/link";
 import { Hourglass,X } from "lucide-react";
 /**
  * 过期提醒：文章（或 frontmatter 里的 updated）超过一年没更新时，在正文顶部提示一句。
@@ -29,7 +30,7 @@ export function OutdatedNotice({date,updated,seriesHref}:{date:string;updated?:s
     <div>
       <strong>这篇{updated?"最后更新于":"写于"} {years>=1?`${years} 年多`:`${days} 天`}前，部分内容可能已经过时</strong>
       <p>时间停在 <time dateTime={stamp}>{stamp.replaceAll("-",".")}</time>。版本号、接口这类东西变得快，照着做之前记得对一下最新文档。</p>
-      <div className="ft-outdated-actions"><a href="/blog/">看看最近写了什么</a>{seriesHref&&<a href={seriesHref}>同系列的其他篇</a>}</div>
+      <div className="ft-outdated-actions"><Link href="/blog/">看看最近写了什么</Link>{seriesHref&&<Link href={seriesHref}>同系列的其他篇</Link>}</div>
     </div>
     <button type="button" className="ft-outdated-close" onClick={close} aria-label="知道了，关闭提示" title="知道了"><X size={15}/></button>
   </aside>;

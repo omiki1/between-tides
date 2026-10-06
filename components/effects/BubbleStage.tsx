@@ -10,6 +10,8 @@ const BUBBLES = [
   { x: 86, y: 44, s: 20, d: 8, dl: 5 }, { x: 10, y: 58, s: 26, d: 12, dl: 6 }, { x: 72, y: 62, s: 38, d: 9.5, dl: 4 }, { x: 42, y: 4, s: 18, d: 10, dl: 7 },
 ];
 const GOAL = 3;
+/* 只在点击时调用（放在组件外，避免被当成渲染期的不纯调用） */
+const pickOne = <T,>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
 export function BubbleStage({ posts }: { posts: { title: string; href: string }[] }) {
   const [popped, setPopped] = useState<number[]>([]);
   const [found, setFound] = useState<{ title: string; href: string } | null>(null);
@@ -17,7 +19,7 @@ export function BubbleStage({ posts }: { posts: { title: string; href: string }[
     if (popped.includes(index)) return;
     const next = [...popped, index];
     setPopped(next);
-    if (next.length === GOAL && posts.length) setFound(posts[Math.floor(Math.random() * posts.length)]);
+    if (next.length === GOAL && posts.length) setFound(pickOne(posts));
   };
   const left = GOAL - popped.length;
   return <>
