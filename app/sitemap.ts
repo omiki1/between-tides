@@ -15,6 +15,7 @@ export default function sitemap():MetadataRoute.Sitemap{
     {url:absolute("/gallery/"),lastModified:newest,changeFrequency:"monthly",priority:.7},
     {url:absolute("/anime/"),lastModified:newest,changeFrequency:"weekly",priority:.7},
     {url:absolute("/notes/"),lastModified:newest,changeFrequency:"weekly",priority:.7},
+    {url:absolute("/friends/"),lastModified:newest,changeFrequency:"monthly",priority:.6},
     {url:absolute("/about/"),lastModified:newest,changeFrequency:"yearly",priority:.6},
     {url:absolute("/categories/"),lastModified:newest,changeFrequency:"weekly",priority:.7},
     {url:absolute("/tags/"),lastModified:newest,changeFrequency:"weekly",priority:.7},

@@ -504,11 +504,16 @@ html[data-intro=boot] .home-music-wrap,html[data-intro=boot] #seasonal-weather,h
 }
 
 .navbar.scrolled{background:color-mix(in srgb,var(--glass) 90%,transparent);backdrop-filter:blur(24px) saturate(165%);box-shadow:0 14px 44px rgba(6,4,18,.34),inset 0 1px 0 rgba(255,255,255,.12)}
-.welcome-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:55;display:flex;gap:16px;align-items:center;max-width:min(520px,calc(100vw - 32px));padding:14px 16px 14px 18px;border-radius:16px;border:1px solid var(--border-highlight);background:color-mix(in srgb,var(--glass) 92%,transparent);backdrop-filter:blur(18px) saturate(150%);box-shadow:0 18px 50px rgba(16,8,28,.22);animation:welcome-in .55s ease}
+.welcome-toast{position:fixed;left:16px;right:16px;bottom:28px;margin-inline:auto;width:fit-content;transform:none;z-index:55;display:flex;gap:16px;align-items:center;max-width:520px;padding:14px 16px 14px 18px;border-radius:16px;border:1px solid var(--border-highlight);background:color-mix(in srgb,var(--glass) 92%,transparent);backdrop-filter:blur(18px) saturate(150%);box-shadow:0 18px 50px rgba(16,8,28,.22);animation:welcome-in .55s ease}
 .welcome-toast strong{font-size:14px;font-weight:550;display:block}
 .welcome-toast p{margin-top:4px;font-size:12px;line-height:1.7;color:var(--text-secondary)}
+.welcome-toast :is(strong,p){text-wrap:wrap}
+/* ≤900px 右下角有悬浮导航球（52px，距底 18px），欢迎条整体抬到它上面 */
+@media (max-width:900px){.welcome-toast{bottom:calc(max(18px,env(safe-area-inset-bottom)) + 66px)}}
 .welcome-toast button{flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid var(--border-highlight);background:linear-gradient(120deg,var(--primary-strong),var(--secondary));color:#1b1226;font-size:12px;cursor:pointer}
-@keyframes welcome-in{from{opacity:0;transform:translateX(-50%) translateY(16px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes welcome-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.welcome-toast{background:var(--surface)}}
+@media (prefers-reduced-transparency:reduce){.welcome-toast{background:var(--surface);-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (prefers-reduced-motion:reduce){.welcome-toast{animation:none}}
 .time-progress{display:grid;gap:10px;margin:0 0 22px;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:linear-gradient(140deg,var(--glass),transparent)}
 .time-progress__row{display:grid;gap:6px}

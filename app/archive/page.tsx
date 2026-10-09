@@ -63,7 +63,7 @@ export default function ArchivePage(){
         <Link href="/blog/">全部手记<ArrowUpRight size={15}/></Link>
         <Link href="/categories/">按分类浏览<ArrowUpRight size={15}/></Link>
         <Link href="/tags/">按标签浏览<ArrowUpRight size={15}/></Link>
-        <Link href="/rss.xml">订阅 RSS<ArrowUpRight size={15}/></Link>
+        <a href="/rss.xml">订阅 RSS<ArrowUpRight size={15}/></a>
       </div>
       <p className="method-note">共 {getCategories().length} 个分类、{posts.length} 篇手记。分类与标签都从文章 frontmatter 推导，新增文章会自动出现在这里。</p>
     </Reveal>

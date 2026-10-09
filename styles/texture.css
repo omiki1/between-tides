@@ -114,7 +114,11 @@ html:hover{scrollbar-color:var(--tx-scroll-hover) transparent}
 /* ---------- 7. 性能与可访问性 ---------- */
 @media (max-width:700px){
   /* 手机：卡片取消毛玻璃，只留导航模糊；颗粒透明度降低 */
-  .widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting,.button-quiet{backdrop-filter:none;-webkit-backdrop-filter:none}
+  /* 先写带前缀、后写标准属性：两个都要留下（只写一个时 Chromium/Android 或 Safari 会漏掉一边）。
+     模糊关掉后背景要更实，否则文字压在纹理上发虚。 */
+  .widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting,.button-quiet{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .widget-card,.aside-card,.now-panel,.music-panel,.project-card,.steam-card,.time-greeting{background:linear-gradient(150deg,color-mix(in srgb,var(--glass) 55%,var(--surface)),var(--surface))}
+  .button-quiet{background:color-mix(in srgb,var(--glass) 55%,var(--surface))}
   body::before{opacity:calc(var(--tx-noise-opacity) * .6)}
 }
 @media (prefers-reduced-motion:reduce){
