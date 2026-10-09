@@ -65,3 +65,13 @@
 @keyframes ft-rise{from{opacity:0;transform:translateY(18px)}}
 @media (prefers-reduced-motion:no-preference){.ft-rise{animation:ft-rise .75s cubic-bezier(.22,.61,.36,1) backwards}}
 /* === /perf-v4 === */
+
+/* === perf-v5 === 文楷换字体时标题不跳（首页 h1「让好奇心，慢慢发生。」原来在字体到达时整体下移 6px，CLS≈0.0003）
+ * 原因：font-display:swap，先用系统中文字体排，再换文楷；两种字体的上/下伸部比例不同（文楷 hhea 1900/500，
+ * 苹方 / 雅黑 / Noto CJK 各不相同），行高固定时字形在行框里的位置变了，于是文字整体上下挪。和开场动画无关。
+ * 修法：回退用一组带 ascent/descent-override 的 local() 别名（和文楷同一组数值），文楷本身也写死同样的数值
+ * （styles/wenkai.css，避免 Windows 走 win 度量 2146/555）。换字体前后字形的竖直位置一致。 */
+@font-face{font-family:"WenKai Fallback";font-weight:100 549;src:local("PingFang SC Regular"),local("PingFangSC-Regular"),local("Microsoft YaHei"),local("MicrosoftYaHei"),local("Noto Sans CJK SC"),local("NotoSansCJKsc-Regular"),local("Noto Sans SC"),local("Source Han Sans SC"),local("Hiragino Sans GB W3");ascent-override:92.77%;descent-override:24.41%;line-gap-override:0%}
+@font-face{font-family:"WenKai Fallback";font-weight:550 900;src:local("PingFang SC Semibold"),local("PingFangSC-Semibold"),local("Microsoft YaHei Bold"),local("MicrosoftYaHei-Bold"),local("Noto Sans CJK SC Bold"),local("NotoSansCJKsc-Bold"),local("Source Han Sans SC Bold"),local("Hiragino Sans GB W6");ascent-override:92.77%;descent-override:24.41%;line-gap-override:0%}
+:root{--font-lxgw-wenkai:"LXGW WenKai Screen","WenKai Fallback",system-ui,"Site CJK",sans-serif}
+/* === /perf-v5 === */
