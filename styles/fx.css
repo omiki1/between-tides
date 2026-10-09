@@ -1,0 +1,27 @@
+/* === fx-premium === 虹彩玻璃卡片。全部由 <html data-fx="..."> 开关控制，
+ * 删掉本文件和 app/layout.tsx 里的 <FxBoot/> 即可整体回滚。只复用 token，不改已有组件样式。 */
+
+/* ---------- 虹彩玻璃卡片（仅精确指针） ---------- */
+.fx-glass-sheen{
+  position:fixed;left:0;top:0;z-index:30;pointer-events:none;opacity:0;
+  transform-origin:center;transition:opacity .35s ease;will-change:transform,opacity;
+  --fx-mx:50%;--fx-my:50%;--fx-ang:0deg;
+  background:
+    radial-gradient(circle at var(--fx-mx) var(--fx-my),rgba(255,255,255,.20),rgba(255,255,255,0) 34%),
+    conic-gradient(from var(--fx-ang) at var(--fx-mx) var(--fx-my),
+      rgba(255,170,210,.32),rgba(170,220,255,.32),rgba(205,180,255,.28),rgba(255,236,200,.24),rgba(150,240,230,.26),rgba(255,170,210,.32));
+  -webkit-mask-image:radial-gradient(circle at var(--fx-mx) var(--fx-my),#000 0,rgba(0,0,0,.6) 45%,rgba(0,0,0,.12) 100%);
+  mask-image:radial-gradient(circle at var(--fx-mx) var(--fx-my),#000 0,rgba(0,0,0,.6) 45%,rgba(0,0,0,.12) 100%);
+  mix-blend-mode:screen;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+}
+.light .fx-glass-sheen{mix-blend-mode:multiply;filter:saturate(1.4)}
+.fx-glass-sheen.is-on{opacity:1}
+:root[data-fx-glass] :is(.widget-card,.aside-card,.project-card,.featured-post,.album-card,.taxonomy-card,.friend-card,.steam-card,.now-panel)[data-fx-tilt]:not(:focus-visible):not(:has(:focus-visible)){
+  transform:perspective(900px) rotateX(var(--fx-rx,0deg)) rotateY(var(--fx-ry,0deg)) translateY(-2px);
+  transition:transform .18s ease-out,box-shadow .35s ease;
+  box-shadow:var(--glow-soft-hover,var(--glow-soft));
+}
+
+@media (prefers-reduced-motion:reduce){.fx-glass-sheen{display:none}}
+/* === /fx-premium === */

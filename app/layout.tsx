@@ -12,6 +12,7 @@ import { VisitRecorder } from "@/components/layout/VisitRecorder";
 import { SearchDialog, type SearchSeed } from "@/components/search/SearchDialog";
 import { getCategories, getPosts, getTagSummaries } from "@/lib/posts";
 import { ReadingProgress } from "@/components/effects/ReadingProgress";
+import { FxBoot } from "@/components/fx/FxBoot";
 import "./globals.css";
 import "../styles/features.css";
 import "@/styles/texture.css";
@@ -19,6 +20,7 @@ import "@/styles/denia.css";
 import "@/styles/character-art.css";
 import "@/styles/a11y.css";
 import "@/styles/perf.css";
+import "@/styles/fx.css";
 const manrope=localFont({src:"../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",variable:"--font-manrope",display:"swap"});
 export const metadata:Metadata={metadataBase:new URL(site.url),title:{default:site.seo.title,template:`%s · ${site.name}`},description:site.description,keywords:site.seo.keywords,openGraph:{title:site.seo.title,description:site.description,type:"website",locale:"zh_CN",siteName:site.name,images:ogImages(HOME_OG_IMAGE,`${site.name} · ${site.description}`)},twitter:{card:"summary_large_image",title:site.seo.title,description:site.description,images:[HOME_OG_IMAGE]},icons:{icon:[{url:"/denia-favicon.svg",type:"image/svg+xml"}],other:[{rel:"alternate icon",url:"/favicon.svg",type:"image/svg+xml"}]},alternates:{types:{"application/rss+xml":"/rss.xml"}}};
 export const viewport:Viewport={themeColor:[{media:"(prefers-color-scheme: dark)",color:"#110e1e"},{media:"(prefers-color-scheme: light)",color:"#f7f3f8"}],colorScheme:"dark light"};
@@ -34,4 +36,4 @@ function searchSeed():SearchSeed{
   suggestions.push({label:"按时间浏览",href:"/archive/"});
   return {recent,suggestions};
 }
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><DeferredLayers/><ReadingProgress/><Navbar/><DeferredWelcome/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/><DeferredDetails/></Providers></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><DeferredLayers/><ReadingProgress/><Navbar/><DeferredWelcome/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/><DeferredDetails/><FxBoot/></Providers></body></html>}
