@@ -26,7 +26,7 @@ export default function ArchivePage(){
         <span><b>{archive.length}</b> 个年份</span>
         {posts.length>0&&<span>首次记录 <b>{posts[posts.length-1].date.replaceAll("-",".")}</b></span>}
       </div>
-      <CharacterArt name="denia-04" variant="head" sizes="300px"/>
+      <CharacterArt name="denia-03" variant="head" className="char-art--round" sizes="300px"/>
     </Reveal>
     <Reveal as="section" className="home-section">
       <div className="section-title"><div><span className="section-number">01</span><h2>按年份</h2><span className="eyebrow">BY YEAR</span></div><Link href="/categories/" className="text-link">按分类浏览<ArrowUpRight size={15}/></Link></div>

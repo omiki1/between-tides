@@ -34,6 +34,13 @@
 .char-art--inline{width:176px;margin:26px 0 0 auto}
 .char-art--inline.char-art--start{margin:30px auto 0 0}
 @media (max-width:700px){.char-art--inline{width:132px;margin-top:20px}}
+/* round：圆形头像本身边缘完整，不做底部渐隐，尺寸收一点 */
+.char-art--round img{-webkit-mask-image:none;mask-image:none;max-height:210px;margin-top:auto}
+/* badge：denia-04 是从浅色海报上抠的，边缘带一圈浅色半透明残留，深色底上发灰。
+   放进浅色圆盘里（两种主题同一个底），残留和底色融在一起，边缘是实的 */
+.char-art--badge img{aspect-ratio:1;width:100%;object-fit:cover;object-position:50% 18%;border-radius:50%;
+  background:radial-gradient(circle at 50% 38%,#fbf1f7,#ead7ec 70%,#dcc6e4);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--primary-strong) 30%,transparent),0 14px 30px rgba(16,8,28,.25);filter:none}
 
 /* footer-peek：右边缘贴页面边，底边贴页脚上沿；上、左两条硬边用遮罩渐隐。只在首页、≥1100px 出现 */
 .char-art--footer-peek{position:absolute;right:0;bottom:100%;width:clamp(120px,10vw,150px);align-items:flex-end;gap:0;z-index:1}
