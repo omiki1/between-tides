@@ -39,7 +39,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
   const next=series?(series.next&&getPost(series.next.slug)):neighbours.next;
   const category=getCategoryOfPost(post.slug);
   const jsonLd={"@context":"https://schema.org","@type":"BlogPosting",headline:post.title,description:post.description,datePublished:post.date,dateModified:post.updated||post.date,keywords:post.tags.join(","),image:post.cover?`${site.url}${post.cover}`:undefined,url:`${site.url}/blog/${post.slug}/`,author:{"@type":"Person",name:site.nickname},publisher:{"@type":"Organization",name:site.name}};
-  return <main id="main" className="container inner">
+  return <main id="main" className="container inner reading-page">
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
     <Rise className="reading-head">
       <Link className="back-link" href="/blog/" data-pagefind-ignore="all"><ArrowLeft size={15}/>所有手记</Link>
@@ -57,7 +57,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
       </div>
       {series&&<SeriesCard series={series}/>}
     </Rise>
-    {post.cover&&!post.hideCover&&<Rise className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Rise>}
+    {post.cover&&!post.hideCover&&<Rise className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 740px" loading="eager"/></Rise>}
     <div className="reading-layout">
       <div className="ft-article-col">
         <DeferredOutdated date={post.date} updated={post.updated} seriesHref={category?`/categories/${category.slug}/`:undefined}/>

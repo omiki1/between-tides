@@ -882,3 +882,26 @@ html[data-ambiance-motion=reduce] .music-panel-polish .album-cover.is-playing im
 :is(.project-card,.album-card,.friend-card,.taxonomy-card,.featured-work-layout,.interest-grid article,.post-table a,.start-grid a,.post-pager a,.steam-card):active{
   transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(1px) scale(.985);
 }
+
+/* === reading-center === 文章页：阅读栏在视口里居中，目录放在右侧留白里
+ * 原来 .reading-layout 是「740px 正文 | 72px | 250px 目录」整体靠左，正文中心比视口中心偏左 105–340px。
+ * 现在标题区、封面、正文、上下篇都收进同一条 740px 的中栏，左右对称居中；
+ * ≥1241px：三栏网格「留白 | 正文 | 留白」，目录（.reading-aside，sticky）放在右侧留白里，左侧留白同宽，正文正好居中；
+ *          两侧留白最少 220px，窄一点的屏幕先压正文宽度（1241px 时约 567px），不压目录。
+ * ≤1240px：右侧放不下目录，目录和侧栏卡片收到正文下面（和原来 ≤1100px 的做法一样），正文仍居中。
+ * 只作用于文章页（main.reading-page）；项目详情页共用 reading-* 类名但带 .side-rail，保持原布局。文章页没有 .side-rail。 */
+.reading-page :is(.reading-head,.reading-cover,.post-pager){max-width:740px;margin-inline:auto}
+.reading-page .reading-layout :is(.ft-article-col,.reading-aside){width:100%;max-width:740px;justify-self:center}
+@media(min-width:1241px){
+  .reading-page .reading-layout{grid-template-columns:minmax(220px,1fr) minmax(0,740px) minmax(220px,1fr);column-gap:56px}
+  .reading-page .reading-layout .ft-article-col{grid-column:2;grid-row:1}
+  /* 标题区 / 封面 / 上下篇与中栏同宽：中栏被压窄（<1440px）时一起变窄，左缘对齐 */
+  .reading-page :is(.reading-head,.reading-cover,.post-pager){max-width:min(740px,calc(100% - 552px))}
+  .reading-page .reading-layout .reading-aside{grid-column:3;grid-row:1;max-width:270px;justify-self:start}
+}
+@media(min-width:1101px) and (max-width:1240px){
+  .reading-page .reading-layout{grid-template-columns:minmax(0,1fr);gap:44px}
+  .reading-page .reading-layout .reading-aside{position:static;grid-template-columns:1fr 1fr;gap:18px;max-height:none;overflow:visible;padding:0;margin:0 auto}
+  .reading-page .toc{border-left:0;padding-left:0;grid-column:1/-1}
+}
+/* === /reading-center === */
