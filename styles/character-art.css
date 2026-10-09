@@ -6,7 +6,9 @@
  *   footer-peek —— 首页：贴着页脚上沿、右侧页面边缘探出来（爱弥斯 03 底边是硬切的，只能这样贴边放）
  */
 .char-art{margin:0;pointer-events:none;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;align-items:center;gap:6px}
-.char-art img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;filter:drop-shadow(0 14px 26px color-mix(in srgb,var(--primary-strong) 20%,transparent))}
+/* 不加任何投影 / 底板：drop-shadow 和标题区的底部渐隐遮罩叠在一起时，阴影被遮罩裁成图片外框大小的矩形，
+   日间是灰紫色、夜间是发白的方块（用户反馈的「灰边 / 灰方块」）。立绘直接放在页面背景上。 */
+.char-art img{display:block;max-width:100%;height:auto;-webkit-user-drag:none}
 .char-art__credit{font-family:var(--font-body-cjk);font-size:10px;font-weight:400;letter-spacing:.6px;line-height:1.4;white-space:nowrap;color:var(--text-muted);opacity:.85}
 
 /* head：标题区高度内、右侧，文字最宽只到 ~700px，右边留给立绘；>1240px 让开右侧的区块导航 */
@@ -25,7 +27,7 @@
 /* 关于页标题区很高，人像放在两段视频右侧的空白里，限制在 440px 内 */
 .about-head .char-art--head{top:auto;height:min(440px,calc(100% - 40px));bottom:24px}
 
-/* aside：侧栏最后一块，不加卡片底，只留柔和投影；底部渐隐 */
+/* aside：侧栏最后一块，不加卡片底、不加投影；底部渐隐 */
 .char-art--aside{padding-top:4px}
 .char-art--aside img{width:100%;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
 @media (max-width:980px){.char-art--aside{display:none}}
@@ -36,15 +38,12 @@
 @media (max-width:700px){.char-art--inline{width:132px;margin-top:20px}}
 /* round：圆形头像本身边缘完整，不做底部渐隐，尺寸收一点 */
 .char-art--round img{-webkit-mask-image:none;mask-image:none;max-height:210px;margin-top:auto}
-/* badge：denia-04 是从浅色海报上抠的，边缘带一圈浅色半透明残留，深色底上发灰。
-   放进浅色圆盘里（两种主题同一个底），残留和底色融在一起，边缘是实的 */
-.char-art--badge img{aspect-ratio:1;width:100%;object-fit:cover;object-position:50% 18%;border-radius:50%;
-  background:radial-gradient(circle at 50% 38%,#fbf1f7,#ead7ec 70%,#dcc6e4);
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--primary-strong) 30%,transparent),0 14px 30px rgba(16,8,28,.25);filter:none}
+/* fade：denia-04 原图肩部是白色渐隐，底部用遮罩收掉（不加底板、描边、投影） */
+.char-art--fade img{-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent);mask-image:linear-gradient(180deg,#000 72%,transparent)}
 
 /* footer-peek：右边缘贴页面边，底边贴页脚上沿；上、左两条硬边用遮罩渐隐。只在首页、≥1100px 出现 */
 .char-art--footer-peek{position:absolute;right:0;bottom:100%;width:clamp(120px,10vw,150px);align-items:flex-end;gap:0;z-index:1}
-.char-art--footer-peek img{width:100%;filter:none;
+.char-art--footer-peek img{width:100%;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 16%);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 16%);mask-composite:intersect}
 .char-art--footer-peek .char-art__credit{position:absolute;right:calc(100% + 6px);bottom:4px}
