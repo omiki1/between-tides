@@ -370,6 +370,12 @@ details.archive-year[open]>summary .archive-year-chevron{transform:rotate(180deg
 .search-foot kbd{font:9px var(--font-manrope);border:1px solid var(--border);border-radius:4px;padding:2px 5px}
 
 @media(max-width:1240px){.side-rail{display:none}}
+/* 右侧区块导航是 position:fixed（right:26px，宽约 105px），≥1241px 才出现。.container 两边只留 56px，
+   1241–1713px 之间正文右缘会跑到导航下面。带导航的页面给 main 右侧让出「导航占位 − 容器本身右边距」：
+   --side-rail-reserve = 导航到视口右缘的距离（26 + 宽度）再加约 20px 间隔；容器右边距已经够宽（≥1714px）时为 0。
+   padding 的百分比按包含块（body，不含滚动条）算，和 fixed 导航的参照一致。 */
+:root{--side-rail-reserve:152px}
+@media(min-width:1241px){main.container:has(>.side-rail){padding-right:max(0px,calc((min(100% - 112px,1420px) - 100%) / 2 + var(--side-rail-reserve)))}}
 @media(max-width:1100px){.reading-layout{grid-template-columns:minmax(0,1fr);gap:44px}.reading-aside{position:static;grid-template-columns:1fr 1fr;gap:18px}.toc{border-left:0;padding-left:0;grid-column:1/-1}.about-columns{grid-template-columns:1fr;gap:28px}.interest-grid{grid-template-columns:repeat(2,1fr)}.gallery-board{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
 @media(max-width:850px){.archive-list a{grid-template-columns:36px 84px 1fr 18px;gap:14px}.archive-tags,.archive-time{display:none}.method-grid{grid-template-columns:1fr}.now-strip,.about-now{grid-template-columns:1fr}.post-pager{grid-template-columns:1fr}.reading-cover{height:250px}}
 @media(max-width:700px){.page-head{padding-left:20px;margin-top:4px}.page-head h1{font-size:31px;letter-spacing:1px}.page-head>p{font-size:12.5px}.page-stats span+span{padding-left:16px}.page-stats{gap:8px 16px}.prose{font-size:16px;line-height:1.95}.prose h2{font-size:19.5px;margin-top:38px}.reading-layout{margin-top:32px}.reading-aside{grid-template-columns:1fr}.reading-cover{height:210px;margin-top:26px}.gallery-board,.gallery-board.single-column{grid-template-columns:minmax(0,1fr)}.lightbox{width:calc(100% - 24px)}.lightbox-caption{flex-direction:column;align-items:flex-start}.lightbox-stage{padding:9px}.interest-grid,.start-grid{grid-template-columns:1fr}.notes-timeline{padding-left:22px}.archive-list a{grid-template-columns:1fr 18px}.archive-index,.archive-list time{display:none}}

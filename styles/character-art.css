@@ -17,7 +17,6 @@
 .char-art--head img{height:calc(100% - 22px);width:auto;max-width:min(30vw,340px);object-fit:contain;object-position:bottom right;
   /* 几张官网立绘在腿部被原图截断：底部统一渐隐，不留硬边 */
   -webkit-mask-image:linear-gradient(180deg,#000 78%,transparent);mask-image:linear-gradient(180deg,#000 78%,transparent)}
-@media (min-width:1241px){.char-art--head{right:112px}}
 @media (max-width:1099px){.char-art--head{display:none}}
 /* 少数几页（友链、碎念：标题区短、下面不是大图）在手机上改成标题区里的小立绘，走 600 宽小图 */
 @media (max-width:700px){
