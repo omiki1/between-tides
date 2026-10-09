@@ -1,0 +1,4 @@
+/* 霞鹜文楷 Screen 的构建期子集：只含标题、语录和展示文字用到的字（scripts/wenkai/subset.py 每次构建自动生成）。
+ * 取代 node_modules/lxgw-wenkai-screen-webfont 的 ~100 个 unicode-range 分片。正文仍走系统中文字体（styles/perf.css）。
+ * 子集里没有的字会退回 --font-lxgw-wenkai 后面的系统字体。 */
+@font-face{font-family:"LXGW WenKai Screen";font-style:normal;font-weight:400;font-display:swap;src:url("./generated/wenkai-subset.woff2") format("woff2")}

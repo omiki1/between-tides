@@ -1,6 +1,7 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useRef } from "react";
+import { afterLoadIdle } from "@/lib/after-load";
 
 const MOTES = [
   { left: "8%", top: "38%", size: 4, dur: "11s", dx: "10px", delay: "0s" },
@@ -79,9 +80,24 @@ export function TideDivider({
   const preset = TIDE_PALETTES[key];
   const main = (mainColors ?? preset.main) as readonly [string, string, string];
   const gap = (gapColors ?? preset.gap) as readonly [string, string, string];
+  /* 波纹的 stroke-dashoffset 动画不走合成器、每帧都要重绘：页面加载完且空闲后、且分隔线在视口里才播放（.is-live），
+   * 其余时间停在第一帧（见 globals.css 的 .tide-divider:not(.is-live)） */
+  const root = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const node = root.current;
+    if (!node) return;
+    let onScreen = false, allowed = false;
+    const sync = () => node.classList.toggle("is-live", allowed && onScreen && !document.hidden);
+    const io = new IntersectionObserver(entries => { onScreen = entries.some(e => e.isIntersecting); sync(); });
+    io.observe(node);
+    document.addEventListener("visibilitychange", sync);
+    const cancel = afterLoadIdle(() => { allowed = true; sync(); });
+    return () => { cancel(); io.disconnect(); document.removeEventListener("visibilitychange", sync); };
+  }, []);
 
   return (
     <div
+      ref={root}
       className={`tide-divider tide-divider--${tone}`}
       aria-hidden="true"
       data-palette={key}

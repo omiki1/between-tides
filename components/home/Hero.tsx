@@ -8,8 +8,11 @@ import { site } from "@/config/site";
 import { deniaVoices as voices, claimVoice, releaseVoice } from "@/lib/deniaVoices";
 import styles from "./Hero.module.css";
 import { DeniaTassel } from "./DeniaTassel";
+import { useAfterLoad } from "@/lib/after-load";
 export function Hero(){
  const reduced=useReducedMotion();
+ /* 台词轮播等页面加载完、主线程空闲后再开始转 */
+ const ready=useAfterLoad();
  const mx=useMotionValue(0),my=useMotionValue(0);
  const x=useSpring(mx,{stiffness:45,damping:25}),y=useSpring(my,{stiffness:45,damping:25});
  const [clicks,setClicks]=useState(0);const [resonance,setResonance]=useState(false);
@@ -29,13 +32,13 @@ export function Hero(){
  /* 台词池：挂载后再领取（静态导出，SSR 先显示第一句兜底），轮播时跳过其他位置正在显示的台词 */
  useEffect(()=>{const v=claimVoice("hero");let live=true;queueMicrotask(()=>{if(live)setLine(v.index)});return()=>{live=false;releaseVoice("hero")}},[]);
  useEffect(()=>{
-  if(reduced||voicePlaying||hold||voiceError)return;
+  if(!ready||reduced||voicePlaying||hold||voiceError)return;
   const id=setTimeout(()=>{
    if(document.visibilityState!=="visible"||document.documentElement.dataset.ambianceMotion==="reduce")return;
    setAnnounce(false);setLine(claimVoice("hero",{advance:true}).index);
   },6000);
   return()=>clearTimeout(id);
- },[reduced,voicePlaying,hold,voiceError,line]);
+ },[ready,reduced,voicePlaying,hold,voiceError,line]);
  function advance(){setVoiceError("");setAnnounce(true);setLine(claimVoice("hero",{advance:true}).index)}
  async function resonate(){
   const element=voice.current;if(!element)return;

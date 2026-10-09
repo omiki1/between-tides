@@ -118,7 +118,7 @@ export function PointerEffects() {
     };
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerdown", click, { passive: true });
-    document.documentElement.addEventListener("pointerleave", hide);
+    document.documentElement.addEventListener("pointerleave", hide, { passive: true });
     window.addEventListener("blur", clear);
     preference.addEventListener("change", clear);
     return () => {

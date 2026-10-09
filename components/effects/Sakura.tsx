@@ -8,6 +8,7 @@ import {
   sakuraCounts,
   shouldReduceMotion,
 } from "./ambiance";
+import { isLiteDevice } from "@/lib/after-load";
 
 export function Sakura() {
   const { resolvedTheme } = useTheme();
@@ -23,12 +24,15 @@ export function Sakura() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const img = new Image();
-    let width = innerWidth, height = innerHeight, frame = 0, previous = 0, ready = night, disposed = false;
+    let width = innerWidth, height = innerHeight, frame = 0, previous = 0, ready = night, disposed = false, onScreen = true;
+    /* 手机 / 窄屏 / 粗指针：粒子减到 1/4，画布分辨率最多 1.5x（桌面仍是最多 2x） */
+    const lite = isLiteDevice();
     let particles: { x: number; y: number; size: number; rotation: number; phase: number }[] = [];
 
     const rebuild = () => {
       const prefs = readAmbiance();
-      const count = sakuraCounts(prefs.density, night);
+      const full = sakuraCounts(prefs.density, night);
+      const count = lite ? Math.round(full / 4) : full;
       particles = Array.from({ length: count }, () => ({
         x: Math.random(),
         y: Math.random(),
@@ -43,7 +47,7 @@ export function Sakura() {
 
     const resize = () => {
       width = innerWidth; height = innerHeight;
-      const scale = Math.min(devicePixelRatio || 1, 2);
+      const scale = Math.min(devicePixelRatio || 1, lite ? 1.5 : 2);
       canvas.width = width * scale; canvas.height = height * scale;
       canvas.style.width = `${width}px`; canvas.style.height = `${height}px`;
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
@@ -80,20 +84,23 @@ export function Sakura() {
       ctx.clearRect(0, 0, width, height);
       const prefs = readAmbiance();
       const pause = shouldReduceMotion(prefs.motion, reducedMq.matches) || particles.length === 0;
-      if (!disposed && ready && !pause && !document.hidden) frame = requestAnimationFrame(draw);
+      if (!disposed && ready && !pause && onScreen && !document.hidden) frame = requestAnimationFrame(draw);
     };
 
     img.onload = () => { ready = true; sync(); };
     img.src = "/assets/images/effects/sakura.webp";
     resize(); document.body.appendChild(canvas); rebuild();
-    window.addEventListener("resize", resize);
+    /* 画布不在视口里（例如被全屏元素盖住、打印预览）或标签页隐藏时不画 */
+    const io = new IntersectionObserver(entries => { onScreen = entries.some(e => e.isIntersecting); sync(); });
+    io.observe(canvas);
+    window.addEventListener("resize", resize, { passive: true });
     document.addEventListener("visibilitychange", sync);
     reducedMq.addEventListener("change", sync);
     const onAmbiance = () => rebuild();
     window.addEventListener(AMBIANCE_EVENT, onAmbiance);
     window.addEventListener("storage", onAmbiance);
     return () => {
-      disposed = true; cancelAnimationFrame(frame); canvas.remove();
+      disposed = true; cancelAnimationFrame(frame); io.disconnect(); canvas.remove();
       window.removeEventListener("resize", resize);
       document.removeEventListener("visibilitychange", sync);
       reducedMq.removeEventListener("change", sync);

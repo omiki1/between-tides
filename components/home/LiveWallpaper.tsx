@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { afterLoadIdle } from "@/lib/after-load";
 
 /**
  * Looping live wallpaper for the left rail.
@@ -23,16 +24,31 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
     const video = videoRef.current;
     if (!video) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    /* 视频在页面 load 完、空闲、且卡片进入视口后才开始下载；离开视口或切走标签页就暂停 */
+    let onScreen = false, started = false, allowed = false;
+    const shouldPlay = () => useVideoRef.current && !reduced && onScreen && !document.hidden;
+    const syncPlayback = () => {
+      if (!useVideoRef.current) return;
+      if (shouldPlay()) video.play().catch(() => {});
+      else video.pause();
+    };
+    const maybeStart = () => {
+      if (started || !allowed || !onScreen) return;
+      started = true;
+      video.preload = "auto";
+      video.load();
+    };
     const onReady = () => {
       useVideoRef.current = true;
       setVideoReady(true);
-      if (reduced) {
+      if (!shouldPlay()) {
         video.pause();
         return;
       }
       video.play().catch(() => {
         useVideoRef.current = false;
         setVideoReady(false);
+        video.dispatchEvent(new Event("wallpaper-fallback"));
       });
     };
     const onFail = () => {
@@ -41,8 +57,18 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
     };
     video.addEventListener("canplay", onReady);
     video.addEventListener("error", onFail);
-    video.load();
+    const io = new IntersectionObserver(entries => {
+      onScreen = entries.some(e => e.isIntersecting);
+      maybeStart();
+      syncPlayback();
+    }, { rootMargin: "200px 0px" });
+    io.observe(video);
+    document.addEventListener("visibilitychange", syncPlayback);
+    const cancelIdle = afterLoadIdle(() => { allowed = true; maybeStart(); });
     return () => {
+      cancelIdle();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", syncPlayback);
       video.removeEventListener("canplay", onReady);
       video.removeEventListener("error", onFail);
     };
@@ -57,16 +83,19 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
     let raf = 0;
     const start = performance.now();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    /* 尺寸由 ResizeObserver 缓存：每帧读 clientWidth 会强制整页样式重算 */
+    let w = 0, h = 0, onScreen = false, allowed = false;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const { clientWidth: w, clientHeight: h } = canvas;
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
       canvas.width = Math.max(1, Math.floor(w * dpr));
       canvas.height = Math.max(1, Math.floor(h * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
-    const ro = new ResizeObserver(resize);
+    const ro = new ResizeObserver(() => { resize(); if (!raf) schedule(); });
     ro.observe(canvas);
 
     type Petal = { x: number; y: number; r: number; s: number; a: number; spin: number };
@@ -79,13 +108,15 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
       spin: (i % 3) - 1,
     }));
 
+    /* 只在：加载完且空闲 + 画布在视口里 + 标签页可见 + 没有视频顶替 时才逐帧画；减弱动效时只画一帧 */
+    const running = () => allowed && onScreen && !document.hidden && !useVideoRef.current;
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = running() ? requestAnimationFrame(draw) : 0;
+    };
     const draw = (now: number) => {
-      if (useVideoRef.current) {
-        raf = requestAnimationFrame(draw);
-        return;
-      }
-      const w = canvas.clientWidth;
-      const h = canvas.clientHeight;
+      raf = 0;
+      if (!running()) return;
       const t = reduced ? 0 : ((now - start) / 1000) % PERIOD;
       const p = t / PERIOD; // 0..1 seamless
 
@@ -142,13 +173,27 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
       ctx.fillStyle = vig;
       ctx.fillRect(0, 0, w, h);
 
-      raf = requestAnimationFrame(draw);
+      if (!reduced) raf = requestAnimationFrame(draw);
     };
 
-    raf = requestAnimationFrame(draw);
+    const io = new IntersectionObserver(entries => { onScreen = entries.some(e => e.isIntersecting); schedule(); });
+    io.observe(canvas);
+    document.addEventListener("visibilitychange", schedule);
+    const cancelIdle = afterLoadIdle(() => { allowed = true; schedule(); });
+    /* 视频准备好/失败时重新判断要不要画（canplay/error 的处理器先于这里注册，ref 已更新） */
+    const video = videoRef.current;
+    video?.addEventListener("canplay", schedule);
+    video?.addEventListener("error", schedule);
+    video?.addEventListener("wallpaper-fallback", schedule);
     return () => {
+      cancelIdle();
       cancelAnimationFrame(raf);
+      video?.removeEventListener("canplay", schedule);
+      video?.removeEventListener("error", schedule);
+      video?.removeEventListener("wallpaper-fallback", schedule);
+      io.disconnect();
       ro.disconnect();
+      document.removeEventListener("visibilitychange", schedule);
     };
   }, []);
 
@@ -162,7 +207,7 @@ export function LiveWallpaper({ videoSrc = "/assets/wallpaper/loop.mp4" }: Props
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           aria-hidden="true"
         />
         <canvas ref={canvasRef} className="live-wallpaper-canvas" aria-hidden="true" />

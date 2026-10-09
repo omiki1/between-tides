@@ -44,3 +44,6 @@ assets/
 # ---- 构建时生成的图片宽度变体（scripts/make-image-variants.mjs）----
 public/**/*.w[0-9]*.webp
 lib/image-variants.json
+
+# ---- 构建时生成的文楷字形子集（scripts/wenkai/subset.py）----
+styles/generated/

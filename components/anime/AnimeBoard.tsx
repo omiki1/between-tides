@@ -122,7 +122,7 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
               ) : null}
               <span className="anime-type">{item.seasonTypeName}</span>
             </button>
-            <h3>{item.title}</h3>
+            <h3 className="no-wenkai">{item.title}</h3>
             <p>{item.epStatus || followLabels[item.followStatus]}</p>
           </li>
         ))}
@@ -152,7 +152,7 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
             <img src={coverThumb(open.cover, 280, 373)} srcSet={coverSrcSet(open.cover, 280, 373)} alt="" width={280} height={373} decoding="async" referrerPolicy="no-referrer" />
             <div>
               <span className="eyebrow">{open.seasonTypeName} · {followLabels[open.followStatus]}</span>
-              <h2>{open.title}</h2>
+              <h2 className="no-wenkai">{open.title}</h2>
               {open.rating > 0 ? <p className="anime-modal-score">评分 {open.rating.toFixed(1)}</p> : null}
               <p>{open.evaluate || "暂无简介。"}</p>
               <p className="anime-modal-meta">{open.epStatus}{open.areas.length ? ` · ${open.areas.join(" / ")}` : ""}</p>

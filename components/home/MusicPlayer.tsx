@@ -69,7 +69,7 @@ function waitForGesture(signal: AbortSignal) {
       signal.removeEventListener("abort", done);
       resolve();
     };
-    window.addEventListener("pointerdown", done, { capture: true, once: true });
+    window.addEventListener("pointerdown", done, { capture: true, once: true, passive: true });
     window.addEventListener("keydown", done, { capture: true, once: true });
     signal.addEventListener("abort", done);
   });
