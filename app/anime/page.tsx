@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import { Tv, Star, Database } from "lucide-react";
 import { getBangumi, getBangumiStats } from "@/lib/bangumi";
+import { withLocalCovers } from "@/lib/anime-covers";
 import { AnimeBoard } from "@/components/anime/AnimeBoard";
 import { ProfileCard } from "@/components/home/ProfileCard";
 import { QuoteCard } from "@/components/home/QuoteCard";
@@ -16,8 +18,14 @@ export const metadata: Metadata = {
 };
 
 export default function AnimePage() {
-  const items = getBangumi();
+  const items = withLocalCovers(getBangumi());
   const stats = getBangumiStats();
+  /* 首屏第一张封面（AnimeBoard 默认按评分从高到低排）：在 <head> 里提前、高优先级下载。
+     crossOrigin 与卡片上的 <img crossOrigin="anonymous"> 一致，预加载才会被复用 */
+  const first = [...items].sort((a, b) => (b.rating || 0) - (a.rating || 0))[0];
+  if (first?.coverLocal) {
+    preload(`${first.coverLocal}.w220.webp`, { as: "image", fetchPriority: "high", crossOrigin: "anonymous", imageSrcSet: `${first.coverLocal}.w220.webp 1x, ${first.coverLocal}.w440.webp 2x` });
+  }
   return (
     <main id="main" className="container inner anime-page">
       <div className="anime-shell">

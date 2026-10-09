@@ -13,13 +13,12 @@ export type BangumiItem = {
   epStatus: string;
   areas: string[];
   link: string;
+  /** 站内封面前缀（/anime-covers/{name}），由构建脚本生成；缺省时用 B 站地址 */
+  coverLocal?: string;
 };
 
-export const followLabels: Record<number, string> = {
-  1: "想看",
-  2: "在看",
-  3: "看过",
-};
+import { followLabels } from "@/lib/bangumi-labels";
+export { followLabels };
 
 export const bangumi = data as {
   uid: string;

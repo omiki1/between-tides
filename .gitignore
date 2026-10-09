@@ -47,3 +47,8 @@ lib/image-variants.json
 
 # ---- 构建时生成的文楷字形子集（scripts/wenkai/subset.py）----
 styles/generated/
+
+# ---- 构建时下载的追番封面（scripts/make-anime-covers.mjs）----
+# 源图缓存与生成的 220/440 宽 WebP 都是构建产物，不进版本库
+.cache/
+public/anime-covers/

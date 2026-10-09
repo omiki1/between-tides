@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState, startTransition } from "react";
 import { Search, Star, X } from "lucide-react";
-import { followLabels, type BangumiItem } from "@/lib/bangumi";
+import { followLabels } from "@/lib/bangumi-labels";
+import type { BangumiItem } from "@/lib/bangumi";
 import { coverSrcSet, coverThumb } from "@/lib/cover-thumb";
 import { EmptyState } from "@/components/ui/EmptyState";
 
@@ -109,11 +110,12 @@ export function AnimeBoard({ items }: { items: BangumiItem[] }) {
         </EmptyState>
       )}
       <ul className="anime-grid">
-        {slice.map((item) => (
+        {slice.map((item, index) => (
           <li key={item.id} className="anime-card">
             <button type="button" onClick={() => setOpen(item)} aria-label={`查看 ${item.title}`}>
+              {/* 首屏第一张：eager + fetchPriority=high（LCP）；其余懒加载。优先用构建时生成的站内 WebP，缺图退回 B 站缩略图参数 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={coverThumb(item.cover, 220, 293)} srcSet={coverSrcSet(item.cover, 220, 293)} alt="" width={220} height={293} loading="lazy" decoding="async" referrerPolicy="no-referrer" crossOrigin="anonymous" />
+              <img src={item.coverLocal ? `${item.coverLocal}.w220.webp` : coverThumb(item.cover, 220, 293)} srcSet={item.coverLocal ? `${item.coverLocal}.w220.webp 1x, ${item.coverLocal}.w440.webp 2x` : coverSrcSet(item.cover, 220, 293)} alt="" width={220} height={293} loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : undefined} decoding="async" referrerPolicy="no-referrer" crossOrigin="anonymous" />
               {item.rating > 0 ? (
                 <span className="anime-score">
                   <Star size={11} />

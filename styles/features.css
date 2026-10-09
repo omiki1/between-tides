@@ -191,3 +191,6 @@
 .qq-facade .qq-facade-hit{position:absolute;inset:0;z-index:1;padding:0;border:0;border-radius:inherit;background:none;cursor:pointer}
 .qq-facade .qq-facade-hit:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
 .qq-facade-note span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 追番页窄屏：单列网格用 minmax(0,1fr)，否则分类标签那一行的最小内容宽度（约 550px）会把整列撑宽、右半边被裁掉 */
+@media (max-width:980px){.anime-shell{grid-template-columns:minmax(0,1fr)}}
