@@ -166,5 +166,6 @@ html.denia-vt::view-transition-new(root){
 .reading-aside{scrollbar-color:var(--tx-scroll) transparent}
 /* ---------- 12. TimeGreeting 里的达妮娅台词（lib/deniaVoices 领取） ---------- */
 .time-greeting-voice{margin-top:6px;font-size:12px;line-height:1.5;color:var(--text-secondary);display:flex;align-items:center;gap:6px}
+.time-greeting-voice[data-pending]{visibility:hidden}
 .time-greeting-voice::before{content:"";flex:none;width:5px;height:5px;transform:rotate(45deg);background:var(--denia-tassel);opacity:.85}
 /* === /denia-v1 === */

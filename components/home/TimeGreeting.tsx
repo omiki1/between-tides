@@ -48,7 +48,8 @@ export function TimeGreeting() {
               <b>{String(date.getDate()).padStart(2, "0")}<small>/{String(date.getMonth() + 1).padStart(2, "0")}</small></b>
             </div>
           </div>
-          {voice && <p className="time-greeting-voice" title={voice.caption}>「{voice.text}」</p>}
+          {/* 台词挂载后才在浏览器里挑（按本地日期 + 时段），这一行先占好位置再填字，免得下面的卡片被顶下去（追番页 CLS） */}
+          <p className="time-greeting-voice" title={voice?.caption} aria-hidden={voice ? undefined : true} data-pending={voice ? undefined : ""}>{voice ? <>「{voice.text}」</> : "\u00a0"}</p>
         </div>
         <Icon size={22} aria-hidden="true" />
       </div>
