@@ -28,7 +28,8 @@
     "search:index": "node scripts/build-search.mjs",
     "images:variants": "node scripts/make-image-variants.mjs",
     "font:subset": "node scripts/wenkai/run.mjs build --force",
-    "font:check": "node scripts/wenkai/run.mjs check && node scripts/wenkai/run.mjs check-html out"
+    "font:check": "node scripts/wenkai/run.mjs check && node scripts/wenkai/run.mjs check-html out",
+    "og": "node scripts/og/render-og.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

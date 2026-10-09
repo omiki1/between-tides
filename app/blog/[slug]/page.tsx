@@ -14,12 +14,17 @@ import { SeriesCard } from "@/components/blog/SeriesCard";
 import { CodeCopy } from "@/components/blog/CodeCopy";
 import { ReadDoneCorner } from "@/components/blog/ReadDoneCorner";
 import { getSeries, linkSeriesRefs } from "@/lib/series";
+import { ogImageFor, ogImages } from "@/lib/og";
 export function generateStaticParams(){return getPostSlugs().map(slug=>({slug}))}
 export async function generateMetadata({params}:PageProps<"/blog/[slug]">):Promise<Metadata>{
   const {slug}=await params;const post=getPost(slug);
   if(!post)return {title:"没有找到这篇手记"};
   const url=`/blog/${post.slug}/`;
-  return {title:post.title,description:post.description,alternates:{canonical:url},keywords:post.tags,openGraph:{type:"article",title:post.title,description:post.description,url,publishedTime:post.date,modifiedTime:post.updated||post.date,tags:post.tags,images:post.cover?[{url:post.cover,alt:post.title}]:undefined},twitter:{card:"summary_large_image",title:post.title,description:post.description,images:post.cover?[post.cover]:undefined}};
+  /* 分享图：知识图谱系列每篇有自己的卡片（public/og/<slug>.png），其余文章用首页图 */
+  const series=getSeries(post.slug);
+  const image=ogImageFor(post.slug);
+  const alt=series?`${series.name} · 第 ${series.index}/${series.total} 篇 · ${post.title}`:post.title;
+  return {title:post.title,description:post.description,alternates:{canonical:url},keywords:post.tags,openGraph:{type:"article",title:post.title,description:post.description,url,publishedTime:post.date,modifiedTime:post.updated||post.date,tags:post.tags,images:ogImages(image,alt)},twitter:{card:"summary_large_image",title:post.title,description:post.description,images:[image]}};
 }
 export default async function PostPage({params}:PageProps<"/blog/[slug]">){
   const {slug}=await params;const post=getPost(slug);

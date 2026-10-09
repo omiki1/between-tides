@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { site } from "@/config/site";
+import { HOME_OG_IMAGE, ogImages } from "@/lib/og";
 import { Providers } from "@/components/layout/Providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -18,7 +19,7 @@ import "@/styles/denia.css";
 import "@/styles/a11y.css";
 import "@/styles/perf.css";
 const manrope=localFont({src:"../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",variable:"--font-manrope",display:"swap"});
-export const metadata:Metadata={metadataBase:new URL(site.url),title:{default:site.seo.title,template:`%s · ${site.name}`},description:site.description,keywords:site.seo.keywords,openGraph:{title:site.seo.title,description:site.description,type:"website",locale:"zh_CN",siteName:site.name},twitter:{card:"summary",title:site.seo.title,description:site.description},icons:{icon:[{url:"/denia-favicon.svg",type:"image/svg+xml"}],other:[{rel:"alternate icon",url:"/favicon.svg",type:"image/svg+xml"}]},alternates:{types:{"application/rss+xml":"/rss.xml"}}};
+export const metadata:Metadata={metadataBase:new URL(site.url),title:{default:site.seo.title,template:`%s · ${site.name}`},description:site.description,keywords:site.seo.keywords,openGraph:{title:site.seo.title,description:site.description,type:"website",locale:"zh_CN",siteName:site.name,images:ogImages(HOME_OG_IMAGE,`${site.name} · ${site.description}`)},twitter:{card:"summary_large_image",title:site.seo.title,description:site.description,images:[HOME_OG_IMAGE]},icons:{icon:[{url:"/denia-favicon.svg",type:"image/svg+xml"}],other:[{rel:"alternate icon",url:"/favicon.svg",type:"image/svg+xml"}]},alternates:{types:{"application/rss+xml":"/rss.xml"}}};
 export const viewport:Viewport={themeColor:[{media:"(prefers-color-scheme: dark)",color:"#110e1e"},{media:"(prefers-color-scheme: light)",color:"#f7f3f8"}],colorScheme:"dark light"};
 const fontBoot=`(function(){try{var m=localStorage.getItem("firefly-font-mode");document.documentElement.dataset.fontMode=m==="original"?"original":"wenkai"}catch(e){}})()`;
 const introBoot=`(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";if(p!=="/")return;if(/[?&]intro=1(?:&|$)/.test(location.search))sessionStorage.removeItem("between-tides.home-intro-seen.v2");var reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(reduced||sessionStorage.getItem("between-tides.home-intro-seen.v2")==="1"){document.documentElement.dataset.intro="seen"}else{document.documentElement.dataset.intro="boot"}}catch(e){}})()`;
