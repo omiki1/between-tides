@@ -1,5 +1,23 @@
-/* === fx-premium === 虹彩玻璃卡片。全部由 <html data-fx="..."> 开关控制，
+/* === fx-premium === 站名沙砾聚字 + 虹彩玻璃卡片。全部由 <html data-fx="..."> 开关控制，
  * 删掉本文件和 app/layout.tsx 里的 <FxBoot/> 即可整体回滚。只复用 token，不改已有组件样式。 */
+
+/* ---------- 站名沙砾聚字（仅桌面） ---------- */
+.fx-wordmark{
+  position:relative;margin:14px 0 0;width:max-content;max-width:100%;
+  font-family:var(--font-lxgw-wenkai,serif);font-size:clamp(34px,4.4vw,56px);line-height:1.2;letter-spacing:.12em;font-weight:600;
+  height:1.2em;white-space:nowrap; /* 固定行高：文楷晚到时不推动下面的 h1（CLS=0） */
+}
+.fx-wordmark-text{
+  background:linear-gradient(100deg,var(--denia-pink,#f3c1c8),color-mix(in srgb,var(--denia-pink,#f3c1c8) 40%,var(--denia-blue-soft,#8fa3dc)) 55%,var(--denia-blue-soft,#8fa3dc));
+  -webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .6s ease;
+}
+.light .fx-wordmark-text{background-image:linear-gradient(100deg,#c2546f,#9a6fae 55%,var(--denia-blue-soft,#4a5c9a))}
+.fx-wordmark-canvas{position:absolute;pointer-events:none;opacity:0;transition:opacity .6s ease}
+.fx-wordmark[data-fx-state="particles"] .fx-wordmark-text{opacity:0;transition-duration:.18s}
+.fx-wordmark[data-fx-state="particles"] .fx-wordmark-canvas{opacity:1;transition-duration:.25s}
+.fx-wordmark[data-fx-state="text"] .fx-wordmark-text{transition-duration:.45s}
+.fx-wordmark[data-fx-state="text"] .fx-wordmark-canvas{transition-duration:.45s}
+@media (max-width:899px),(pointer:coarse){.fx-wordmark-canvas{display:none}}
 
 /* ---------- 虹彩玻璃卡片（仅精确指针） ---------- */
 .fx-glass-sheen{
@@ -23,5 +41,5 @@
   box-shadow:var(--glow-soft-hover,var(--glow-soft));
 }
 
-@media (prefers-reduced-motion:reduce){.fx-glass-sheen{display:none}}
+@media (prefers-reduced-motion:reduce){.fx-wordmark-canvas,.fx-glass-sheen{display:none}}
 /* === /fx-premium === */

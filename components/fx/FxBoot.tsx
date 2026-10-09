@@ -19,6 +19,18 @@ export function FxBoot() {
     const cancel = whenIdle(() => {
       const reduced = motionReduced();
       const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+      const wide = matchMedia("(min-width: 900px)").matches;
+      if (fx.includes("wordmark") && !reduced && fine && wide) {
+        // HomeIntro 播放中不聚字（会被它盖住），等它结束（data-intro=seen）再开始
+        const go = () => document.querySelectorAll<HTMLElement>("[data-fx-wordmark]").forEach(el => {
+          import("./wordmark").then(m => m.mountWordmark(el)).then(keep);
+        });
+        if (root.dataset.intro === "boot" || root.dataset.intro === "leaving") {
+          const mo = new MutationObserver(() => { if (root.dataset.intro === "seen") { mo.disconnect(); if (!dead) go(); } });
+          mo.observe(root, { attributes: true, attributeFilter: ["data-intro"] });
+          keep(() => mo.disconnect());
+        } else go();
+      }
       if (fx.includes("glass") && !reduced && fine) {
         import("./glass").then(m => keep(m.mountGlass()));
       }

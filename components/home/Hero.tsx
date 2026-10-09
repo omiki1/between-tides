@@ -9,6 +9,7 @@ import { deniaVoices as voices, claimVoice, releaseVoice } from "@/lib/deniaVoic
 import styles from "./Hero.module.css";
 import { DeniaTassel } from "./DeniaTassel";
 import { useAfterLoad } from "@/lib/after-load";
+import { FxWordmark } from "@/components/fx/FxWordmark";
 export function Hero(){
  const reduced=useReducedMotion();
  /* 台词轮播等页面加载完、主线程空闲后再开始转 */
@@ -58,6 +59,7 @@ export function Hero(){
   <div className={styles.meteors} aria-hidden="true"><i/><i/><i/></div>
   <div className="hero-copy">
    <div className="hero-intro"><span className="small-orbit"/>FANTASY CONVERGENCE</div>
+   <FxWordmark/>
    <p className="greeting">{site.hero.greeting} <span>{site.nickname}</span><span className="greeting-line"/></p>
    <h1>{site.hero.headline}<br/><span>{site.hero.emphasis}</span></h1>
    <p className="hero-english">{site.hero.english}</p>
