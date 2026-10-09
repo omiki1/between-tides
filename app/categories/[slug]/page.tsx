@@ -6,11 +6,12 @@ import { getCategories } from "@/lib/posts";
 import { PostRow } from "@/components/blog/PostRow";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 export function generateStaticParams(){return getCategories().map(category=>({slug:category.slug}))}
 export async function generateMetadata({params}:PageProps<"/categories/[slug]">):Promise<Metadata>{
   const {slug}=await params;const category=getCategories().find(item=>item.slug===slug);
   if(!category)return {title:"没有找到这个分类"};
-  return {title:`分类 · ${category.name}`,description:`${category.name} 分类下的 ${category.count} 篇手记。`,alternates:{canonical:`/categories/${category.slug}/`}};
+  return withPageOg({title:`分类 · ${category.name}`,description:`${category.name} 分类下的 ${category.count} 篇手记。`,alternates:{canonical:`/categories/${category.slug}/`}});
 }
 export default async function CategoryPage({params}:PageProps<"/categories/[slug]">){
   const {slug}=await params;const category=getCategories().find(item=>item.slug===slug);

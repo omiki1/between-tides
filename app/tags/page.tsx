@@ -5,11 +5,12 @@ import { getPosts, getTagSummaries } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { EmptyState } from "@/components/ui/EmptyState";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "标签",
   description: "本站的全部标签：从设计、AI 到生活方式。",
   alternates: { canonical: "/tags/" },
-};
+});
 export default function TagsPage(){
   const tags=getTagSummaries();
   const posts=getPosts();

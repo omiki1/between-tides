@@ -10,6 +10,7 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import { DeferredToc } from "@/components/blog/DeferredPost";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.id }));
@@ -21,11 +22,11 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return { title: "没有找到这个项目" };
-  return {
+  return withPageOg({
     title: project.name,
     description: project.description,
     alternates: { canonical: `/projects/${project.id}/` },
-  };
+  });
 }
 
 export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {

@@ -5,11 +5,12 @@ import { getNotes, getNoteTags } from "@/lib/notes";
 import { site } from "@/config/site";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "随记",
   description: "短句子、片刻的想法和一些还没有答案的问题。",
   alternates: { canonical: "/notes/" },
-};
+});
 export default function NotesPage(){
   const notes=getNotes();
   const tags=getNoteTags();

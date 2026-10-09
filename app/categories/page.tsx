@@ -5,11 +5,12 @@ import { getCategories, getPosts } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { EmptyState } from "@/components/ui/EmptyState";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "分类",
   description: "按主题浏览本站的手记：设计、技术、AI 与生活。",
   alternates: { canonical: "/categories/" },
-};
+});
 export default function CategoriesPage(){
   const categories=getCategories();
   const posts=getPosts();

@@ -7,11 +7,12 @@ import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { SteamCard } from "@/components/about/SteamCard";
 import { MiniClips } from "@/components/home/MiniClips";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "关于",
   description: "关于幻想收束点、关于 omiki1，以及这个小站为什么被建起来。",
   alternates: { canonical: "/about/" },
-};
+});
 const interests = [
   { icon:Code2, title:"写代码", text:"喜欢把复杂的东西拆成能解释清楚的小块，正在学习 Agent 与检索系统的设计。" },
   { icon:Sparkles, title:"问问题", text:"对「为什么这样更好」的兴趣，常常大于对「怎么做最快」的兴趣。" },

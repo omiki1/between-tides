@@ -6,11 +6,12 @@ import { getPostsByTag, getTagSummaries } from "@/lib/posts";
 import { PostRow } from "@/components/blog/PostRow";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 export function generateStaticParams(){return getTagSummaries().map(tag=>({slug:tag.slug}))}
 export async function generateMetadata({params}:PageProps<"/tags/[slug]">):Promise<Metadata>{
   const {slug}=await params;const tag=getTagSummaries().find(item=>item.slug===slug);
   if(!tag)return {title:"没有找到这个标签"};
-  return {title:`标签 · ${tag.name}`,description:`带有「${tag.name}」标签的 ${tag.count} 篇手记。`,alternates:{canonical:`/tags/${tag.slug}/`}};
+  return withPageOg({title:`标签 · ${tag.name}`,description:`带有「${tag.name}」标签的 ${tag.count} 篇手记。`,alternates:{canonical:`/tags/${tag.slug}/`}});
 }
 export default async function TagPage({params}:PageProps<"/tags/[slug]">){
   const {slug}=await params;const tag=getTagSummaries().find(item=>item.slug===slug);

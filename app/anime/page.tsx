@@ -10,12 +10,13 @@ import { CalendarCard } from "@/components/home/CalendarCard";
 import { SiteStats } from "@/components/home/SiteStats";
 import { TimeGreeting } from "@/components/home/TimeGreeting";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withPageOg({
   title: "追番",
   description: "从哔哩哔哩同步过来的追番列表：正在看的、看过的，以及还想再打开的那些。",
   alternates: { canonical: "/anime/" },
-};
+});
 
 export default function AnimePage() {
   const items = withLocalCovers(getBangumi());

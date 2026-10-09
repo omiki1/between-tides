@@ -3,12 +3,13 @@ import type { Metadata } from "next";
 import { friends } from "@/data/friends";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withPageOg({
   title: "友链",
   description: "本站的朋友与常去之处。",
   alternates: { canonical: "/friends/" },
-};
+});
 
 export default function FriendsPage() {
   return (

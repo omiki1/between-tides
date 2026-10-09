@@ -4,8 +4,9 @@ import { AlbumGrid } from "@/components/gallery/AlbumGrid";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { MiniClips } from "@/components/home/MiniClips";
+import { withPageOg } from "@/lib/og";
 
-export const metadata: Metadata = { title: "相册", description: "按相册翻看收藏的图片。", alternates: { canonical: "/gallery/" } };
+export const metadata: Metadata = withPageOg({ title: "相册", description: "按相册翻看收藏的图片。", alternates: { canonical: "/gallery/" } });
 
 export default function GalleryPage() {
   return (

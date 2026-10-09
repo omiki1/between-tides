@@ -6,11 +6,12 @@ import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { CategoryBar } from "@/components/blog/CategoryBar";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "归档",
   description: "本站的全部手记，按年份排列，可折叠查看。",
   alternates: { canonical: "/archive/" },
-};
+});
 export default function ArchivePage(){
   const archive=getArchive();
   const posts=getPosts();

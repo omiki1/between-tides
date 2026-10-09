@@ -4,12 +4,13 @@ import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withPageOg({
   title: "项目",
   description: "医学证据工作台 MediAtlas，以及通向它的图谱、检索、Agent 与 FastAPI 练习。",
   alternates: { canonical: "/projects/" },
-};
+});
 
 const stageCopy: Record<string, string> = {
   可运行原型: "本地能跑通整条对话与检索链，还没有对外发布。",

@@ -6,6 +6,7 @@ import { albums, albumsIn, getAlbum, photosIn } from "@/data/gallery";
 import { GalleryBoard } from "@/components/gallery/GalleryBoard";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { withPageOg } from "@/lib/og";
 
 export function generateStaticParams() {
   return albums.map((album) => ({ album: album.slug }));
@@ -18,11 +19,11 @@ export async function generateMetadata({ params }: PageProps<"/gallery/[album]">
   const album = getAlbum(slug);
   if (!album) return { title: "没有找到这个相册" };
   const count = photosIn(album.slug).length;
-  return {
+  return withPageOg({
     title: `相册 · ${album.title}`,
     description: `${album.description} 共 ${count} 张。`,
     alternates: { canonical: `/gallery/${album.slug}/` },
-  };
+  });
 }
 
 export default async function AlbumPage({ params }: PageProps<"/gallery/[album]">) {

@@ -7,11 +7,12 @@ import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 import { PostRow } from "@/components/blog/PostRow";
-export const metadata: Metadata = {
+import { withPageOg } from "@/lib/og";
+export const metadata: Metadata = withPageOg({
   title: "手记",
   description: "全部手记：设计、技术、AI 与生活。按时间倒序排列。",
   alternates: { canonical: "/blog/" },
-};
+});
 const english = (value:string) => value.toUpperCase();
 export default function BlogPage(){
   // 站内没有 /blog/page/2/ 路由，之前只取第 1 页（12 篇）会把更早的文章漏掉；文章不多，直接列全部
