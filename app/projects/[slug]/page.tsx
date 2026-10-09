@@ -7,6 +7,7 @@ import { readProjectBody } from "@/lib/projects";
 import { renderMarkdown, extractHeadings } from "@/lib/markdown";
 import { ProjectVisual } from "@/components/projects/ProjectCard";
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import { DeferredToc } from "@/components/blog/DeferredPost";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 
@@ -56,6 +57,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         <article className="prose" dangerouslySetInnerHTML={{ __html: html }} />
         <aside className="reading-aside">
           <TableOfContents headings={headings} />
+          <DeferredToc />
           {project.github ? (
             <div className="aside-card">
               <span className="eyebrow">SOURCE</span>

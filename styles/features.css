@@ -186,3 +186,8 @@
   .ft-today-text{margin-top:0}
 }
 @media (prefers-reduced-motion:reduce){.ft-today-frame img{animation:none}}
+
+/* QQ 音乐外链播放器的占位卡（点了才插 iframe） */
+.qq-facade .qq-facade-hit{position:absolute;inset:0;z-index:1;padding:0;border:0;border-radius:inherit;background:none;cursor:pointer}
+.qq-facade .qq-facade-hit:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
+.qq-facade-note span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

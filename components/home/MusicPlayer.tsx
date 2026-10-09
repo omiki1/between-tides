@@ -86,6 +86,9 @@ export function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
   const [needsGesture, setNeedsGesture] = useState(false);
   const [widgetFallback, setWidgetFallback] = useState(false);
+  /* 官方外链播放器只在用户点了「播放」之后才插入 iframe（之前只显示一个同样式的封面卡片），
+     免得每个页面一加载就拉 QQ 的整套播放器脚本（它自己的资源 404 会刷满控制台）。 */
+  const [widgetOpen, setWidgetOpen] = useState(false);
   const [position, setPosition] = useState(0), [duration, setDuration] = useState(0), [error, setError] = useState("");
   const queue = source === "qq" ? qqTracks : localTracks;
   const qqPlayer = current.mid ? qqOutchainPlayerUrl(current.id) : "";
@@ -125,6 +128,7 @@ export function MusicPlayer() {
     if (!element || ticket !== revision.current) return false;
     const same = track.id === currentRef.current.id && element.hasAttribute("src") && !element.error;
     setCurrent(track); setSource(track.mid ? "qq" : "local"); setError(""); setNeedsGesture(false); setWidgetFallback(false);
+    if (track.id !== currentRef.current.id) setWidgetOpen(false);
     window.dispatchEvent(new CustomEvent("site-audio", { detail: "music" }));
     try {
       if (!same) {
@@ -198,6 +202,7 @@ export function MusicPlayer() {
     writeAutoplay(next);
     if (!next) {
       pause();
+      setWidgetOpen(false);
       setPlayerEpoch(value => value + 1);
     }
   }
@@ -212,9 +217,16 @@ export function MusicPlayer() {
 
   return <section className="music-panel music-panel-polish" aria-label="音乐播放器" data-pagefind-ignore="all">
     <div className="music-top"><span className="eyebrow"><AudioLines size={13}/> MUSIC</span><div className="music-tools"><button className="autoplay-toggle" type="button" aria-pressed={autoplay} aria-label="进入页面时播放导入的 QQ 音乐" onClick={toggleAutoplay}>{autoplay ? "进页播放开" : "进页播放关"}</button><button className="playlist-trigger" onClick={() => dialog.current?.showModal()} aria-label="打开歌单列表"><ListMusic size={15}/><span>歌单 · {queue.length}</span></button></div></div>
-    {showWidget ? <div className="qq-player-wrap">
-      <iframe key={`${current.id}-${playerEpoch}`} src={qqPlayer} title={`QQ 音乐播放器：${current.title}`} width="100%" height="65" frameBorder="0" allow="autoplay; encrypted-media" loading={autoplay ? "eager" : "lazy"} referrerPolicy="strict-origin-when-cross-origin"/>
-    </div> : <>
+    {showWidget && widgetOpen ? <div className="qq-player-wrap">
+      <iframe key={`${current.id}-${playerEpoch}`} src={qqPlayer} title={`QQ 音乐播放器：${current.title}`} width="100%" height="65" frameBorder="0" allow="autoplay; encrypted-media" referrerPolicy="strict-origin-when-cross-origin"/>
+    </div> : showWidget ? <>
+      <div className="music-main qq-facade"><div className="album-cover"><img src={current.cover} alt="" width={64} height={64} draggable={false}/><span aria-hidden/><button type="button" className="qq-facade-hit" tabIndex={-1} aria-label={`用 QQ 音乐官方播放器播放 ${current.title}`} onClick={() => setWidgetOpen(true)}/></div><div className="track-info"><h3 title={current.title}>{current.title}</h3><p title={current.artist}>{current.artist}</p><div className="music-controls">
+        <button aria-label="上一首" onClick={() => change(-1)}><SkipBack size={15}/></button>
+        <button className="play-button" aria-label={`用 QQ 音乐官方播放器播放 ${current.title}`} onClick={() => setWidgetOpen(true)}><Play size={15}/></button>
+        <button aria-label="下一首" onClick={() => change(1)}><SkipForward size={15}/></button>
+      </div></div></div>
+      <div className="track-progress qq-facade-note"><span>点 ▶ 载入 QQ 音乐官方播放器</span></div>
+    </> : <>
       <div className="music-main"><div className={`album-cover${playing ? " is-playing" : ""}`}><img src={current.cover} alt="" width={64} height={64} draggable={false}/><span aria-hidden/></div><div className="track-info"><h3 title={current.title}>{current.title}</h3><p title={current.artist}>{current.artist}</p><div className="music-controls">
         <button aria-label="上一首" onClick={() => change(-1)}><SkipBack size={15}/></button>
         <button className="play-button" aria-label={playing ? "暂停" : "播放"} onClick={() => playing ? pause() : void playTrack()}>{playing ? <Pause size={15}/> : <Play size={15}/>}</button>

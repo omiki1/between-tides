@@ -44,3 +44,24 @@
   --font-blog-original:var(--font-manrope),"Site CJK",sans-serif;
 }
 /* === /perf-v3 === */
+
+/* === perf-v4 === 文章页
+ * 1) 代码块 / 行内代码、导语的字体栈同样收成 local() 别名：原来的 SFMono-Regular, Menlo, Consolas / Georgia, "Songti SC"
+ *    在 Linux、安卓上都不存在，首次排版要逐个按名字去系统里查（和 perf-v3 是同一个问题）。各平台实际用到的字体不变。
+ * 2) .ft-rise：首屏标题区、封面的纯 CSS 入场，代替 framer-motion（不参与水合）。 */
+@font-face{font-family:"Site Mono";src:local("SFMono-Regular"),local("SF Mono Regular"),local("Menlo Regular"),local("Menlo-Regular"),local("Consolas"),local("Cascadia Mono Regular"),local("CascadiaMono-Regular"),local("DejaVu Sans Mono"),local("DejaVuSansMono"),local("Liberation Mono"),local("LiberationMono")}
+@font-face{font-family:"Site Mono";font-weight:600 900;src:local("SFMono-Bold"),local("SF Mono Bold"),local("Menlo Bold"),local("Menlo-Bold"),local("Consolas Bold"),local("Consolas-Bold"),local("DejaVu Sans Mono Bold"),local("DejaVuSansMono-Bold"),local("Liberation Mono Bold"),local("LiberationMono-Bold")}
+@font-face{font-family:"Site Serif";font-style:normal;src:local("Georgia")}
+@font-face{font-family:"Site Serif";font-style:italic;src:local("Georgia Italic"),local("Georgia-Italic")}
+@font-face{font-family:"Site Serif CJK";src:local("Songti SC Regular"),local("STSongti-SC-Regular")}
+:root{
+  --font-code:ui-monospace,"Site Mono","Site CJK",monospace;
+  --font-lede:"Site Serif","Site Serif CJK",serif;
+  /* Tailwind preflight 给 pre/code/kbd/samp 的默认等宽栈也走同一个别名 */
+  --default-mono-font-family:var(--font-code);
+}
+.prose :not(pre)>code,.prose pre code{font-family:var(--font-code)}
+.reading-lede{font-family:var(--font-lede)}
+@keyframes ft-rise{from{opacity:0;transform:translateY(18px)}}
+@media (prefers-reduced-motion:no-preference){.ft-rise{animation:ft-rise .75s cubic-bezier(.22,.61,.36,1) backwards}}
+/* === /perf-v4 === */

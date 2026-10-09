@@ -6,13 +6,10 @@ import { ArrowLeft,ArrowRight,ArrowUpRight,Clock,CalendarDays,Folder,RefreshCw }
 import { getCategoryOfPost, getPost, getPostSlugs, getNeighbours, slugify, coverPositionStyle } from "@/lib/posts";
 import { renderMarkdown, extractHeadings } from "@/lib/markdown";
 import { site } from "@/config/site";
-import { Reveal } from "@/components/effects/Reveal";
-import { ReadingProgress } from "@/components/blog/ReadingProgress";
+import { Rise } from "@/components/ui/Rise";
 import { TableOfContents } from "@/components/blog/TableOfContents";
-import { OutdatedNotice } from "@/components/blog/OutdatedNotice";
 import { SeriesCard } from "@/components/blog/SeriesCard";
-import { CodeCopy } from "@/components/blog/CodeCopy";
-import { ReadDoneCorner } from "@/components/blog/ReadDoneCorner";
+import { PostEnhancers, DeferredOutdated, DeferredReadDone } from "@/components/blog/DeferredPost";
 import { getSeries, linkSeriesRefs } from "@/lib/series";
 import { HOME_OG_IMAGE, ogImageFor, ogImages } from "@/lib/og";
 export function generateStaticParams(){return getPostSlugs().map(slug=>({slug}))}
@@ -44,8 +41,7 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
   const jsonLd={"@context":"https://schema.org","@type":"BlogPosting",headline:post.title,description:post.description,datePublished:post.date,dateModified:post.updated||post.date,keywords:post.tags.join(","),image:post.cover?`${site.url}${post.cover}`:undefined,url:`${site.url}/blog/${post.slug}/`,author:{"@type":"Person",name:site.nickname},publisher:{"@type":"Organization",name:site.name}};
   return <main id="main" className="container inner">
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(jsonLd)}}/>
-    <ReadingProgress/>
-    <Reveal className="reading-head">
+    <Rise className="reading-head">
       <Link className="back-link" href="/blog/" data-pagefind-ignore="all"><ArrowLeft size={15}/>所有手记</Link>
       <div className="post-meta">{post.tags.map(t=>t.toUpperCase()).join(" / ")}<span>{post.date.replaceAll("-",".")}</span></div>
       <h1>{post.title}</h1>
@@ -60,14 +56,13 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
         {post.tags.map(tag=><Link key={tag} className="tag-chip" href={`/tags/${slugify(tag)}/`}># {tag}</Link>)}
       </div>
       {series&&<SeriesCard series={series}/>}
-    </Reveal>
-    {post.cover&&!post.hideCover&&<Reveal className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Reveal>}
+    </Rise>
+    {post.cover&&!post.hideCover&&<Rise className="reading-cover" style={coverPositionStyle(post.coverPosition)}><Image src={post.cover} alt="" fill sizes="(max-width: 900px) 100vw, 1040px" loading="eager"/></Rise>}
     <div className="reading-layout">
       <div className="ft-article-col">
-        <OutdatedNotice date={post.date} updated={post.updated} seriesHref={category?`/categories/${category.slug}/`:undefined}/>
+        <DeferredOutdated date={post.date} updated={post.updated} seriesHref={category?`/categories/${category.slug}/`:undefined}/>
         <article className="prose" dangerouslySetInnerHTML={{__html:html}}/>
-        <CodeCopy/>
-        <ReadDoneCorner/>
+        <DeferredReadDone/>
       </div>
       <aside className="reading-aside" data-pagefind-ignore="all">
         <TableOfContents headings={headings}/>
@@ -88,5 +83,6 @@ export default async function PostPage({params}:PageProps<"/blog/[slug]">){
       {previous?<Link href={`/blog/${previous.slug}/`}><ArrowLeft size={16}/><span><small>{series&&series.previous&&<i className="ft-pager-series">{series.name} · 第 {series.previous.index}/{series.total} 篇</i>}上一篇</small>{previous.title}</span></Link>:<span/>}
       {next?<Link href={`/blog/${next.slug}/`} className="pager-next"><span><small>{series&&series.next&&<i className="ft-pager-series">{series.name} · 第 {series.next.index}/{series.total} 篇</i>}下一篇</small>{next.title}</span><ArrowRight size={16}/></Link>:<span/>}
     </nav>
+    <PostEnhancers series={Boolean(series)}/>
   </main>;
 }
