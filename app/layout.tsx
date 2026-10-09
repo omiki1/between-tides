@@ -16,6 +16,7 @@ import "./globals.css";
 import "../styles/features.css";
 import "@/styles/texture.css";
 import "@/styles/denia.css";
+import "@/styles/character-art.css";
 import "@/styles/a11y.css";
 import "@/styles/perf.css";
 const manrope=localFont({src:"../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",variable:"--font-manrope",display:"swap"});

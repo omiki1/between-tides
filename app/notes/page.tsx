@@ -5,6 +5,7 @@ import { getNotes, getNoteTags } from "@/lib/notes";
 import { site } from "@/config/site";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { withPageOg } from "@/lib/og";
 export const metadata: Metadata = withPageOg({
   title: "随记",
@@ -24,6 +25,7 @@ export default function NotesPage(){
         <span><b>{tags.length}</b> 个标签</span>
         <span>更新于 <b>{notes[0].date.replaceAll("-",".")}</b></span>
       </div>
+      <CharacterArt name="denia-02" variant="head" className="char-art--mobile" sizes="(max-width: 700px) 128px, 300px"/>
     </Reveal>
 
     <Reveal as="section" className="home-section">

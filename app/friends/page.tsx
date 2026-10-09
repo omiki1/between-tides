@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { friends } from "@/data/friends";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { withPageOg } from "@/lib/og";
 
 export const metadata: Metadata = withPageOg({
@@ -26,6 +27,7 @@ export default function FriendsPage() {
             <b>{friends.length}</b> 位朋友
           </span>
         </div>
+        <CharacterArt name="aemeath-01" variant="head" className="char-art--mobile" sizes="(max-width: 700px) 128px, 300px"/>
       </Reveal>
       <Reveal as="section" className="home-section">
         <ul className="friends-grid friends-grid-page">

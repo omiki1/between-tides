@@ -10,6 +10,7 @@ import { CalendarCard } from "@/components/home/CalendarCard";
 import { SiteStats } from "@/components/home/SiteStats";
 import { TimeGreeting } from "@/components/home/TimeGreeting";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { withPageOg } from "@/lib/og";
 
 export const metadata: Metadata = withPageOg({
@@ -33,6 +34,7 @@ export default function AnimePage() {
         <aside className="home-sidebar" aria-label="资料">
           <ProfileCard />
           <QuoteCard />
+          <CharacterArt name="aemeath-04" variant="aside" sizes="240px" />
         </aside>
         <div className="anime-center">
           <Reveal className="anime-heading">

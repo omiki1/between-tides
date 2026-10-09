@@ -5,10 +5,12 @@ import { FooterVisits } from "./FooterVisits";
 import { TideDivider } from "@/components/effects/TideDivider";
 import { TimeProgress } from "./TimeProgress";
 import { FooterPeek } from "./FooterPeek";
+import { FooterArt } from "./FooterArt";
 
 export function Footer() {
   return (
     <footer className="footer">
+      <FooterArt />
       <TideDivider tone="footer" palette="tide" />
       <div className="footer container">
         <FooterPeek />

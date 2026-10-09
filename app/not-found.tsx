@@ -4,6 +4,7 @@ import { Compass,ArrowUpRight } from "lucide-react";
 import { site } from "@/config/site";
 import { getPosts } from "@/lib/posts";
 import { BubbleStage } from "@/components/effects/BubbleStage";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 export const metadata:Metadata={title:"找不到这个页面",description:"这个地址没有对应的内容。"};
 export default function NotFound(){
   const posts=getPosts().map(p=>({title:p.title,href:`/blog/${p.slug}/`}));
@@ -16,6 +17,7 @@ export default function NotFound(){
         <div className="notfound-links">
           {site.nav.map(item=><Link key={item.href} href={item.href}>{item.href==="/"?<><Compass size={15}/>回到首页</>:item.label}<ArrowUpRight size={14}/></Link>)}
         </div>
+        <CharacterArt name="denia-03" variant="inline" className="char-art--start" sizes="(max-width: 700px) 132px, 176px"/>
       </section>
       <BubbleStage posts={posts}/>
     </div>

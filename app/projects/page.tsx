@@ -4,6 +4,7 @@ import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { withPageOg } from "@/lib/og";
 
 export const metadata: Metadata = withPageOg({
@@ -33,6 +34,7 @@ export default function ProjectsPage() {
           <span><b>{projects.filter((p) => p.status === "可运行原型").length}</b> 个可运行原型</span>
           <span>从练习接到完整系统</span>
         </div>
+        <CharacterArt name="aemeath-05" variant="head" sizes="340px"/>
       </Reveal>
 
       {first ? (

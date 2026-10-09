@@ -5,6 +5,7 @@ import { ArrowUpRight,Code2,Music2,Sparkles,Compass,PenLine,Coffee } from "lucid
 import { site } from "@/config/site";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { SteamCard } from "@/components/about/SteamCard";
 import { MiniClips } from "@/components/home/MiniClips";
 import { withPageOg } from "@/lib/og";
@@ -37,6 +38,7 @@ export default function AboutPage(){
         <MiniClips src="/assets/wallpaper/clip-resonance.mp4?v=3" position="center 46%" />
         <MiniClips src="/assets/wallpaper/clip-pv.mp4?v=3" position="center 42%" />
       </div>
+      <CharacterArt name="denia-01" variant="head" sizes="300px"/>
     </Reveal>
 
     <Reveal as="section" className="home-section">
@@ -77,6 +79,7 @@ export default function AboutPage(){
       </div>
       <p className="method-note">{site.github ? <>代码在 <a href={site.github} rel="me" target="_blank">GitHub @omiki1</a>。</> : null}哔哩哔哩在 <a href={site.bilibili} rel="me" target="_blank">空间 A1478L</a>，追番已同步到<Link href="/anime/">这个页面</Link>。</p>
       <div className="contact-flourish" aria-hidden="true" />
+      <CharacterArt name="aemeath-02" variant="inline" sizes="(max-width: 700px) 132px, 176px"/>
     </Reveal>
 
     <Reveal as="section" className="home-section">

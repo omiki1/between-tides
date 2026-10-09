@@ -1,0 +1,45 @@
+/* === character-art === 官方角色立绘（components/ui/CharacterArt.tsx）
+ * 纯装饰：不响应指针、不挡文字；署名用系统字体。位置按 variant 区分：
+ *   head        —— 列表页标题区右侧空白处（≥1100px 才出现，窄屏不占地方）
+ *   aside       —— 侧栏底部（追番左栏，≤980px 不显示）
+ *   inline      —— 正文流里的小圆像（关于 / 404，手机也显示，走 600 宽小图）
+ *   footer-peek —— 首页：贴着页脚上沿、右侧页面边缘探出来（爱弥斯 03 底边是硬切的，只能这样贴边放）
+ */
+.char-art{margin:0;pointer-events:none;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;align-items:center;gap:6px}
+.char-art img{display:block;max-width:100%;height:auto;-webkit-user-drag:none;filter:drop-shadow(0 14px 26px color-mix(in srgb,var(--primary-strong) 20%,transparent))}
+.char-art__credit{font-family:var(--font-body-cjk);font-size:10px;font-weight:400;letter-spacing:.6px;line-height:1.4;white-space:nowrap;color:var(--text-muted);opacity:.85}
+
+/* head：标题区高度内、右侧，文字最宽只到 ~700px，右边留给立绘；>1240px 让开右侧的区块导航 */
+.page-head:has(>.char-art--head){isolation:isolate}
+.char-art--head{position:absolute;z-index:-1;top:10px;bottom:2px;right:24px;align-items:flex-end}
+.char-art--head img{height:calc(100% - 22px);width:auto;max-width:min(30vw,340px);object-fit:contain;object-position:bottom right;
+  /* 几张官网立绘在腿部被原图截断：底部统一渐隐，不留硬边 */
+  -webkit-mask-image:linear-gradient(180deg,#000 78%,transparent);mask-image:linear-gradient(180deg,#000 78%,transparent)}
+@media (min-width:1241px){.char-art--head{right:112px}}
+@media (max-width:1099px){.char-art--head{display:none}}
+/* 少数几页（友链、碎念：标题区短、下面不是大图）在手机上改成标题区里的小立绘，走 600 宽小图 */
+@media (max-width:700px){
+  .char-art--head.char-art--mobile{display:flex;position:static;z-index:auto;width:128px;margin:16px 0 0 auto;align-items:center}
+  .char-art--head.char-art--mobile img{height:auto;width:100%;max-width:100%}
+}
+/* 关于页标题区很高，人像放在两段视频右侧的空白里，限制在 440px 内 */
+.about-head .char-art--head{top:auto;height:min(440px,calc(100% - 40px));bottom:24px}
+
+/* aside：侧栏最后一块，不加卡片底，只留柔和投影；底部渐隐 */
+.char-art--aside{padding-top:4px}
+.char-art--aside img{width:100%;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
+@media (max-width:980px){.char-art--aside{display:none}}
+
+/* inline：圆形头像，靠右（404 靠左），手机缩小 */
+.char-art--inline{width:176px;margin:26px 0 0 auto}
+.char-art--inline.char-art--start{margin:30px auto 0 0}
+@media (max-width:700px){.char-art--inline{width:132px;margin-top:20px}}
+
+/* footer-peek：右边缘贴页面边，底边贴页脚上沿；上、左两条硬边用遮罩渐隐。只在首页、≥1100px 出现 */
+.char-art--footer-peek{position:absolute;right:0;bottom:100%;width:clamp(120px,10vw,150px);align-items:flex-end;gap:0;z-index:1}
+.char-art--footer-peek img{width:100%;filter:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 16%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent,#000 22%),linear-gradient(180deg,transparent,#000 16%);mask-composite:intersect}
+.char-art--footer-peek .char-art__credit{position:absolute;right:calc(100% + 6px);bottom:4px}
+@media (max-width:1099px){.char-art--footer-peek{display:none}}
+/* === /character-art === */

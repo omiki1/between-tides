@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { getPosts, getTagSummaries, coverPositionStyle, getFeaturedPost, getPostsExceptFeatured } from "@/lib/posts";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
+import { CharacterArt } from "@/components/ui/CharacterArt";
 import { CategoryBar } from "@/components/blog/CategoryBar";
 import { PostRow } from "@/components/blog/PostRow";
 import { withPageOg } from "@/lib/og";
@@ -29,6 +30,7 @@ export default function BlogPage(){
         <span><b>{tags.length}</b> 个标签</span>
         <span>最近更新 <b>{posts[0].date.replaceAll("-",".")}</b></span>
       </div>
+      <CharacterArt name="denia-05" variant="head" sizes="300px"/>
     </Reveal>
 
     <Reveal as="section" className="home-section">
