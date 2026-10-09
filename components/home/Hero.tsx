@@ -77,7 +77,7 @@ export function Hero(){
    <span className={styles.coordinate}>WUTHERING WAVES / DREAM ARCHIVE</span>
    <div className={styles.water} aria-hidden="true"><i/><i/><i/></div>
    <motion.div className={styles.character} style={reduced?{}:{x,y}}>
-    <Image src="/artwork/denia.webp" alt="Denia 粉发立绘，漂浮于星光与梦境潮汐之间" fill sizes="(max-width: 700px) 270px, 390px" preload/>
+    <Image src="/artwork/denia.webp" alt="Denia 粉发立绘，漂浮于星光与梦境潮汐之间" fill sizes="(max-width: 700px) 270px, 390px" preload fetchPriority="high" loading="eager"/>
    </motion.div>
    <div className={styles.nameplate}><span className="small-orbit"/><div><small>DENIA · WUTHERING WAVES</small></div><Sparkles size={18}/></div>
    <div className={`${styles.quote} denia-quote`} role="button" tabIndex={0} data-denia-bubble="" aria-label={`角色语录：${voiceError||quote}（点击切换下一句）`} onClick={advance} onKeyDown={event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();advance()}}} onPointerEnter={()=>setHold(true)} onPointerLeave={()=>setHold(false)} onFocus={()=>setHold(true)} onBlur={()=>setHold(false)}><span>“</span><p aria-live={announce?"polite":"off"}>{voiceError?voiceError:<><span className="sr-only">{quote}</span><span className="denia-type" aria-hidden="true" key={line}>{Array.from(quote).map((char,index)=><i key={index} style={{animationDelay:`${index*55}ms`}}>{char}</i>)}</span></>}</p><small>中文角色语音</small><span className={styles.quoteClose} aria-hidden="true">”</span><DeniaTassel className="denia-tassel"/></div>
