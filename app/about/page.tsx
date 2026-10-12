@@ -7,6 +7,8 @@ import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CharacterArt } from "@/components/ui/CharacterArt";
 import { SteamCard } from "@/components/about/SteamCard";
+import { ZzzBanner } from "@/components/zzz/ZzzBanner";
+import "@/styles/zzz.css";
 import { MiniClips } from "@/components/home/MiniClips";
 import { withPageOg } from "@/lib/og";
 export const metadata: Metadata = withPageOg({
@@ -66,6 +68,7 @@ export default function AboutPage(){
 
     <div id="steam"><Reveal as="section" className="home-section steam-section">
       <div className="section-title"><div><span className="section-number">03</span><h2>游戏角落</h2><span className="eyebrow">STEAM</span></div></div>
+      <ZzzBanner />
       <SteamCard />
     </Reveal>
     </div>

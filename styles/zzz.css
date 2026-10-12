@@ -1,0 +1,41 @@
+/* === zzz === 绝区零立绘（components/zzz/*）：黑 / 红 / 金点缀，不替换达妮娅的粉蓝主色。
+ * 纯装饰：不挡文字、不加投影、不加灰色底板；署名用系统字体。 */
+:root{--zzz-red:#d8323f;--zzz-gold:#d4a548}
+.zzz-credit{font-family:var(--font-body-cjk);font-size:10px;font-weight:400;letter-spacing:.6px;line-height:1.4;white-space:nowrap;color:var(--text-muted);opacity:.85}
+
+/* 关于页横幅：底边是两张图的硬切线，贴住横幅下沿；左图渐入、右图左缘渐隐叠在左图上 */
+.zzz-banner{position:relative;margin:0 0 18px;aspect-ratio:10/3;overflow:hidden;border-radius:var(--radius-md);
+  border:1px solid color-mix(in srgb,var(--zzz-red) 24%,var(--border));
+  background:linear-gradient(100deg,transparent 28%,color-mix(in srgb,var(--zzz-red) 7%,transparent) 64%,color-mix(in srgb,var(--zzz-gold) 9%,transparent));
+  pointer-events:none;user-select:none;-webkit-user-select:none}
+.zzz-banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--zzz-red) 30%,var(--zzz-gold) 70%,transparent);opacity:.7}
+.zzz-banner__art{position:absolute;bottom:0;pointer-events:auto}
+.zzz-banner__art img{display:block;width:100%;height:auto;-webkit-user-drag:none}
+.zzz-banner__art--burnice{left:0;width:56%}
+.zzz-banner__art--burnice img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 78%,transparent)}
+.zzz-banner__art--claret{right:0;width:52%}
+.zzz-banner__art--claret img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 24%);mask-image:linear-gradient(90deg,transparent,#000 24%)}
+.zzz-banner .zzz-credit{position:absolute;left:14px;top:9px}
+/* 星火落在墨镜 / 眼睛附近 */
+.zzz-banner__art--burnice{--zzz-spark-x:47%;--zzz-spark-y:48%}
+.zzz-banner__art--claret{--zzz-spark-x:50%;--zzz-spark-y:33%}
+@media (max-width:700px){.zzz-banner{aspect-ratio:2.6/1;margin-bottom:14px}.zzz-banner__art--burnice{width:62%}.zzz-banner__art--claret{width:58%}.zzz-banner .zzz-credit{left:10px;top:6px;font-size:9px}}
+
+/* 悬停：墨镜反光一样的斜向扫光（只落在人物轮廓上）+ 一颗小红星火。
+ * 只在能悬停的设备上、未开启「减少动态」（系统或站内设置）时出现；伪元素不接收指针。 */
+
+.zzz-glint::before,.zzz-glint::after{pointer-events:none}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  html:not([data-ambiance-motion=reduce]) .zzz-glint:hover::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(105deg,transparent 43%,rgba(255,226,170,.5) 46%,rgba(255,248,232,.95) 48.5%,rgba(255,64,64,.7) 50.5%,transparent 53%) 0 0/240% 100% no-repeat;
+    -webkit-mask:var(--zzz-mask) center bottom/contain no-repeat;mask:var(--zzz-mask) center bottom/contain no-repeat;
+    animation:zzz-glint .85s cubic-bezier(.3,.7,.4,1) both}
+  html:not([data-ambiance-motion=reduce]) .zzz-glint:hover::before{content:"";position:absolute;z-index:1;width:26px;height:26px;margin:-13px 0 0 -13px;
+    left:var(--zzz-spark-x,50%);top:var(--zzz-spark-y,20%);
+    background:radial-gradient(circle,#fff 0 16%,#ff5a5a 30%,var(--zzz-red) 46%,transparent 72%);
+    clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
+    animation:zzz-spark .9s .15s ease-out both}
+}
+@keyframes zzz-glint{from{background-position:100% 0}to{background-position:0 0}}
+@keyframes zzz-spark{0%{opacity:0;transform:scale(.2) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(25deg)}100%{opacity:0;transform:scale(.6) rotate(45deg)}}
+/* === /zzz === */
