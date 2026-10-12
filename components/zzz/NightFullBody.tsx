@@ -38,7 +38,7 @@ export function NightFullBody({ name }: { name: ZzzName }) {
             <img
               src={`${base}.webp`}
               srcSet={`${base}-600w.webp 600w, ${base}.webp ${art.w}w`}
-              sizes="220px"
+              sizes="230px"
               width={art.w}
               height={art.h}
               alt=""

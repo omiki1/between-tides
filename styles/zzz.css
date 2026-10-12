@@ -23,15 +23,24 @@
 
 /* 首页夜间全身立绘（components/zzz/NightFullBody.tsx）：左右两栏底部，首屏之外。
  * 日间、≤1200px（右栏隐藏）时容器不显示，也不插入 <img>；容器按各自原图比例固定，图片后插入不产生偏移。 */
-.zzz-night{margin:6px 0 0;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;user-select:none;-webkit-user-select:none}
-html:not(.dark) .zzz-night{display:none}
-@media (max-width:1200px){.zzz-night{display:none}}
-.zzz-night__box{position:relative;width:100%;max-width:220px}
-.zzz-night__box--burnice{aspect-ratio:781/1205}
-.zzz-night__box--claret{aspect-ratio:951/1355}
-.zzz-night__box .zzz-glint{position:absolute;inset:0;display:block;pointer-events:auto}
+.zzz-night{display:none}
+@media (min-width:1201px){
+  /* 镜像对称：主栏跨两行，两侧栏在第一行；立绘作为第二行的左右两格，同一高度、底边与主栏底边齐平 */
+  .home-layout>.home-main{grid-column:2;grid-row:1/span 2}
+  .home-layout>.home-sidebar{grid-row:1}
+  .home-layout>.home-sidebar-right{grid-column:3}
+  html.dark .zzz-night{display:flex;grid-row:2;align-self:end;flex-direction:column;gap:6px;margin:16px 0 0;pointer-events:none;user-select:none;-webkit-user-select:none}
+  .zzz-night[data-zzz-full=burnice]{grid-column:1;align-items:flex-start}
+  .zzz-night[data-zzz-full=claret]{grid-column:3;align-items:flex-end}
+}
+.zzz-night__box{position:relative;width:220px;height:300px}
+.zzz-night__box .zzz-glint{position:absolute;bottom:0;left:50%;height:100%;transform:translateX(-50%);display:block;pointer-events:auto}
+.zzz-night__box--burnice .zzz-glint{aspect-ratio:781/1205}
+.zzz-night__box--claret .zzz-glint{aspect-ratio:951/1355}
 .zzz-night__box img{display:block;width:100%;height:100%;-webkit-user-drag:none}
 .zzz-night .zzz-credit[aria-hidden]{visibility:hidden}
+.zzz-night[data-zzz-full=burnice] .zzz-credit{text-align:left}
+.zzz-night[data-zzz-full=claret] .zzz-credit{text-align:right}
 .zzz-night__box--burnice .zzz-glint{--zzz-spark-x:56%;--zzz-spark-y:10%}
 .zzz-night__box--claret .zzz-glint{--zzz-spark-x:43%;--zzz-spark-y:11%}
 

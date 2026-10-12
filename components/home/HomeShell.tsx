@@ -21,7 +21,6 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <ReactionTest />
         <QuoteCard />
         <CategoryWidget />
-        <NightFullBody name="burnice" />
       </aside>
       <div className="home-main">{children}</div>
       <aside className="home-sidebar home-sidebar-right" aria-label="右侧栏">
@@ -31,8 +30,9 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <GamesPreview />
         <AnimePreview />
         <CalendarCard />
-        <NightFullBody name="claret" />
       </aside>
+      <NightFullBody name="burnice" />
+      <NightFullBody name="claret" />
     </div>
   );
 }
