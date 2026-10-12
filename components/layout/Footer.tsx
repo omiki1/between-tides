@@ -6,6 +6,7 @@ import { TideDivider } from "@/components/effects/TideDivider";
 import { TimeProgress } from "./TimeProgress";
 import { FooterPeek } from "./FooterPeek";
 import { FooterArt } from "./FooterArt";
+import { HomeTailArt } from "@/components/zzz/HomeTailArt";
 
 export function Footer() {
   return (
@@ -15,7 +16,10 @@ export function Footer() {
       <div className="footer container">
         <FooterPeek />
         <p className="footer-tide-line">{site.tagline}</p>
-        <TimeProgress />
+        <div className="time-progress-wrap">
+          <HomeTailArt />
+          <TimeProgress />
+        </div>
         <div className="footer-top">
           <Link href="/" className="footer-brand">
             <WaveMark />

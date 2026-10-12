@@ -4,6 +4,8 @@ import { friends } from "@/data/friends";
 import { SideRail } from "@/components/layout/SideRail";
 import { Reveal } from "@/components/effects/Reveal";
 import { CharacterArt } from "@/components/ui/CharacterArt";
+import { NightFullBody } from "@/components/zzz/NightFullBody";
+import "@/styles/zzz.css";
 import { withPageOg } from "@/lib/og";
 
 export const metadata: Metadata = withPageOg({
@@ -62,6 +64,7 @@ export default function FriendsPage() {
           ))}
         </ul>
       </Reveal>
+      <NightFullBody name="claret" minWidth={701} place="page" />
       <SideRail current="friends" />
     </main>
   );

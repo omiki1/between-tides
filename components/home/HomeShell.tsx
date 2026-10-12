@@ -9,8 +9,6 @@ import { TimeGreeting } from "./TimeGreeting";
 import { ReactionTest } from "./ReactionTest";
 import { LiveWallpaper } from "./LiveWallpaper";
 import { DeniaToday } from "./DeniaToday";
-import { NightFullBody } from "@/components/zzz/NightFullBody";
-import "@/styles/zzz.css";
 
 export function HomeShell({ children }: { children: React.ReactNode }) {
   return (
@@ -31,8 +29,6 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <AnimePreview />
         <CalendarCard />
       </aside>
-      <NightFullBody name="burnice" />
-      <NightFullBody name="claret" />
     </div>
   );
 }
