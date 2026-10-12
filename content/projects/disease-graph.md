@@ -22,7 +22,7 @@
 - PaddleNLP 的 PP-UIE / uie-base 做命名实体识别。
 - GLM 把抽取结果或用户提问写成 Cypher。
 - 一条带历史的问答链：生成查询 → 执行 → 组织回答，并做医疗 / 非医疗意图分流，减少凭空编造。
-- 高德天气和图谱查询封装成 LangChain Tool，交给 `create_agent` 自己调度。
+- 图谱查询封装成 LangChain Tool，交给 `create_agent` 自己调度。
 
 它证明“自然语言 → 图查询 → 回答”这条路走得通，但还停在脚本和原型，没有登录、没有前端，也没有后来 MediAtlas 里的证据门槛。
 

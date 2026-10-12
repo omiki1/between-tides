@@ -27,7 +27,7 @@ export const projects: Project[] = [
     id: "disease-graph",
     name: "疾病知识图谱问答",
     subtitle: "把病、症、药放进一张图里。",
-    description: "stu-neoj4 的图谱实验。以疾病为中心，接入症状、药物、科室、检查、宜忌食物等 8 类实体和 11 种关系；PaddleNLP 做抽取，GLM 把问句写成 Cypher，再交给带历史的问答链和可调度天气、图谱查询的 Agent。",
+    description: "stu-neoj4 的图谱实验。以疾病为中心，接入症状、药物、科室、检查、宜忌食物等 8 类实体和 11 种关系；PaddleNLP 做抽取，GLM 把问句写成 Cypher，再交给带历史的问答链和可调度图谱查询的 Agent。",
     tags: ["Neo4j", "PaddleNLP", "LangChain", "Cypher"],
     status: "图谱实验",
     visual: "nodes",
