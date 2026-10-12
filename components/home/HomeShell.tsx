@@ -9,6 +9,8 @@ import { TimeGreeting } from "./TimeGreeting";
 import { ReactionTest } from "./ReactionTest";
 import { LiveWallpaper } from "./LiveWallpaper";
 import { DeniaToday } from "./DeniaToday";
+import { NightFullBody } from "@/components/zzz/NightFullBody";
+import "@/styles/zzz.css";
 
 export function HomeShell({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +21,7 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <ReactionTest />
         <QuoteCard />
         <CategoryWidget />
+        <NightFullBody name="burnice" />
       </aside>
       <div className="home-main">{children}</div>
       <aside className="home-sidebar home-sidebar-right" aria-label="右侧栏">
@@ -28,6 +31,7 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <GamesPreview />
         <AnimePreview />
         <CalendarCard />
+        <NightFullBody name="claret" />
       </aside>
     </div>
   );

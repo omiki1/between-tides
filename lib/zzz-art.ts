@@ -4,4 +4,8 @@ export const ZZZ_BANNER = {
   burnice: { w: 1199, h: 581 },
   claret: { w: 1174, h: 671 },
 } as const;
+export const ZZZ_FULL = {
+  burnice: { w: 781, h: 1205 },
+  claret: { w: 951, h: 1355 },
+} as const;
 export type ZzzName = keyof typeof ZZZ_BANNER;

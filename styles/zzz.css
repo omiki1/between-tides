@@ -3,23 +3,37 @@
 :root{--zzz-red:#d8323f;--zzz-gold:#d4a548}
 .zzz-credit{font-family:var(--font-body-cjk);font-size:10px;font-weight:400;letter-spacing:.6px;line-height:1.4;white-space:nowrap;color:var(--text-muted);opacity:.85}
 
-/* 关于页横幅：底边是两张图的硬切线，贴住横幅下沿；左图渐入、右图左缘渐隐叠在左图上 */
-.zzz-banner{position:relative;margin:0 0 18px;aspect-ratio:10/3;overflow:hidden;border-radius:var(--radius-md);
+/* 关于页横幅：底边是两张图的硬切线，贴住横幅下沿；两人分开站（中间留空），左缘 / 右缘渐隐 */
+.zzz-banner{position:relative;margin:0 0 18px;aspect-ratio:100/27;overflow:hidden;border-radius:var(--radius-md);
   border:1px solid color-mix(in srgb,var(--zzz-red) 24%,var(--border));
   background:linear-gradient(100deg,transparent 28%,color-mix(in srgb,var(--zzz-red) 7%,transparent) 64%,color-mix(in srgb,var(--zzz-gold) 9%,transparent));
   pointer-events:none;user-select:none;-webkit-user-select:none}
 .zzz-banner::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--zzz-red) 30%,var(--zzz-gold) 70%,transparent);opacity:.7}
 .zzz-banner__art{position:absolute;bottom:0;pointer-events:auto}
 .zzz-banner__art img{display:block;width:100%;height:auto;-webkit-user-drag:none}
-.zzz-banner__art--burnice{left:0;width:56%}
-.zzz-banner__art--burnice img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 78%,transparent)}
-.zzz-banner__art--claret{right:0;width:52%}
-.zzz-banner__art--claret img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 24%);mask-image:linear-gradient(90deg,transparent,#000 24%)}
+.zzz-banner__art--burnice{left:0;width:48%}
+.zzz-banner__art--burnice img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.zzz-banner__art--claret{right:0;width:46%}
+.zzz-banner__art--claret img{-webkit-mask-image:linear-gradient(90deg,transparent,#000 20%);mask-image:linear-gradient(90deg,transparent,#000 20%)}
 .zzz-banner .zzz-credit{position:absolute;left:14px;top:9px}
 /* 星火落在墨镜 / 眼睛附近 */
 .zzz-banner__art--burnice{--zzz-spark-x:47%;--zzz-spark-y:48%}
 .zzz-banner__art--claret{--zzz-spark-x:50%;--zzz-spark-y:33%}
-@media (max-width:700px){.zzz-banner{aspect-ratio:2.6/1;margin-bottom:14px}.zzz-banner__art--burnice{width:62%}.zzz-banner__art--claret{width:58%}.zzz-banner .zzz-credit{left:10px;top:6px;font-size:9px}}
+@media (max-width:700px){.zzz-banner{aspect-ratio:40/10;margin-bottom:14px}.zzz-banner__art--burnice{width:48%}.zzz-banner__art--claret{width:44%}.zzz-banner .zzz-credit{left:10px;top:6px;font-size:9px}}
+
+/* 首页夜间全身立绘（components/zzz/NightFullBody.tsx）：左右两栏底部，首屏之外。
+ * 日间、≤1200px（右栏隐藏）时容器不显示，也不插入 <img>；容器按各自原图比例固定，图片后插入不产生偏移。 */
+.zzz-night{margin:6px 0 0;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;user-select:none;-webkit-user-select:none}
+html:not(.dark) .zzz-night{display:none}
+@media (max-width:1200px){.zzz-night{display:none}}
+.zzz-night__box{position:relative;width:100%;max-width:220px}
+.zzz-night__box--burnice{aspect-ratio:781/1205}
+.zzz-night__box--claret{aspect-ratio:951/1355}
+.zzz-night__box .zzz-glint{position:absolute;inset:0;display:block;pointer-events:auto}
+.zzz-night__box img{display:block;width:100%;height:100%;-webkit-user-drag:none}
+.zzz-night .zzz-credit[aria-hidden]{visibility:hidden}
+.zzz-night__box--burnice .zzz-glint{--zzz-spark-x:56%;--zzz-spark-y:10%}
+.zzz-night__box--claret .zzz-glint{--zzz-spark-x:43%;--zzz-spark-y:11%}
 
 /* 悬停：墨镜反光一样的斜向扫光（只落在人物轮廓上）+ 一颗小红星火。
  * 只在能悬停的设备上、未开启「减少动态」（系统或站内设置）时出现；伪元素不接收指针。 */
