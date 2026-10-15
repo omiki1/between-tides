@@ -46,7 +46,9 @@ function imageHandler(state: State, node: Image): Element {
   /* Alt text keeps the credit; external files also link to their original source. */
   const caption:ElementContent[] = [text(alt)];
   if (external(src)) caption.push(element("a", { href:src, target:"_blank", rel:["noreferrer","noopener"] }, [text("原始文件 ↗")]));
-  return element("figure", { className: figureClassNames(node.title) }, [picture, element("figcaption", {}, caption)]);
+  /* alt 为空（装饰性图片）时不渲染空的 figcaption */
+  const hasCaption = alt.trim() !== "" || external(src);
+  return element("figure", { className: figureClassNames(node.title) }, hasCaption ? [picture, element("figcaption", {}, caption)] : [picture]);
 }
 
 function linkHandler(state: State, node: Link): Element {

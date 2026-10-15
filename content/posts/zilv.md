@@ -8,7 +8,7 @@ hideCover: true
 featured: false
 ---
 
-![金发、戴圆框眼镜的动漫少女闭着眼睛开怀大笑](/posts/zilv-cover.webp "1200x675")
+![](/posts/zilv-cover.webp "1200x675")
 
 昨天晚上，我突然意识到，自己不能再这样颓废下去了。
 
