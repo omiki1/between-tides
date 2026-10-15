@@ -37,7 +37,9 @@ function figureClassNames(title: string | null | undefined): string[] {
 function imageHandler(state: State, node: Image): Element {
   const src = node.url || "";
   const alt = node.alt || "";
-  const image = element("img", { src, alt, loading:"lazy", decoding:"async" }, []);
+  /* 标注了尺寸就写进 width/height，浏览器据此在图片加载前预留空间（CLS 0） */
+  const dim = dimensions.exec((node.title || "").trim());
+  const image = element("img", { src, alt, loading:"lazy", decoding:"async", ...(dim ? { width:Number(dim[1]), height:Number(dim[2]) } : {}) }, []);
   const picture:ElementContent = external(src)
     ? element("a", { href:src, target:"_blank", rel:["noreferrer","noopener"] }, [image])
     : image;
