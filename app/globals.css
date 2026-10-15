@@ -905,3 +905,11 @@ html[data-ambiance-motion=reduce] .music-panel-polish .album-cover.is-playing im
   .reading-page .toc{border-left:0;padding-left:0;grid-column:1/-1}
 }
 /* === /reading-center === */
+
+/* 欢迎条：贴左下角的小卡片，不挡内容；只有按钮可点；右侧给悬浮导航球留位置 */
+.welcome-toast{left:max(16px,env(safe-area-inset-left));right:auto;bottom:max(16px,env(safe-area-inset-bottom));margin-inline:0;width:min(340px,calc(100vw - 96px));max-width:none;padding:10px 12px 10px 14px;gap:10px;border-radius:14px;pointer-events:none;box-shadow:0 10px 28px rgba(16,8,28,.2)}
+.welcome-toast strong{font-size:13px}
+.welcome-toast p{margin-top:2px;font-size:11px;line-height:1.55}
+.welcome-toast button{pointer-events:auto;min-height:32px;padding:6px 12px}
+@media (max-width:900px){.welcome-toast{bottom:max(16px,env(safe-area-inset-bottom));width:min(320px,calc(100vw - 96px))}}
+@media (pointer:coarse){.welcome-toast button{min-height:44px;min-width:44px}}
