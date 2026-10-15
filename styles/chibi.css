@@ -1,0 +1,20 @@
+/* 首页 Q 版小人：固定尺寸盒子（CLS 0），load 后才设置 --chibi；4x2 雪碧图，每帧时长不等，用 step-end 关键帧。 */
+.chibi-pet{margin:0;display:flex;flex-direction:column;align-items:center;gap:2px}
+.chibi-pet__box{--s:96px;display:block;width:var(--s);height:var(--s);padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chibi-pet__box[data-ready]{background-image:var(--chibi);background-repeat:no-repeat;background-size:400% 200%;background-position:0 0}
+.chibi-pet__box.is-play{animation:chibi-idle 2.42s step-end infinite}
+.chibi-pet__box:focus-visible{outline:2px solid var(--primary-strong);outline-offset:3px;border-radius:12px}
+.chibi-pet__credit{font-size:9px;line-height:14px;height:14px;white-space:nowrap;letter-spacing:.4px;color:var(--text-muted);opacity:.8}
+@media (max-width:700px){.chibi-pet__box{--s:64px}}
+@keyframes chibi-idle{
+  0%{background-position:0 0}
+  45.45%{background-position:33.333% 0}
+  53.72%{background-position:66.667% 0}
+  57.85%{background-position:100% 0}
+  62.81%{background-position:0 100%}
+  69.42%{background-position:33.333% 100%}
+  77.69%{background-position:66.667% 100%}
+  87.6%{background-position:100% 100%}
+}
+@media (prefers-reduced-motion:reduce){.chibi-pet__box.is-play{animation:none}}
+html[data-ambiance-motion="reduce"] .chibi-pet__box.is-play{animation:none}

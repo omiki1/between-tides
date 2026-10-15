@@ -9,6 +9,8 @@ import { TimeGreeting } from "./TimeGreeting";
 import { ReactionTest } from "./ReactionTest";
 import { LiveWallpaper } from "./LiveWallpaper";
 import { DeniaToday } from "./DeniaToday";
+import { ChibiPet } from "./ChibiPet";
+import "@/styles/chibi.css";
 
 export function HomeShell({ children }: { children: React.ReactNode }) {
   return (
@@ -24,6 +26,7 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
       <aside className="home-sidebar home-sidebar-right" aria-label="右侧栏">
         <TimeGreeting />
         <DeniaToday />
+        <ChibiPet />
         <SiteStats />
         <GamesPreview />
         <AnimePreview />
