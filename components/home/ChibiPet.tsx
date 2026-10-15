@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RotateCw } from "lucide-react";
 import { afterLoadIdle } from "@/lib/after-load";
+import { CHIBI_GLOWS } from "@/lib/chibi-glows";
 import "@/styles/chibi.css";
 
 /*
@@ -26,7 +27,7 @@ function pick3(prev: number[] | null): number[] {
   return PETS.map((_, i) => i).slice(0, 3);
 }
 
-export function ChibiPet() {
+export function ChibiPet({ variant = "band" }: { variant?: "band" | "hero" }) {
   const root = useRef<HTMLDivElement>(null);
   const [armed, setArmed] = useState(false);
   const [picks, setPicks] = useState<number[] | null>(null);
@@ -69,7 +70,7 @@ export function ChibiPet() {
   }, []);
 
   return (
-    <div className="chibi-band" ref={root} data-pagefind-ignore="all">
+    <div className={`chibi-band${variant === "hero" ? " chibi-band--hero" : ""}`} ref={root} data-pagefind-ignore="all">
       <div className="chibi-row">
         {[0, 1, 2].map((slot) => {
           const pet = picks ? PETS[picks[slot]!]! : null;
@@ -87,6 +88,7 @@ export function ChibiPet() {
                 style={pet ? ({ "--chibi": `url(/art/chibi/${pet[0]}.webp)` } as React.CSSProperties) : undefined}
                 data-ready={pet ? "" : undefined}
               />
+              {pet && (CHIBI_GLOWS[pet[0]]?.length ?? 0) > 0 && (<span className="chibi-glows" aria-hidden="true">{CHIBI_GLOWS[pet[0]]!.map((g, i) => (<i key={i} className={`chibi-glow chibi-glow--${g.kind}`} style={{ left: `${g.x}%`, top: `${g.y}%`, width: `${g.size}%`, animationDelay: `${-(slot * 1.7 + i * 1.1)}s` }} />))}</span>)}
             </div>
           );
         })}

@@ -2,7 +2,8 @@
    4x2 雪碧图，每帧时长不等，用 step-end 关键帧；三个用 --phase 错开相位。 */
 .chibi-band{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px auto 22px}
 .chibi-row{display:flex;align-items:center;justify-content:center;gap:28px}
-.chibi-pet__box{--s:112px;display:block;flex:none;width:var(--s);height:var(--s)}
+.chibi-slot{--s:112px}
+.chibi-pet__box{display:block;flex:none;width:var(--s);height:var(--s)}
 .chibi-pet__box[data-ready]{background-image:var(--chibi);background-repeat:no-repeat;background-size:400% 200%;background-position:0 0}
 .is-play>.chibi-pet__box{animation:chibi-idle 2.42s step-end var(--phase,0s) infinite}
 .chibi-pet__credit{margin:0;font-size:9px;line-height:14px;height:14px;white-space:nowrap;letter-spacing:.4px;color:var(--text-muted);opacity:.8}
@@ -12,7 +13,7 @@
 .chibi-refresh svg{transition:transform .6s cubic-bezier(.3,.7,.3,1)}
 @media (max-width:700px){
   .chibi-row{gap:12px}
-  .chibi-pet__box{--s:76px}
+  .chibi-slot{--s:76px}
   .chibi-refresh{width:44px;height:44px;margin-left:0}
 }
 @keyframes chibi-idle{
@@ -25,14 +26,27 @@
   77.69%{background-position:66.667% 100%}
   87.6%{background-position:100% 100%}
 }
-@media (prefers-reduced-motion:reduce){.is-play>.chibi-pet__box{animation:none}.chibi-slot::before{animation:none!important}.chibi-refresh svg{transition:none}}
+@media (prefers-reduced-motion:reduce){.is-play>.chibi-pet__box{animation:none}.chibi-refresh svg{transition:none}}
 html[data-ambiance-motion="reduce"] .is-play>.chibi-pet__box{animation:none}
-html[data-ambiance-motion="reduce"] .chibi-slot::before{animation:none!important}
+html[data-ambiance-motion="reduce"] 
 html[data-ambiance-motion="reduce"] .chibi-refresh svg{transition:none}
-/* 夜间：每个小房间背后一团暖色灯光（只动 opacity，渐变本身透明收边，无模糊/阴影）；离屏时暂停，减少动态时静态 */
+/* 夜间：只在真正会发光的东西上点一小团柔光（位置见 lib/chibi-glows.ts）。只动 opacity，渐变本身透明收边；
+   离屏暂停，减少动态时静态。白天不显示。 */
 .chibi-slot{position:relative;flex:none}
-html.dark .chibi-slot::before{content:"";position:absolute;inset:-24%;pointer-events:none;border-radius:50%;
-  background:radial-gradient(circle at 50% 56%,rgba(255,206,140,.55) 0,rgba(255,176,112,.22) 38%,rgba(255,160,100,0) 68%);
-  opacity:.7;animation:chibi-glow 5.6s ease-in-out var(--glow-phase,0s) infinite alternate;animation-play-state:paused}
-html.dark .chibi-slot.is-play::before{animation-play-state:running}
-@keyframes chibi-glow{from{opacity:.42}to{opacity:.95}}
+.chibi-glows{position:absolute;left:0;top:0;width:var(--s);height:var(--s);pointer-events:none;display:none}
+html.dark .chibi-glows{display:block}
+.chibi-glow{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;mix-blend-mode:screen;opacity:.75;animation-play-state:paused;
+  background:radial-gradient(circle,rgba(255,226,170,.95) 0,rgba(255,196,120,.42) 38%,rgba(255,176,100,0) 70%)}
+.chibi-glow--lamp{animation:chibi-breathe 4.8s ease-in-out infinite alternate}
+.chibi-glow--screen{background:radial-gradient(circle,rgba(220,240,255,.95) 0,rgba(150,200,255,.42) 38%,rgba(130,180,255,0) 70%);animation:chibi-flicker 3.7s linear infinite}
+.chibi-slot.is-play .chibi-glow{animation-play-state:running}
+@keyframes chibi-breathe{from{opacity:.4}to{opacity:.95}}
+@keyframes chibi-flicker{0%,100%{opacity:.8}12%{opacity:.6}24%{opacity:.9}37%{opacity:.7}52%{opacity:.95}66%{opacity:.65}81%{opacity:.85}}
+@media (prefers-reduced-motion:reduce){.chibi-glow{animation:none!important}}
+html[data-ambiance-motion="reduce"] .chibi-glow{animation:none!important}
+/* 首页 Hero 里的版本：靠左、更小，贴在标签下面、滚动提示上面 */
+.chibi-band--hero{align-items:flex-start;margin:16px 0 0;gap:4px}
+.chibi-band--hero .chibi-row{justify-content:flex-start;gap:14px}
+.chibi-band--hero .chibi-slot{--s:96px}
+.chibi-band--hero .chibi-refresh{margin-left:0}
+@media (max-width:700px){.chibi-band--hero{margin-top:12px}.chibi-band--hero .chibi-row{gap:10px}.chibi-band--hero .chibi-slot{--s:60px}}

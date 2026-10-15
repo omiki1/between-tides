@@ -8,7 +8,6 @@ import { NotesPreview } from "@/components/home/NotesPreview";
 import { GuestbookWall } from "@/components/home/GuestbookWall";
 import { FriendsPreview } from "@/components/home/FriendsPreview";
 import { SakuraPick } from "@/components/home/SakuraPick";
-import { ChibiPet } from "@/components/home/ChibiPet";
 import { HomeShell } from "@/components/home/HomeShell";
 import { HomeIntro } from "@/components/effects/HomeIntro";
 import { TideDivider } from "@/components/effects/TideDivider";
@@ -64,7 +63,6 @@ export default function Home() {
       <Reveal delay={0.08}>
         <FriendsPreview />
       </Reveal>
-      <ChibiPet />
       <TideDivider palette="aurora" />
     </main>
   );

@@ -10,6 +10,7 @@ import styles from "./Hero.module.css";
 import { DeniaTassel } from "./DeniaTassel";
 import { useAfterLoad } from "@/lib/after-load";
 import { FxWordmark } from "@/components/fx/FxWordmark";
+import { ChibiPet } from "./ChibiPet";
 export function Hero(){
  const reduced=useReducedMotion();
  /* 台词轮播等页面加载完、主线程空闲后再开始转 */
@@ -70,6 +71,7 @@ export function Hero(){
     <Link className="button-quiet" href="/anime/">我的追番<ArrowUpRight size={16}/></Link>
    </div>
    <div className="hero-interests"><span><Code2 size={14}/> Code</span><span><Sparkles size={14}/> AI &amp; ideas</span><span><Music2 size={14}/> Music</span></div>
+   <ChibiPet variant="hero"/>
   </div>
   <div className={styles.art}>
    <span className={styles.word} aria-hidden="true">DENIA</span>
