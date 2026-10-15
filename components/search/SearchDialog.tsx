@@ -19,7 +19,8 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
   const [voice,setVoice]=useState(0);
   const [hint,setHint]=useState(0);
   const [isOpen,setIsOpen]=useState(false);
-  const open=useCallback(()=>{void loadPagefind();setHint(0);setIsOpen(true);dialog.current?.showModal();requestAnimationFrame(()=>input.current?.focus())},[]);
+  const [extra,setExtra]=useState<{label:string;href:string}|null>(null);
+  const open=useCallback(()=>{void loadPagefind();setExtra((window as unknown as {__ownerCmd?:{label:string;href:string}}).__ownerCmd??null);setHint(0);setIsOpen(true);dialog.current?.showModal();requestAnimationFrame(()=>input.current?.focus())},[]);
   const close=useCallback(()=>{dialog.current?.close()},[]);
   useEffect(()=>{
     const onOpen=()=>open();
@@ -79,6 +80,7 @@ export function SearchDialog({seed}:{seed:SearchSeed}){
         <input ref={input} value={query} onChange={event=>{setQuery(event.target.value);setCursor(0)}} onKeyDown={onInputKeyDown} type="search" placeholder={PLACEHOLDERS[hint]} aria-label="搜索关键词" aria-controls="search-results" autoComplete="off"/>
         <button className="icon-button" onClick={close} aria-label="关闭搜索"><X size={17}/></button>
       </div>
+      {extra&&(!term||/后台|admin|博客|写作|blog/i.test(term))&&<ul className="search-results" role="listbox" aria-label="更多"><li role="option" aria-selected={false}><button onClick={()=>{dialog.current?.close();window.open(extra.href,"_blank","noopener,noreferrer")}}><span className="result-kind">前往</span><span className="result-body"><b>{extra.label}</b></span><CornerDownLeft size={14}/></button></li></ul>}
       {!term&&<>
         <p className="search-hint">试试从最近的手记开始</p>
         <ul id="search-results" className="search-results" role="listbox" aria-label="最近的手记">

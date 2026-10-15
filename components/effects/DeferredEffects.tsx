@@ -11,6 +11,7 @@ const Sakura = dynamic(() => import("./Sakura").then(m => m.Sakura), { ssr: fals
 const PointerEffects = dynamic(() => import("./PointerEffects").then(m => m.PointerEffects), { ssr: false });
 const DeniaBubbles = dynamic(() => import("./DeniaBubbles").then(m => m.DeniaBubbles), { ssr: false });
 const DeniaDetails = dynamic(() => import("./DeniaDetails").then(m => m.DeniaDetails), { ssr: false });
+const OwnerLink = dynamic(() => import("@/components/layout/OwnerLink").then(m => m.OwnerLink), { ssr: false });
 const WelcomeToast = dynamic(() => import("./WelcomeToast").then(m => m.WelcomeToast), { ssr: false });
 
 /** 画布花瓣/夜雨、指针光晕、点击泡泡（放在原来的位置：导航栏之前） */
@@ -30,4 +31,10 @@ export function DeferredWelcome() {
 export function DeferredDetails() {
   const ready = useAfterLoad();
   return ready ? <DeniaDetails /> : null;
+}
+
+/** 站长入口：load 之后才加载，访客什么都不渲染 */
+export function DeferredOwner() {
+  const ready = useAfterLoad();
+  return ready ? <OwnerLink /> : null;
 }

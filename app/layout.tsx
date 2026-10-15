@@ -6,7 +6,7 @@ import { Providers } from "@/components/layout/Providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
-import { DeferredLayers, DeferredWelcome, DeferredDetails } from "@/components/effects/DeferredEffects";
+import { DeferredLayers, DeferredWelcome, DeferredDetails, DeferredOwner } from "@/components/effects/DeferredEffects";
 import { MusicDock } from "@/components/layout/MusicDock";
 import { VisitRecorder } from "@/components/layout/VisitRecorder";
 import { SearchDialog, type SearchSeed } from "@/components/search/SearchDialog";
@@ -36,4 +36,4 @@ function searchSeed():SearchSeed{
   suggestions.push({label:"按时间浏览",href:"/archive/"});
   return {recent,suggestions};
 }
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><DeferredLayers/><ReadingProgress/><Navbar/><DeferredWelcome/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/><DeferredDetails/><FxBoot/></Providers></body></html>}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="zh-CN" data-scroll-behavior="smooth" data-font-mode="wenkai" suppressHydrationWarning><body className={manrope.variable}><script dangerouslySetInnerHTML={{__html:fontBoot}}/><script dangerouslySetInnerHTML={{__html:introBoot}}/><Providers><a className="skip-link" href="#main">跳到主要内容</a><AmbientBackground/><DeferredLayers/><ReadingProgress/><Navbar/><DeferredWelcome/><div className="ft-pf-body" data-pagefind-body>{children}</div><MusicDock/><Footer/><SearchDialog seed={searchSeed()}/><VisitRecorder/><DeferredDetails/><DeferredOwner/><FxBoot/></Providers></body></html>}
