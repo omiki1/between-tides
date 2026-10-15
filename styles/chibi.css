@@ -1,11 +1,20 @@
-/* 首页 Q 版小人：固定尺寸盒子（CLS 0），load 后才设置 --chibi；4x2 雪碧图，每帧时长不等，用 step-end 关键帧。 */
-.chibi-pet{margin:0;display:flex;flex-direction:column;align-items:center;gap:2px}
-.chibi-pet__box{--s:96px;display:block;width:var(--s);height:var(--s);padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* 首页「友链」下方的 3 个 Q 版小人：固定尺寸盒子（CLS 0），load 且接近视口后才设置 --chibi；
+   4x2 雪碧图，每帧时长不等，用 step-end 关键帧；三个用 --phase 错开相位。 */
+.chibi-band{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px auto 22px}
+.chibi-row{display:flex;align-items:center;justify-content:center;gap:28px}
+.chibi-pet__box{--s:112px;display:block;flex:none;width:var(--s);height:var(--s)}
 .chibi-pet__box[data-ready]{background-image:var(--chibi);background-repeat:no-repeat;background-size:400% 200%;background-position:0 0}
-.chibi-pet__box.is-play{animation:chibi-idle 2.42s step-end infinite}
-.chibi-pet__box:focus-visible{outline:2px solid var(--primary-strong);outline-offset:3px;border-radius:12px}
-.chibi-pet__credit{font-size:9px;line-height:14px;height:14px;white-space:nowrap;letter-spacing:.4px;color:var(--text-muted);opacity:.8}
-@media (max-width:700px){.chibi-pet__box{--s:64px}}
+.is-play>.chibi-pet__box{animation:chibi-idle 2.42s step-end var(--phase,0s) infinite}
+.chibi-pet__credit{margin:0;font-size:9px;line-height:14px;height:14px;white-space:nowrap;letter-spacing:.4px;color:var(--text-muted);opacity:.8}
+.chibi-refresh{flex:none;display:grid;place-items:center;width:36px;height:36px;margin-left:4px;border-radius:50%;border:1px solid var(--border-highlight);background:var(--glass);color:var(--text-secondary);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chibi-refresh:hover{color:var(--primary-strong);border-color:var(--primary-strong)}
+.chibi-refresh:focus-visible{outline:2px solid var(--primary-strong);outline-offset:3px}
+.chibi-refresh svg{transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+@media (max-width:700px){
+  .chibi-row{gap:12px}
+  .chibi-pet__box{--s:76px}
+  .chibi-refresh{width:44px;height:44px;margin-left:0}
+}
 @keyframes chibi-idle{
   0%{background-position:0 0}
   45.45%{background-position:33.333% 0}
@@ -16,5 +25,14 @@
   77.69%{background-position:66.667% 100%}
   87.6%{background-position:100% 100%}
 }
-@media (prefers-reduced-motion:reduce){.chibi-pet__box.is-play{animation:none}}
-html[data-ambiance-motion="reduce"] .chibi-pet__box.is-play{animation:none}
+@media (prefers-reduced-motion:reduce){.is-play>.chibi-pet__box{animation:none}.chibi-slot::before{animation:none!important}.chibi-refresh svg{transition:none}}
+html[data-ambiance-motion="reduce"] .is-play>.chibi-pet__box{animation:none}
+html[data-ambiance-motion="reduce"] .chibi-slot::before{animation:none!important}
+html[data-ambiance-motion="reduce"] .chibi-refresh svg{transition:none}
+/* 夜间：每个小房间背后一团暖色灯光（只动 opacity，渐变本身透明收边，无模糊/阴影）；离屏时暂停，减少动态时静态 */
+.chibi-slot{position:relative;flex:none}
+html.dark .chibi-slot::before{content:"";position:absolute;inset:-24%;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle at 50% 56%,rgba(255,206,140,.55) 0,rgba(255,176,112,.22) 38%,rgba(255,160,100,0) 68%);
+  opacity:.7;animation:chibi-glow 5.6s ease-in-out var(--glow-phase,0s) infinite alternate;animation-play-state:paused}
+html.dark .chibi-slot.is-play::before{animation-play-state:running}
+@keyframes chibi-glow{from{opacity:.42}to{opacity:.95}}
