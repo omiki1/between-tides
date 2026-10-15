@@ -1,16 +1,14 @@
 ---
 title: "自律"
-description: "原创小段子：为了自律，我制定了五个闹钟和一份计划。纯属虚构，与任何游戏无关。"
+description: "为了自律，我制定了五个闹钟和一份计划，结果……"
 date: "2026-10-15"
-tags: ["原创小段子", "Life"]
-cover: "/posts/zilv-alarms.svg"
+tags: ["Life"]
+cover: "/posts/zilv-cover.webp"
 hideCover: true
 featured: false
 ---
 
-> 原创小段子 · 纯属虚构，与任何游戏无关。
-
-![五个闹钟从精神抖擞到瘫倒，旁边是一张写满计划的纸和一个睡着的人（原创手绘 SVG）](/posts/zilv-alarms.svg "1200x675")
+![金发、戴圆框眼镜的动漫少女闭着眼睛开怀大笑](/posts/zilv-cover.webp "1200x675")
 
 昨天晚上，我突然意识到，自己不能再这样颓废下去了。
 
@@ -53,3 +51,5 @@ featured: false
 现在我每天都严格按照计划生活。
 
 除了偶尔起晚了。
+
+![五个闹钟从精神抖擞到瘫倒，旁边是一张写满计划的纸和一个睡着的人](/posts/zilv-alarms.svg "1200x675")
