@@ -9,6 +9,7 @@ import { TimeGreeting } from "./TimeGreeting";
 import { ReactionTest } from "./ReactionTest";
 import { LiveWallpaper } from "./LiveWallpaper";
 import { DeniaToday } from "./DeniaToday";
+import { SideFigure } from "./SideFigure";
 
 export function HomeShell({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export function HomeShell({ children }: { children: React.ReactNode }) {
         <ReactionTest />
         <QuoteCard />
         <CategoryWidget />
+        <SideFigure />
       </aside>
       <div className="home-main">{children}</div>
       <aside className="home-sidebar home-sidebar-right" aria-label="右侧栏">

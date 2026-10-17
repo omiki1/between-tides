@@ -1,0 +1,6 @@
+/* 首页左侧栏末尾的装饰立绘（components/home/SideFigure.tsx）。白天 / 夜间都是透明底，不加底板、不加投影。 */
+.side-figure{display:none;margin:8px 0 0;pointer-events:none;user-select:none;-webkit-user-select:none}
+.side-figure__box{width:180px;aspect-ratio:382/765;margin:0 auto}
+.side-figure img{display:block;width:100%;height:100%;-webkit-user-drag:none}
+@media (min-width:981px){.side-figure{display:block}}
+@media (min-width:1201px){.side-figure__box{width:200px}}
